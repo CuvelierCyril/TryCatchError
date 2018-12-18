@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Se connecter{% endblock %}
+{% block body %}
+<h1 class="col-12 text-center">Se connecter</h1>
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-xs-6 col-sm-3 m-auto">
+                <form id="login-form" method="POST" action="{# {{ path('apiLogin') }} #}">
+                    <div class="form-group m-auto">
+                        <label class="col-12 pl-0" for="register-form-email">Adresse Email<span class="pl-4" id="emailError"></span></label>
+                        <input type="email" class="form-control" id="register-form-email" placeholder="jean@exemple.com" name="email">
+                    </div><br>
+                    <div class="form-group m-auto">
+                        <label class="col-12 pl-0" for="register-form-password">Mot de passe<span class="pl-4" id="passwordError"></span></label>
+                        <input type="password" class="form-control" id="register-form-password" placeholder="Mot de passe" name="password">
+                    </div><br>
+                    <div class="row col-12">
+                        <button type="submit" class="btn btn_background m-auto">S'inscrire</button>
+                        <span id="divFailed" class="col-12 text-center"></span>
+                    </div>
+                </form>
+                <div id="formSuccess"></div>
+            </div>
+        </div>
+    </div>
+
+{# <h1 class="text-center">Se connecter</h1>
+<form action="{{ path('apiLogin') }}" method="POST" id="login-form">
+    <p><input type="text" name="email" placeholder="Adresse mail"><div id="emailError"></div></p>
+    <p><input type="text" name="password" placeholder="Mot de passe"><div id="passwordError"></div></p>
+    <p><input type="submit"><div id="divFailed"></div></p>
+</form> #}
+{# <div id="formSuccess"></div> #}
+{% endblock %}
+{% block javascripts %}
+<script>
+    var addBtn = ["{{ path('profil') }}", "{{ path('disconnect') }}"];
+</script>
+<script src="{{ asset('js/login.js') }}"></script>
+{% endblock %}
