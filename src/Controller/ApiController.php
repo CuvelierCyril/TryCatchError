@@ -21,20 +21,12 @@ class ApiController extends AbstractController{
     public function apiRegister(Request $request){
         if ($request->getMethod() == 'POST'){
             $email = $request->request->get('email');
-            $firstname = $request->request->get('firstname');
-            $lastname = $request->request->get('lastname');
             $nickname = $request->request->get('nickname');
             $password = $request->request->get('password');
             $passwordConfirm = $request->request->get('passwordConfirm');
 
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)){
                 $msg['email'] = true;
-            }
-            if (!preg_match('#^[a-zA-Z\'\- ]{3,50}$#', $firstname)){
-                $msg['firstname'] = true;
-            }
-            if (!preg_match('#^[a-zA-Z\'\- ]{3,50}$#', $lastname)){
-                $msg['lastname'] = true;
             }
             if (!preg_match('#^[a-zA-Z0-9áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ._-]{3,50}$#', $nickname)){
                 $msg['nickname'] = true;
@@ -57,14 +49,14 @@ class ApiController extends AbstractController{
                         $newUser
                             ->setEmail($email)
                             ->setPassword(password_hash($password, PASSWORD_BCRYPT))
-                            ->setFirstname($firstname)
-                            ->setLastname($lastname)
                             ->setNickname($nickname)
                             ->setScore(0)
-                            ->setAccess(1)
                             ->setToken($token)
-                            ->setValidate(0)
-                            ->setimage('img/default.png')
+                            ->setActive(0)
+                            ->setPicture('img/default.png')
+                            ->setDate(new Datetime())
+                            ->setRank(0)
+                            ->setStatus(0)
                         ;
                         $em = $this->getDoctrine()->getManager();
                         $em->persist($newUser);

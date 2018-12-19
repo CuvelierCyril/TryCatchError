@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Résultats{% endblock %}
+{% block body %}
+<h1 class="text-center">Résultats</h1>
+{% if vide is defined %}
+    <p>Aucun article trouvé</p>
+{% else %}
+{% for article in articles %}
+    <p><a href="{{ path('subject', {id : article.id}) }}">{{article.title|raw}}</a> écrit par {{ article.author.nickname }} le {{ article.date|date('d-m-Y H:i:s') }}</p>
+{% endfor %}
+{% endif %}
+{% endblock %}
+{% block javascripts %}{% endblock %}

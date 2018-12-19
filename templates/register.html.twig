@@ -2,25 +2,12 @@
 
 {% block title %}Inscription{% endblock %}
 {% block body %}
-{#<h1 class="text-center">Inscription</h1>
-<form action="{{ path('apiRegister') }}" method="POST" id="register-form">
-    <p><input type="text" name="firstname" placeholder="prénom"><div id="firstnameError"></div></p>
-    <p><input type="text" name="lastname" placeholder="nom"><div id="lastnameError"></div></p>
-    <p><input type="text" name="nickname" placeholder="pseudo"><div id="nicknameError"></div></p>
-    <p><input type="text" name="email" placeholder="Adresse mail"><div id="emailError"></div></p>
-    <p><input type="text" name="password" placeholder="Mot de passe"><div id="passwordError"></div></p>
-    <p><input type="text" name="passwordConfirm" placeholder="Confirmation du mot de passe"><div id="passwordConfirmError"></div></p>
-    <p><input type="submit"><div id="divFailed"></div></p>
-</form>
-<div id="formSuccess"></div>
-<iframe id="upload_target" name="upload_target" src="#" style="width:0;height:0;border:0px solid #fff;"></iframe>#}
-
-<br><h1 class="col-12 text-center">Inscription</h1><br>
+<h1 class="col-12 text-center mt-5 mb-5">Inscription</h1>
     <div class="container-fluid">
 
         <div class="row">
             <div class="col-xs-6 col-sm-3 m-auto">
-                <form id="register-form" method="POST" action="{# {{ path('apiRegister') }} #}">
+                <form id="register-form" method="POST" action="{{ path('apiRegister') }}">
                     <div class="form-group m-auto">
                         <label class="col-12 pl-0" for="register-form-email">Adresse Email<span class="pl-4" id="emailError"></span></label>
                         <input type="email" class="form-control" id="register-form-email" placeholder="jean@exemple.com" name="email">
@@ -39,13 +26,13 @@
                     </div><br>
                     <div class="row col-12">
                         <button type="submit" class="btn btn_background m-auto">S'inscrire</button>
-                        <span id="divFailed" class="col-12 text-center">oui</span>
+                        <span id="divFailed" class="col-12 text-center"></span>
                     </div>
                 </form>
-                <div id="formSuccess"></div>
+                <div class="text-center" id="formSuccess"></div>
             </div>
         </div>
-    </div><br>
+    </div>
 {% endblock %}
 {% block javascripts %}
 <script src="{{ asset('js/register.js') }}"></script>
