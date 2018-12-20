@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer un sujet{% endblock %}
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('css/prism.css') }}">
+{% endblock %}
+{% block body %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-10 offset-1 box-shadow-page">
+      <h1 class="text-center">Postez votre problème</h1>
+      <div id="success"></div>
+      <form action="{{ path('apiCreateSubject') }}" method="POST" id="form-subject">
+        <div class="form-group mt-5">
+            <label for="title">Titre : <span id="errorTitle" class="pl-4"></span></label><br>
+            <input class="form-control" type="text" id="title" name="title" placeholder="Ceci est un exemple de titre" style="width:250px;">
+        </div>
+        <div class="form-group mt-5">
+            <label for="content">Contenu du sujet : <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">
+                Ajouter du code
+            </button><span id="errorContent" class="pl-4"></span></label><br>
+            <textarea class="form-control" id="content" id="content" name="content" rows="10" placeholder="Ecrivez ici le contenu de votre problème."></textarea>
+        </div>
+        <div class="form-group mt-4"><input class="btn btn_background" type="submit" value="Postez"><span id="errorTraitement" class="pl-4"></span></div>
+      </form>
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Ajouter du code</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p><label for="selected-language">Sélectionnez le langage du code à insérer : </label>
+              <select name="selected" id="selected-language"></p>
+                <option value="" selected>langage</option>
+                <option value="html">html</option>
+                <option value="js">js</option>
+                <option value="css">css</option>
+                <option value="php">php</option>
+              </select>
+              <p><label for="selected-language">Ecrivrez ici le code à insérer : </label></p>
+              <textarea name="" id="txt" cols="60" rows="10" placeholder="exemple : <p>Bonjour</p>"></textarea>
+              <div>
+                  <pre><code id="simulation"> </code></pre>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Fermer</button>
+              <button id="valider" type="button" class="btn btn-success" data-dismiss="modal">Valider</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block javascripts %}
+<script src="{{ asset('js/prism.js') }}"></script>
+<script src="{{ asset('js/createSubject.js') }}"></script>
+{% endblock %}

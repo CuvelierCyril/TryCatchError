@@ -11,13 +11,7 @@
     <p><input type="hidden" name="MAX_FILE_SIZE" value="10000000"></p>
     <p><input type="submit"></p>
 </form>
-<p>Creer un sujet</p>
-<form action="{{ path('apiCreateSubject') }}" method="POST" id="createArticle-form">
-    <p><input type="text" name="title" placeholder="titre"><div id="titleError"></div></p>
-    <p><textarea name="content" cols="30" rows="10" placeholder="Contenu"></textarea><div id="contentError"></div></p>
-    <input type="submit">
-</form>
-<div id="formSuccess"></div>
+
 {% endblock %}
 {% block javascripts %}
     <script src="{{ asset('js/createSubject.js') }}"></script>

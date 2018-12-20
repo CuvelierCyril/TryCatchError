@@ -49,6 +49,11 @@ class Subject
      */
     private $answers;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $view;
+
     public function __construct()
     {
         $this->answers = new ArrayCollection();
@@ -146,6 +151,18 @@ class Subject
                 $answer->setSubject(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getView(): ?int
+    {
+        return $this->view;
+    }
+
+    public function setView(int $view): self
+    {
+        $this->view = $view;
 
         return $this;
     }

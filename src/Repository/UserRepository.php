@@ -19,6 +19,26 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
+    public function findByStatusOffset($offset){
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.status != :val')
+            ->setParameter('val', 0)
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findByTypeOffset(){
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.rank = :val')
+            ->setParameter('val', 2)
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     // /**
     //  * @return User[] Returns an array of User objects
     //  */

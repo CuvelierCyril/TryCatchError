@@ -32,6 +32,14 @@
                                 <a class="nav-link text-light" href="{{ path('profil') }}"><i class="far fa-user-circle"></i> Mon compte</a>
                             </li>
                             <li class="nav-item btn-effect text-center">
+                                <a class="nav-link text-light" href="{{ path('createSubject') }}"><i class="fas fa-pen-fancy"></i> Créer un sujet</a>
+                            </li>
+                            {% if app.session.get('account').rank == 2 %}
+                            <li class="nav-item btn-effect text-center">
+                                <a class="nav-link text-light" href="{{ path('admin', {type : 'all', page : 1}) }}"><i class="fas fa-tools"></i> Administration</a>
+                            </li>
+                            {% endif %}
+                            <li class="nav-item btn-effect text-center">
                                 <a class="nav-link text-light" href="{{ path('disconnect') }}"><i class="fas fa-user"></i> Déconnexion</a>
                             </li>
                             {% endif %}
@@ -46,6 +54,7 @@
         <footer class="main-footer"></footer>
         <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
         <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('js/overlay.js') }}"></script>
         {% block javascripts %}{% endblock %}
     </body>
 </html>
