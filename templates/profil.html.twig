@@ -2,17 +2,98 @@
 
 {% block title %}Profile{% endblock %}
 {% block body %}
-<h1 class="text-center">Profile</h1>
-<p>Bienvenue {{ app.session.get('account').nickname }}</p>
-<img src="{{ asset(app.session.get('account').picture) }}" alt="">
-<p>changer photo profil</p>
-<form action="{{ path('profil') }}" method="POST" enctype="multipart/form-data">
-    <p><input type="file" name="img"></p>
-    <p><input type="hidden" name="MAX_FILE_SIZE" value="10000000"></p>
-    <p><input type="submit"></p>
-</form>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 col-md-12 col-sm-12 col-lg-7 offset-lg-1 box-shadow-page order-1 order-sm-1 order-md-1 order-lg-1">
+                <h1 class="text-center mb-4">mon profil</h1>
+                <div class="card offset-1 offset-sm-4 col-md-9 offset-md-3 offset-lg-4 mt-3 mb-3" style="width: 18rem;">
+                    <div>
+                        <div class="card-img-top"><img class="col-12" src="{{ asset(app.session.get('account').picture) }}" alt="Profilimage" height="220" width="220">
+                        </div>
+                        <div class="card-body">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">Nom d'utilisateur: <i>{{ app.session.get('account').nickname }}</i></li>
+                                    <li class="list-group-item">Adresse Email:<i>{{ app.session.get('account').email }}</i></li>
+                                </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-12 text-center col-lg-4 offset-lg-1 ml-0 mt-3 mb-3 order-2 order-lg-2 order-sm-2">
+                <h2 class="col-12">Modifier mes information</h2>
+                <div class="row">
+                    <ul class="row m-auto">
+                        <li class="admintag mt-3 col-12 col-md-12">
+                            <button type="button" class="btn btn-danger btn-lg col-10 col-sm-12 col-md-12 col-lg-12" data-toggle="modal" data-target="#modalpassword">Changer mot de passe</button>
+                            <div class="modal fade" id="modalpassword" tabindex="-1" role="dialog" aria-labelledby="modalpassword" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="modalpassword">Changer de mot de passe</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="card card-body">
+                                            <form class="col-12">
+                                                <div class="input-group mb-2 mr-sm-2">
+                                                    <input type="password" class="form-control" id="passwordchange" placeholder="Changer de mot de passe">
+                                                </div>
+                                                <div class="input-group mb-2 mr-sm-2">
+                                                    <input type="password" class="form-control" id="passwordcomfirmchange" placeholder="comfirmer le mot de passe">
+                                                </div>
+                                                <button type="submit" class="btn btn-primary col-12">Modifier</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                                            <button type="button" class="btn btn-primary">Comfirmer</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="admintag mt-3 col-12 col-md-12">
+                            <button type="button" class="btn btn-danger btn-lg col-10 col-sm-12 col-md-12 col-lg-12" data-toggle="modal" data-target="#modalimg">Changer image de profil</button>
+                            <div class="modal fade" id="modalimg" tabindex="-1" role="dialog" aria-labelledby="modalimg" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="modalimg">Changer image de profil</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="card card-body">
+                                                <div class="input-group col-12">
+                                                    <div class="custom-file">
+                                                        <input type="file" class="custom-file-input" id="uploadform">
+                                                        <label class="custom-file-label" for="uploadform">Choisisez une image</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                                            <button type="button" class="btn btn-primary">Comfirmer</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="main-footer"></footer>
 
 {% endblock %}
 {% block javascripts %}
-    <script src="{{ asset('js/createSubject.js') }}"></script>
+    <script src="{{ asset('js/CreateSubject.js') }}"></script>
 {% endblock %}

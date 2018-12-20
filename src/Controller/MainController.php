@@ -68,7 +68,6 @@ class MainController extends AbstractController{
         }
         return $this->render('profil.html.twig');
     }
-
     /**
      * @route("/se-connecter/", name="login")
      */
@@ -78,12 +77,11 @@ class MainController extends AbstractController{
         }
         return $this->render('login.html.twig');
     }
-
     /**
      * @route("/liste-sujets/", name="subjects")
      */
     public function subjects(){
-            return $this->render('subjects.html.twig');
+            return $this->render('subjects-list.html.twig');
     }
 
     /**
@@ -95,14 +93,14 @@ class MainController extends AbstractController{
         $repo = $this->getDoctrine()->getRepository(Answer::class);
         $answers = $repo->findBySubject($article, array("date" => "DESC"));
         if ($article == null){
-            return $this->render('subject.html.twig', array('vide' => true));
+            return $this->render('subjects-list.html.twig', array('vide' => true));
         }
         $content = $article->getContent();
         $content = str_replace('[code=', '<p><pre><code class="language-', $content);
         $content = str_replace('[/code]', '</code></pre></p>', $content);
         $content = str_replace(']', '>', $content);
         $article->setContent($content);
-        return $this->render('subject.html.twig', array('article' => $article, 'answers' => $answers));
+        return $this->render('subjects-list.html.twig', array('articles' => $article, 'answers' => $answers));
     }
 
     /**

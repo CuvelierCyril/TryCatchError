@@ -20,6 +20,9 @@
                             <li id="indexBtn" class="nav-item btn-effect text-center">
                                 <a class="nav-link text-light" href="{{ path('index') }}"><i class="fas fa-home"></i> Accueil</a>
                             </li>
+                            <li class="nav-item btn-effect text-center">
+                                    <a class="nav-link text-light" href="{{ path('subjects') }}"><i class="fas fa-user"></i> Liste-Articles </a>
+                            </li>
                             {% if app.session.get('account') is null %}
                             <li class="nav-item btn-effect text-center toremove">
                                 <a class="nav-link text-light" href="{{ path('register')}}"><i class="fab fa-wpforms"></i> Inscription</a>

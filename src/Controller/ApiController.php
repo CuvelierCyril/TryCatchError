@@ -104,7 +104,6 @@ class ApiController extends AbstractController{
         }
         return $this->json($msg);
     }
-
     /**
      * @route("create-subject/", name="apiCreateSubject", methods="POST")
      */
@@ -112,6 +111,9 @@ class ApiController extends AbstractController{
         if ($request->getMethod() == 'POST'){
             $title = $request->request->get('title');
             $content = $request->request->get('content');
+            $categories = $request->request->get('categories');
+
+            $languages = ['php', 'symfony', 'css', 'js', 'sql', 'html', 'phppoo', 'angular'];
 
             if (!preg_match('#^[a-zA-Z0-9 \'\-_ !,.?:/]{5,100}$#', $title)){
                 $msg['title'] = true;
@@ -119,6 +121,17 @@ class ApiController extends AbstractController{
             if (mb_strlen($content) < 5 || mb_strlen($content) > 10000){
                 $msg['content'] = true;
             }
+            if($categories != null){
+                foreach($categories as $category){
+                    if(!in_array($category, $languages)){
+                        $msg['category'] = true;
+                    }
+                }
+            } else {
+                $categories = '';
+            }
+            
+            dump($categories);
 
             if (!isset($msg)){
                 $content = strip_tags($content);
@@ -126,6 +139,7 @@ class ApiController extends AbstractController{
                 $newSubject
                     ->setTitle($title)
                     ->setContent($content)
+                    ->setCategories($categories)
                     ->setView(0)
                     ->setDate(new DateTime())
                     ->setAuthor($this->get('session')->get('account'))
@@ -267,13 +281,6 @@ class ApiController extends AbstractController{
             $repo = $this->getDoctrine()->getRepository(Subject::class);
             $subjects = $repo->findAllDateDesc(10 * (intval($page) - 1), '%'.$lang.'%');
             foreach($subjects as $subject){
-                // dump($subject->getContent());
-                // $content = str_replace('[code=', '<pre id="reset"><code class=language-',$subject->getContent());
-                // dump($content);
-                // $content = str_replace('[/code', '</code></pre', $content);
-                // dump($content);
-                // $content = str_replace(']', '>', $content);
-                // dump($content);
                 $newarray[] = array(
                     'title' => $subject->getTitle(),
                     'content' => $subject->getContent(),
