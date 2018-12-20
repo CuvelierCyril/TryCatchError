@@ -95,6 +95,11 @@ class MainController extends AbstractController{
         if ($article == null){
             return $this->render('subjects-list.html.twig', array('vide' => true));
         }
+        $content = $article->getContent();
+        $content = str_replace('[code=', '<p><pre><code class="language-', $content);
+        $content = str_replace('[/code]', '</code></pre></p>', $content);
+        $content = str_replace(']', '>', $content);
+        $article->setContent($content);
         return $this->render('subjects-list.html.twig', array('articles' => $article, 'answers' => $answers));
     }
 
@@ -151,6 +156,29 @@ class MainController extends AbstractController{
         }
         return $this->render('results.html.twig', array('articles' => $articles));
     }
-}
 
-// ceci est un ceci est un titre
+    /**
+     * @route("/administration/{type}/{page}", name="admin")
+     */
+    public function administration(Request $request, $type, $page){
+        $repo = $this->getDoctrine()->getRepository(User::class);
+        if ($type == 'banned'){
+            $users = $repo->findByStatusOffset(0);
+        } else if($type == "moderator"){
+            $users = $repo->findByTypeOffset(0);
+        } else {
+            $users = $repo->findAll();
+        }
+        if (!empty($users)){
+            return $this->render('administration.html.twig', array('users' => $users));
+        }
+        return $this->render('administration.html.twig', array('vide' => true));
+    }
+
+    /**
+     * @route("/creer-sujet/", name="createSubject")
+     */
+    public function createSubject(){
+        return $this->render('createSubject.html.twig');
+    }
+}

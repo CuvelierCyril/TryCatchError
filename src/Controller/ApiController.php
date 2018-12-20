@@ -118,7 +118,7 @@ class ApiController extends AbstractController{
             if (!preg_match('#^[a-zA-Z0-9 \'\-_ !,.?:/]{5,100}$#', $title)){
                 $msg['title'] = true;
             }
-            if (!preg_match('#^[a-zA-Z0-9 \'\-_ !,.?:/]{5,10000}$#', $content)){
+            if (mb_strlen($content) < 5 || mb_strlen($content) > 10000){
                 $msg['content'] = true;
             }
             if($categories != null){
@@ -134,7 +134,7 @@ class ApiController extends AbstractController{
             dump($categories);
 
             if (!isset($msg)){
-                $categories = implode(' ', $categories);
+                $content = strip_tags($content);
                 $newSubject = new Subject();
                 $newSubject
                     ->setTitle($title)
@@ -143,6 +143,7 @@ class ApiController extends AbstractController{
                     ->setView(0)
                     ->setDate(new DateTime())
                     ->setAuthor($this->get('session')->get('account'))
+                    ->setCategories('')
                 ;
                 $em = $this->getDoctrine()->getManager();
                 $em->merge($newSubject);
@@ -298,5 +299,29 @@ class ApiController extends AbstractController{
         } else {
             return $this->json($msg);
         }
+    }
+
+    /**
+     * @route("admin/change-status", name="apiAdminStatus")
+     */
+    public function apiAdmin(Request $request){
+        if ($request->getMethod() == "POST"){
+            $datastr = $request->request->get('datastr');
+            $data = explode("/", $datastr);
+            $repo = $this->getDoctrine()->getRepository(User::class);
+            $user = $repo->findOneById($data[0]);
+            if ($user != null){
+                $user->setStatus($data[1]);
+                $em = $this->getDoctrine()->getManager();
+                $em->merge($user);
+                $em->flush();
+                $msg['success'] = true;
+            } else {
+                $msg['noUser'] = true;
+            }
+        } else {
+            $msg['failed'] = true;
+        }
+        return $this->json($msg);
     }
 }

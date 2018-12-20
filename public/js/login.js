@@ -16,7 +16,7 @@ $(document).ready(function(){
                     $(`<li id="profilBtn" class="nav-item btn-effect text-center">
                     <a class="nav-link text-light" href="` + addBtn[1] + `"><i class="fas fa-user"></i> Déconnexion</a></li>`).insertAfter($('#indexBtn'));
                     $(`<li class="nav-item btn-effect text-center">
-                    <a class="nav-link text-light" href="{{ path('profil') }}"><i class="far fa-user-circle"></i> Mon compte</a>
+                    <a class="nav-link text-light" href="`+ addBtn[0] +`"><i class="far fa-user-circle"></i> Mon compte</a>
                 </li>`).insertBefore($('#profilBtn'));
                 }
                 if (data.email){
