@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Erreur 404{% endblock %}
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('css/error.min.css') }}">
+{% endblock %}
+
+{% block body %}
+<div id='oopss'>
+    <div id='error-text'>
+      <span>404</span>
+      <p>Page introuvable</p>
+      <p class='hmpg'><a href='{{ path('index') }}' class="back">Retour a l'Acceuil</a></p>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}{% endblock %}
