@@ -260,16 +260,20 @@ class ApiController extends AbstractController{
         }
         return $this->json($msg);
     }
-
     /**
      * @route("list-subjects/", name="apiSubjects", methods="POST")
      */
     public function apiSubjects(Request $request){
+        $languages = ['symfony', 'php', 'ajax', 'js','html','css','phppoo','jquery'];
         $filter = $request->request->get('filter');
         $filters = explode('&', $filter);
         $page = $filters[0];
         if (isset($filters[1])){
-            $lang = $filters[1];
+            if(in_array($filters[1], $languages)){
+                $lang = $filters[1];
+            } else {
+                $msg['nan'] = true;
+            }
         } else {
             $lang = '';
         }

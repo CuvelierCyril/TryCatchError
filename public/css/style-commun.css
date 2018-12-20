@@ -86,3 +86,19 @@ background-size: cover;
     text-decoration: none;
     list-style: none;
 }
+#overlay{
+    position:fixed;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    z-index: 2;
+    background: rgba(0,0,0,0.6);
+}
+#overlay img{
+    position:absolute;
+    width:200px;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+}
