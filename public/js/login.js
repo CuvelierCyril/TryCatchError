@@ -13,8 +13,11 @@ $(document).ready(function(){
                     form.remove();
                     $('.toremove').remove();
                     $('#formSuccess').html(`<p style="color : green;">Connexion réussie, bienvenue !</p>`);
-                    $(`<li class="nav-item" id="btn0"><a class="nav-link" href="` + addBtn[0] + `">Profile</a></li>`).insertAfter('#ancre-login');
-                    $(`<li class="nav-item"><a class="nav-link" href="` + addBtn[1] + `">Déconnexion</a></li>`).insertAfter('#btn0');
+                    $(`<li id="profilBtn" class="nav-item btn-effect text-center">
+                    <a class="nav-link text-light" href="` + addBtn[1] + `"><i class="fas fa-user"></i> Déconnexion</a></li>`).insertAfter($('#indexBtn'));
+                    $(`<li class="nav-item btn-effect text-center">
+                    <a class="nav-link text-light" href="{{ path('profil') }}"><i class="far fa-user-circle"></i> Mon compte</a>
+                </li>`).insertBefore($('#profilBtn'));
                 }
                 if (data.email){
                     $('#emailError').html('<span style="color:red;">Format adresse mail invalide</span>');

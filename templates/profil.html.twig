@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profile{% endblock %}
+{% block body %}
+<h1 class="text-center">Profile</h1>
+<p>Bienvenue {{ app.session.get('account').nickname }}</p>
+<img src="{{ asset(app.session.get('account').picture) }}" alt="">
+<p>changer photo profil</p>
+<form action="{{ path('profil') }}" method="POST" enctype="multipart/form-data">
+    <p><input type="file" name="img"></p>
+    <p><input type="hidden" name="MAX_FILE_SIZE" value="10000000"></p>
+    <p><input type="submit"></p>
+</form>
+<p>Creer un sujet</p>
+<form action="{{ path('apiCreateSubject') }}" method="POST" id="createArticle-form">
+    <p><input type="text" name="title" id="title" placeholder="titre"><div id="titleError"></div></p>
+    <p><textarea name="content"  id="content" cols="30" rows="10" placeholder="Contenu"></textarea><div id="contentError"></div></p>
+    <button value="php">PHP</button>
+    <button value="css">CSS</button>
+    <button value="js">JS</button>
+    <button value="sql">SQL</button>
+    <button value="html">HTML</button>
+    <button value="phppoo">PHP POO</button>
+    <button value="angular">Angular</button>
+    <input type="submit">
+</form>
+<div id="formSuccess"></div>
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('js/CreateSubject.js') }}"></script>
+{% endblock %}

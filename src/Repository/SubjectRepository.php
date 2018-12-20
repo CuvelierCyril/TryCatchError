@@ -19,6 +19,39 @@ class SubjectRepository extends ServiceEntityRepository
         parent::__construct($registry, Subject::class);
     }
 
+    public function findAllDateDesc($offset, $like){
+        return $this->createQueryBuilder('s')
+        ->andWhere('s.categories LIKE :key')
+        ->setParameter('key', $like)
+        ->orderBy('s.date', 'DESC')
+        ->setMaxResults(10)
+        ->setFirstResult($offset)
+        ->getQuery()
+        ->getResult()
+        ;
+    }
+
+    public function findByKeyWord($keyword){
+        return $this->createQueryBuilder('s')
+        ->andWhere('s.title LIKE :key')
+        ->setParameter('key', $keyword)
+        ->orderBy('s.date', 'DESC')
+        ->getQuery()
+        ->getResult()
+        ;
+    }
+
+    public function findCount($offset, $like){
+        return $this->createQueryBuilder('s')
+        ->select('COUNT(s.id)')
+        ->andWhere('s.categories LIKE :key')
+        ->setParameter('key', $like)
+        ->orderBy('s.date', 'DESC')
+        ->getQuery()
+        ->getResult()
+        ;
+    }
+
     // /**
     //  * @return Subject[] Returns an array of Subject objects
     //  */

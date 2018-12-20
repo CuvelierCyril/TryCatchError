@@ -14,66 +14,37 @@
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar_menu" aria-controls="navbar_menu" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
-                        
+
                     <div class="collapse navbar-collapse" id="navbar_menu">
                         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                            <li class="nav-item btn-effect text-center">
+                            <li id="indexBtn" class="nav-item btn-effect text-center">
                                 <a class="nav-link text-light" href="{{ path('index') }}"><i class="fas fa-home"></i> Accueil</a>
                             </li>
-                            {# <li class="nav-item btn-effect text-center">
-                                <a class="nav-link text-light" href="{{ path('subjects-list')}}"><i class="fas fa-paperclip"></i> Liste des article</a>
-                            </li>#}
                             <li class="nav-item btn-effect text-center">
+                                    <a class="nav-link text-light" href="{{ path('subjects') }}"><i class="fas fa-user"></i> Liste-Articles </a>
+                            </li>
+                            {% if app.session.get('account') is null %}
+                            <li class="nav-item btn-effect text-center toremove">
                                 <a class="nav-link text-light" href="{{ path('register')}}"><i class="fab fa-wpforms"></i> Inscription</a>
                             </li>
-                            <li class="nav-item btn-effect text-center">
+                            <li class="nav-item btn-effect text-center toremove">
                                 <a class="nav-link text-light" href="{{ path('login') }}"><i class="fas fa-user"></i> Connexion</a>
-                            </li> 
+                            </li>
+                            {% else %}
+                            <li class="nav-item btn-effect text-center">
+                                <a class="nav-link text-light" href="{{ path('profil') }}"><i class="far fa-user-circle"></i> Mon compte</a>
+                            </li>
+                            <li class="nav-item btn-effect text-center">
+                                <a class="nav-link text-light" href="{{ path('disconnect') }}"><i class="fas fa-user"></i> Déconnexion</a>
+                            </li>
+                            {% endif %}
                         </ul>
-                        {#<a class="nav-link text-light ml-2 ml-lg-5 text-center" href="{{ path('profil') }}"><i class="far fa-user-circle icon-zoom"></i></a>
-                        <form class="form-inline">
-                            <input class="form-control  col-10 col-lg-9" type="search" placeholder="Search">
-                            <button class="btn btn-dark m-lg-1 col-2 col-lg-2" type="submit"><i class="fas fa-search"></i></button>
-                        </form>#}
-                    </div>
-                </nav>
-
-
-
-        {#<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item{% if app.request.attributes.get('_route') == 'index' %} active{% endif %}" id="ancre-login">
-                        <a class="nav-link" href="{{ path('index') }}">Accueil</a>
-                    </li>
-                    {% if app.session.get('account') is null %}
-                    <li class="nav-item toremove{% if app.request.attributes.get('_route') == 'register' %} active{% endif %}">
-                        <a class="nav-link" href="{{ path('register') }}">S'inscrire</a>
-                    </li>
-                    <li class="nav-item toremove{% if app.request.attributes.get('_route') == 'login' %} active{% endif %}">
-                        <a class="nav-link" href="{{ path('login') }}">Connexion</a>
-                    </li>
-                    {% else %}
-                    <li class="nav-item{% if app.request.attributes.get('_route') == 'profil' %} active{% endif %}">
-                        <a class="nav-link" href="{{ path('profil') }}">Profile</a>
-                    </li>
-                    <li class="nav-item{% if app.request.attributes.get('_route') == 'disconnect' %} active{% endif %}">
-                        <a class="nav-link" href="{{ path('disconnect') }}">Déconnexion</a>
-                    </li>
-                    {% endif %}
-                    <li class="nav-item{% if app.request.attributes.get('_route') == 'subjects' %} active{% endif %}">
-                        <a class="nav-link" href="{{ path('subjects') }}">Sujets</a>
-                    </li>
-                    <li class="nav-item{% if app.request.attributes.get('_route') == 'userList' %} active{% endif %}">
-                        <a class="nav-link" href="{{ path('userList', {page : 1}) }}">Utilisateurs</a>
-                    </li>
-                </ul>
-                <form class="form-inline my-2 my-lg-0" id="search-form" action="{{ path('searchResults') }}" method="POST">
+                       <form class="form-inline my-2 my-lg-0" id="search-form" action="{{ path('searchResults') }}" method="POST">
                     <input class="form-control mr-sm-2" type="search" name="search" placeholder="Recherche..." aria-label="Search">
                     <button class="btn my-2 my-sm-0" type="submit">Rechercher</button>
                 </form>
-            </div>
-        </nav>#}
+                    </div>
+                </nav>
         {% block body %}{% endblock %}
         <footer class="main-footer"></footer>
         <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>

@@ -1,0 +1,39 @@
+{% extends 'base.html.twig'%}
+
+{% block title %} Subjects {% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row align-top">
+            <div class="col-10 col-lg-9 offset-1 offset-lg-1 box-shadow-page order-2 order-sm-1">
+                <div id="main-container" class="accordion">
+                </div>
+            </div>
+            <div class="m-auto col-12 offset-1 col-lg-2 order-1 order-sm-2" style="margin-top : 0 !important">
+                <p class="text-center col-lg-12 offset-lg-2 m-0 h2">Filtres : </p>
+                <div clas="row">
+                    <ul class="m-auto col-12 flex-lg-row-reverse">
+                        <li class="admintag mb-2"><a id="filtreHtml" class="text-white offset-1 btn btn-danger col-5">HTML</a><a id="filtreCss" class="text-white offset-1 btn btn-danger col-5">CSS</a></li>
+                        <li class="admintag mb-2"><a id="filtreJs" class="text-white offset-1 btn btn-danger col-5">JS</a><a id="filtreJquery" class="text-white offset-1 btn btn-danger col-5">JQUERY</a></li>
+                        <li class="admintag mb-2"><a id="filtrePhp" class="text-white offset-1 btn btn-danger col-5">PHP</a><a id="filtreSymfony" class="text-white offset-1 btn btn-danger col-5">SYMFONY</a></li>
+                        <li class="admintag mb-2"><a id="filtreAjax" class="text-light offset-1 btn btn-danger col-5">AJAX</a><a id="FiltreCharp" class="text-white offset-1 btn btn-danger col-5">C#</a></li>
+                    <ul>
+                </div>
+            </div>
+        </div>
+        <nav aria-label="..." class="m-auto">
+            <ul id="displayPagination" class="pagination col-4 offset-4 mt-2">
+            </ul>
+        </nav>
+    </div>
+
+
+    <div class="view"></div>
+{% endblock %}
+
+{% block javascripts %}
+        <script>
+            var page = '{{ path("apiSubjects") }}';
+        </script>
+        <script src="/js/ShowArticle.js"></script>
+{% endblock %}

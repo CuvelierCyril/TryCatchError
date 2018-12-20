@@ -86,13 +86,3 @@ background-size: cover;
     text-decoration: none;
     list-style: none;
 }
-
-
-
-.limitcaract{
-    word-break: break-all;
-}
-
-.icon-zoom{
-    font-size: 2.5rem;
-}

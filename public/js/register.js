@@ -9,6 +9,7 @@ $(document).ready(function(){
             timeout: 4000,
             data: form.serialize(),
             success:function(data){
+                console.log(data);
                 if (data.success){
                     form.remove();
                     $('#formSuccess').html('<span style="color : green;">Compte crée, bienvenue !</span>');
