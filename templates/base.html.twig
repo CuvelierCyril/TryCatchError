@@ -17,11 +17,11 @@
 
                     <div class="collapse navbar-collapse" id="navbar_menu">
                         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                            <li id="indexBtn" class="nav-item btn-effect text-center">
+                            <li class="nav-item btn-effect text-center">
                                 <a class="nav-link text-light" href="{{ path('index') }}"><i class="fas fa-home"></i> Accueil</a>
                             </li>
-                            <li class="nav-item btn-effect text-center">
-                                    <a class="nav-link text-light" href="{{ path('subjects') }}"><i class="fas fa-book"></i> Liste-Articles </a>
+                            <li id="subjectsBtn" class="nav-item btn-effect text-center">
+                                    <a class="nav-link text-light" href="{{ path('subjects') }}"><i class="fas fa-book"></i> Liste des sujets</a>
                             </li>
                             {% if app.session.get('account') is null %}
                             <li class="nav-item btn-effect text-center toremove">

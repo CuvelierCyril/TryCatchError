@@ -54,6 +54,11 @@ class Subject
      */
     private $view;
 
+    /**
+     * @ORM\Column(type="string", length=150)
+     */
+    private $description;
+
     public function __construct()
     {
         $this->answers = new ArrayCollection();
@@ -124,6 +129,18 @@ class Subject
         return $this;
     }
 
+    public function getView(): ?int
+    {
+        return $this->view;
+    }
+
+    public function setView(int $view): self
+    {
+        $this->view = $view;
+
+        return $this;
+    }
+
     /**
      * @return Collection|Answer[]
      */
@@ -155,14 +172,14 @@ class Subject
         return $this;
     }
 
-    public function getView(): ?int
+    public function getDescription(): ?string
     {
-        return $this->view;
+        return $this->description;
     }
 
-    public function setView(int $view): self
+    public function setDescription(string $description): self
     {
-        $this->view = $view;
+        $this->description = $description;
 
         return $this;
     }

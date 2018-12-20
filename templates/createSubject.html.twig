@@ -12,13 +12,32 @@
       <div id="success"></div>
       <form action="{{ path('apiCreateSubject') }}" method="POST" id="form-subject">
         <div class="form-group mt-5">
-            <label for="title">Titre : <span id="errorTitle" class="pl-4"></span></label><br>
+            <label for="title" id="errorTitle">Titre : </label>
             <input class="form-control" type="text" id="title" name="title" placeholder="Ceci est un exemple de titre" style="width:250px;">
         </div>
-        <div class="form-group mt-5">
-            <label for="content">Contenu du sujet : <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">
+        <div class="row mt-5">
+          <div class="form-group col-6">
+            <label for="description" id="errorDescription">Description : </label>
+            <input class="form-control" type="text" id="description" name="description" placeholder="Ceci est un exemple de description" style="width:500px;">
+          </div>
+          <div class="form-group col-6">
+            <label for="categories" id="errorCategories">Catégories : </label>
+            <div id="categories">
+              <button class="btn btn-secondary btn-category mb-1" value="html">html</button>
+              <button class="btn btn-secondary btn-category mb-1" value="php">php</button>
+              <button class="btn btn-secondary btn-category mb-1" value="css">css</button>
+              <button class="btn btn-secondary btn-category mb-1" value="js">js</button>
+              <button class="btn btn-secondary btn-category mb-1" value="jquery">jquery</button>
+              <button class="btn btn-secondary btn-category mb-1" value="symfony">symfony</button>
+              <button class="btn btn-secondary btn-category mb-1" value="bootstrap">bootstrap</button>
+              <button class="btn btn-secondary btn-category mb-1" value="mySql">mySql</button>
+            </div>
+          </div>
+        </div>
+        <div class="form-group mt-4">
+            <label for="content" id="errorContent">Contenu du sujet : <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">
                 Ajouter du code
-            </button><span id="errorContent" class="pl-4"></span></label><br>
+            </button></label>
             <textarea class="form-control" id="content" id="content" name="content" rows="10" placeholder="Ecrivez ici le contenu de votre problème."></textarea>
         </div>
         <div class="form-group mt-4"><input class="btn btn_background" type="submit" value="Postez"><span id="errorTraitement" class="pl-4"></span></div>
@@ -48,7 +67,7 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+              <button type="button" class="btn btn-secondary btn-category mb-1" data-dismiss="modal">Fermer</button>
               <button id="valider" type="button" class="btn btn-info" data-dismiss="modal">Valider</button>
             </div>
           </div>

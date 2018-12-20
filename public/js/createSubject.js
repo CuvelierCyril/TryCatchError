@@ -1,5 +1,22 @@
 $(document).ready(function(){
     var language;
+    var category = [];
+    $('.btn-category').click(function(e){
+        e.preventDefault();
+        var cat = $(this).val();
+        if ($.inArray(cat, category) == -1){
+            category.push(cat);
+            $(this).removeClass('btn-secondary');
+            $(this).addClass('btn-danger');
+        } else {
+            category = jQuery.grep(category, function(n){
+                return n !== cat;
+            });
+            $(this).removeClass('btn-danger');
+            $(this).addClass('btn-secondary');
+        }
+        console.log(category);
+    });
     $('#selected-language').change(function(e){
         language = $(this).val();
         $('#simulation').removeClass();
@@ -24,26 +41,39 @@ $(document).ready(function(){
     $('#form-subject').submit(function(e){
         var form = $(this);
         e.preventDefault();
-        $('#errorTitle').html('');
+        $('#errorTitle').html('Titre : ');
         $('#Success').html('');
-        $('#errorContent').html('');
+        $('#errorContent').html(`Contenu du sujet : <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">
+        Ajouter du code
+    </button>`);
         $('#errorTraitement').html('');
+        $('#errorDescription').html('Description : ');
+        $('#errorCategories').html('Catégories : ');
         $.ajax({
             url: form.attr('action'),
             method: form.attr('method'),
             dataType: "json",
             timeout: 4000,
-            data: form.serialize(),
+            data: form.serialize()+'&categories='+category,
             success:function(data){
+                console.log(data);
                 if(data.success){
-                    $('form').remove();
+                    $('#form-subject').remove();
                     $('#success').html('<span style="color:green; font-size : 2rem;">Félicitation, votre article est créé !</span>')
                 }
                 if (data.title){
-                    $('#errorTitle').html('<span style="color:red;">Format du titre invalide</span>');
+                    $('#errorTitle').html('Titre : <span style="color:red;">Format du titre invalide</span>');
                 }
                 if(data.content){
-                    $('#errorContent').html('<span style="color:red;">Format du contenu invalide</span>');
+                    $('#errorContent').html(`Contenu du sujet : <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">
+                    Ajouter du code
+                </button><span style="color:red;">Format du contenu invalide</span>`);
+                }
+                if(data.description){
+                    $('#errorDescription').html('Description : <span style="color:red;">Format de la description invalide</span>');
+                }
+                if(data.category){
+                    $('#errorCategories').html('Catégories : <span style="color:red;">Une ou plusieurs categorie(s) est invalide(s)</span>');
                 }
             }
         });

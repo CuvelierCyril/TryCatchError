@@ -110,40 +110,44 @@ class ApiController extends AbstractController{
     public function apiCreateSubject(Request $request){
         if ($request->getMethod() == 'POST'){
             $title = $request->request->get('title');
+            $description = $request->request->get('description');
             $content = $request->request->get('content');
             $categories = $request->request->get('categories');
+            $categories = explode(",", $categories);
 
-            $languages = ['php', 'symfony', 'css', 'js', 'sql', 'html', 'phppoo', 'angular'];
+            $languages = ['html', 'php', 'css', 'js', 'jquery', 'symfony', 'bootstrap', 'mySql'];
 
             if (!preg_match('#^[a-zA-Z0-9 \'\-_ !,.?:/]{5,100}$#', $title)){
                 $msg['title'] = true;
             }
+            if (!preg_match('#^[a-zA-Z0-9 \'\-_ !,.?:/]{5,100}$#', $description)){
+                $msg['description'] = true;
+            }
             if (mb_strlen($content) < 5 || mb_strlen($content) > 10000){
                 $msg['content'] = true;
             }
-            if($categories != null){
+            if($categories[0] != ""){
+                dump('cat pas vide');
                 foreach($categories as $category){
                     if(!in_array($category, $languages)){
                         $msg['category'] = true;
                     }
                 }
+                $categories = implode(" ", $categories);
             } else {
                 $categories = '';
             }
-            
-            dump($categories);
-
             if (!isset($msg)){
                 $content = strip_tags($content);
                 $newSubject = new Subject();
                 $newSubject
                     ->setTitle($title)
                     ->setContent($content)
+                    ->setDescription($description)
                     ->setCategories($categories)
                     ->setView(0)
                     ->setDate(new DateTime())
                     ->setAuthor($this->get('session')->get('account'))
-                    ->setCategories('')
                 ;
                 $em = $this->getDoctrine()->getManager();
                 $em->merge($newSubject);
