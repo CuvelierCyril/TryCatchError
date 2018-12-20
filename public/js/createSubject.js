@@ -1,33 +1,61 @@
 $(document).ready(function(){
-    var value = [];
-    $('button').click(function(e){  
-        var lang = $(this).attr('value');
-        e.preventDefault();
-        if($.inArray(lang, value) != -1){
-            value = jQuery.grep(value, function(n){
-                return n !== lang;
-            }); 
-        } else {
-            value.push(lang);
-        }
+    var language;
+    $('#selected-language').change(function(e){
+        language = $(this).val();
+        $('#simulation').removeClass();
+        $('#simulation').text('');
+        $('#simulation').addClass('language-'+ language);
+        $('#simulation').text($('#txt').val());
+        Prism.highlightAll();
     });
-    $('#createArticle-form').submit(function(e){
+    $('#txt').keyup(function(){
+        $('#simulation').text($(this).val());
+        Prism.highlightAll();
+    });
+    $('#valider').click(function(){
+        $('#content').val($('#content').val()+parsebbcode($('#txt').val()));
+   
+    });
+
+    function parsebbcode(str){
+        str = '[code='+language+'"]' + escapeHtml(str) + '[/code]';
+        return str;
+    }
+    $('#form-subject').submit(function(e){
+        var form = $(this);
         e.preventDefault();
-        console.log(value);
+        $('#errorTitle').html('');
+        $('#Success').html('');
+        $('#errorContent').html('');
+        $('#errorTraitement').html('');
         $.ajax({
-            url: $(this).attr('action'),
-            method: $(this).attr('method'),
-            dataType: 'json',
+            url: form.attr('action'),
+            method: form.attr('method'),
+            dataType: "json",
             timeout: 4000,
-            data:{
-                title: $('#title').val(),
-                content: $('#content').val(),
-                categories: value
-            },
+            data: form.serialize(),
             success:function(data){
-                console.log(data);
+                if(data.success){
+                    $('form').remove();
+                    $('#success').html('<span style="color:green; font-size : 2rem;">Félicitation, votre article est créé !</span>')
+                }
+                if (data.title){
+                    $('#errorTitle').html('<span style="color:red;">Format du titre invalide</span>');
+                }
+                if(data.content){
+                    $('#errorContent').html('<span style="color:red;">Format du contenu invalide</span>');
+                }
             }
         });
     });
-});
-
+    function escapeHtml(text) {
+        var map = {
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          "'": '&#039;'
+        };
+        return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+      }
+}); 

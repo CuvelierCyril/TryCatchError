@@ -93,14 +93,14 @@ class MainController extends AbstractController{
         $repo = $this->getDoctrine()->getRepository(Answer::class);
         $answers = $repo->findBySubject($article, array("date" => "DESC"));
         if ($article == null){
-            return $this->render('subjects-list.html.twig', array('vide' => true));
+            return $this->render('subject.html.twig', array('vide' => true));
         }
         $content = $article->getContent();
         $content = str_replace('[code=', '<p><pre><code class="language-', $content);
         $content = str_replace('[/code]', '</code></pre></p>', $content);
         $content = str_replace(']', '>', $content);
         $article->setContent($content);
-        return $this->render('subjects-list.html.twig', array('articles' => $article, 'answers' => $answers));
+        return $this->render('subject.html.twig', array('articles' => $article, 'answers' => $answers));
     }
 
     /**
