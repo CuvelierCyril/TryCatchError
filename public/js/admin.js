@@ -3,7 +3,7 @@ $(document).ready(function(){
     var button,
         newStatus;
 
-    $('#validateChange').click(function(){
+    $('.validateChange').click(function(){
 
         button = $(this),
         newStatus = button.siblings('select').val();
