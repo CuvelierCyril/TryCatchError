@@ -1,0 +1,13 @@
+#triggerAdminModal{
+    display: none;
+}
+
+#adminModalFooter{
+    margin-top: 2em;
+}
+
+#messageToUser{
+    display: block;
+    height: 6rem;
+    width: 20rem;
+}

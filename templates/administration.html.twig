@@ -1,159 +1,207 @@
 {% extends "base.html.twig" %}
 {% block title %}Administration{% endblock %}
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('css/admin.css') }}">
+{% endblock %}
 {% block body %}
-    <div class="container-fluid">
+<div class="container-fluid">
 
-        <div class="row">
-            <div class="col-12 col-md-9 col-lg-7 offset-lg-1 box-shadow-page">
-                <h1 class="text-center mt-3 mb-5">Liste utilisateur</h1>
-                {% if vide is defined %}
-                <p>Aucun utilisateur</p>
-                {% else %}
-                <table class="table">
-                    <thead>
-                        <tr>
+    <div class="row">
+        <div class="col-12 col-md-9 col-lg-7 offset-lg-1 box-shadow-page">
+            <h1 class="text-center mt-3 mb-5">Liste utilisateurs</h1>
+            {% if vide is defined %}
+            <p class="text-center">Aucun utilisateurs trouvés</p>
+            {% else %}
+            <div id="view"></div>
+            <table class="table">
+                <thead>
+                    <tr>
                         <th scope="col">#</th>
-                        <th scope="col">UserName</th>
-                        <th scope="col">Statut</th>
+                        <th scope="col">Username</th>
                         <th scope="col">Email</th>
-                        </tr>
-                    </thead>
-                    <tbody class="limitcaract">
+                        <th scope="col">Rang</th>
+                        <th scope="col">Statut</th>
+                    </tr>
+                </thead>
+                <tbody class="limitcaract">
                     {% for user in users %}
-                        <tr>
-                            <th scope="row">{{ user.id }}</th>
-                            <td>{{ user.nickname }}</td>
-                            {% if user.active == 0 %}
-                            <td>Compte non activé</td>
-                            {% else %}
-                            <td><select class="custom-select col-8 inputState">
-                                    <option value="{{ user.id }}/0" {% if user.status == 0 %}selected{% endif %}>Active</option>
-                                    <option value="{{ user.id }}/1" {% if user.status == 1 %}selected{% endif %}>averti</option>
-                                    <option value="{{ user.id }}/2" {% if user.status == 2 %}selected{% endif %}>Puni</option>
-                                    <option value="{{ user.id }}/3" {% if user.status == 3 %}selected{% endif %}>Ban</option>
-                            </select><span></span></td>
+                    <tr>
+                        <th scope="row">{{ user.id }}</th>
+                        <td>{{ user.nickname }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>
+                            {% if user.rank == 0 %}
+                            Utilisateur
+                            {% elseif user.rank == 1 %}
+                            Modérateur
+                            {% elseif user.rank == 2 %}
+                            Administrateur
                             {% endif %}
-                            <td>{{ user.email }}</td>
-                        </tr>
+                        </td>
+                        <td>
+                            {% if user.active == 0 %}
+                            Compte non activé
+                            {% else %}
+                            <select class="custom-select col-7 inputState">
+                                {% if user.rank == 2 %}
+                                <option value="{{ user.id }}/0" {% if user.status==0 %}selected{% endif %}>Active</option>
+                                <option value="{{ user.id }}/1" {% if user.status==1 %}selected{% endif %}>Averti</option>
+                                {% else %}
+                                <option value="{{ user.id }}/0" {% if user.status==0 %}selected{% endif %}>Active</option>
+                                <option value="{{ user.id }}/1" {% if user.status==1 %}selected{% endif %}>Averti</option>
+                                <option value="{{ user.id }}/2" {% if user.status==2 %}selected{% endif %}>Puni</option>
+                                <option value="{{ user.id }}/3" {% if user.status==3 %}selected{% endif %}>Ban</option>
+                                {% endif %}
+                            </select>
+                            <button id="validateChange" class="btn btn-danger">Valider</button>
+                            <span></span>
+                            {% endif %}
+                        </td>
+                    </tr>
                     {% endfor %}
-                        <!-- <tr>
-                        <th scope="row">1</th>
-                            <td>thedarklord69</td>
-                            <td><select id="inputState" class="form-control col-8">
-                                    <option selected>Active</option>
-                                    <option>averti</option>
-                                    <option>Puni</option>
-                                    <option>Ban</option>
-                                  </select></td>
-                            <td>@mdo</td>
-                        </tr>
-                        <tr>
-                        <th scope="row">2</th>
-                            <td>ara_cl3tte</td>
-                            <td><select id="inputState" class="form-control col-8">
-                                    <option selected>Active</option>
-                                    <option>averti</option>
-                                    <option>Puni</option>
-                                    <option>Ban</option>
-                                  </select></td>
-                            <td>@fat</td>
-                        </tr>
-                        <tr>
-                        <th scope="row">3</th>
-                            <td>pikachu78400</td>
-                            <td><select id="inputState" class="form-control col-8">
-                                    <option selected>Active</option>
-                                    <option>averti</option>
-                                    <option>Puni</option>
-                                    <option>Ban</option>
-                                  </select></td>
-                            <td>@twitter</td>
-                        </tr>
-                        <tr>
-                        <th scope="row">4</th>
-                            <td>charloote42</td>
-                            <td><select id="inputState" class="form-control col-8">
-                                    <option selected>Active</option>
-                                    <option>averti</option>
-                                    <option>Puni</option>
-                                    <option>Ban</option>
-                                  </select></td>
-                            <td>@twitter</td>
-                        </tr>
-                        <tr>
-                        <th scope="row">5</th>
-                            <td>kikkoolol45600</td>
-                            <td><select id="inputState" class="form-control col-8">
-                                    <option selected>Active</option>
-                                    <option>averti</option>
-                                    <option>Puni</option>
-                                    <option>Ban</option>
-                                  </select></td>
-                            <td>lol@lol.com</td>
-                        </tr>
-                        <tr>
-                        <th scope="row">6</th>
-                            <td>mister_symfony</td>
-                            <td><select id="inputState" class="form-control col-8">
-                                    <option selected>Active</option>
-                                    <option>averti</option>
-                                    <option>Puni</option>
-                                    <option>Ban</option>
-                                  </select></td>
-                            <td>@twitter</td>
-                        </tr>
-                        <tr>
-                        <th scope="row">7</th>
-                            <td>nicoporter</td>
-                            <td><select id="inputState" class="form-control col-8">
-                                    <option selected>Active</option>
-                                    <option>averti</option>
-                                    <option>Puni</option>
-                                    <option>Ban</option>
-                                  </select></td>
-                            <td>@twitter</td>
-                        </tr>
-                        <tr>
-                        <th scope="row">8</th>
-                            <td>louloukoupetere</td>
-                            <td><select id="inputState" class="form-control col-8">
-                                    <option selected>Active</option>
-                                    <option>averti</option>
-                                    <option>Puni</option>
-                                    <option>Ban</option>
-                                  </select></td>
-                            <td>@twitter</td>
-                        </tr>
-                        <tr>
-                        <th scope="row">9</th>
-                            <td>commentoutoutpelle42</td>
-                            <td><select id="inputState" class="form-control col-8">
-                                    <option selected>Active</option>
-                                    <option>averti</option>
-                                    <option>Puni</option>
-                                    <option>Ban</option>
-                                  </select></td>
-                            <td>@twitter</td>
-                        </tr> -->
-                    </tbody>
-                </table>
-            </div>
+                </tbody>
+            </table>
 
-            <div class="col-12 col-md-3 col-lg-4 offset-lg-1 ml-0 mt-3">
-                <h1 class="text-center col-lg-10 offset-lg-1">Voir utilisateurs</h1><br>
-                <div class="row col-lg-10 offset-lg-1">
-                    <ul class="m-auto text-center col-12">
-                        <li class="admintag"><a href="{{ path('admin', {type: 'all', page: 1}) }}" class="btn btn-danger btn-lg col-12 list-button">Tous</a></li><br>
-                        <li class="admintag"><a href="{{ path('admin', {type: 'banned', page: 1}) }}" class="btn btn-danger btn-lg col-12 list-button">Bannis</a></li><br>
-                        <li class="admintag"><a href="{{ path('admin', {type: 'moderator', page: 1}) }}" class="btn btn-danger btn-lg col-12 list-button">Admin/modo</a></li><br>
-                    </ul>
+                <button id="triggerAdminModal" type="button" class="btn btn-primary" data-toggle="modal" data-target="#adminModal"></button>
+                <div class="modal fade" id="adminModal" tabindex="-1" role="dialog" aria-labelledby="adminModalCentered"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="adminModalTitle">Confirmation changement de status</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="formAdmin" action="{{ path('apiAdminStatus') }}" method="POST">
+                                    <label for="messageToUser">Raison du changement de status</label>
+                                    <textarea id="messageToUser"></textarea>
+                                </form>
+                                <div class="modal-footer" id="adminModalFooter">
+                                    <button id="confirmAdminForm" type="submit" class="btn btn-primary">Confirmer</button>
+                                    <button id="cancelAdminForm" type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                    <!-- <tr>
+                                <th scope="row">1</th>
+                                <td>thedarklord69</td>
+                                <td><select id="inputState" class="form-control col-8">
+                                    <option selected>Active</option>
+                                    <option>averti</option>
+                                    <option>Puni</option>
+                                    <option>Ban</option>
+                                </select></td>
+                                <td>@mdo</td>
+                            </tr>
+                            <tr>
+                            <th scope="row">2</th>
+                                <td>ara_cl3tte</td>
+                                <td><select id="inputState" class="form-control col-8">
+                                        <option selected>Active</option>
+                                        <option>averti</option>
+                                        <option>Puni</option>
+                                        <option>Ban</option>
+                                    </select></td>
+                                <td>@fat</td>
+                            </tr>
+                            <tr>
+                            <th scope="row">3</th>
+                                <td>pikachu78400</td>
+                                <td><select id="inputState" class="form-control col-8">
+                                        <option selected>Active</option>
+                                        <option>averti</option>
+                                        <option>Puni</option>
+                                        <option>Ban</option>
+                                    </select></td>
+                                <td>@twitter</td>
+                            </tr>
+                            <tr>
+                            <th scope="row">4</th>
+                                <td>charloote42</td>
+                                <td><select id="inputState" class="form-control col-8">
+                                        <option selected>Active</option>
+                                        <option>averti</option>
+                                        <option>Puni</option>
+                                        <option>Ban</option>
+                                    </select></td>
+                                <td>@twitter</td>
+                            </tr>
+                            <tr>
+                            <th scope="row">5</th>
+                                <td>kikkoolol45600</td>
+                                <td><select id="inputState" class="form-control col-8">
+                                        <option selected>Active</option>
+                                        <option>averti</option>
+                                        <option>Puni</option>
+                                        <option>Ban</option>
+                                    </select></td>
+                                <td>lol@lol.com</td>
+                            </tr>
+                            <tr>
+                            <th scope="row">6</th>
+                                <td>mister_symfony</td>
+                                <td><select id="inputState" class="form-control col-8">
+                                        <option selected>Active</option>
+                                        <option>averti</option>
+                                        <option>Puni</option>
+                                        <option>Ban</option>
+                                    </select></td>
+                                <td>@twitter</td>
+                            </tr>
+                            <tr>
+                            <th scope="row">7</th>
+                                <td>nicoporter</td>
+                                <td><select id="inputState" class="form-control col-8">
+                                        <option selected>Active</option>
+                                        <option>averti</option>
+                                        <option>Puni</option>
+                                        <option>Ban</option>
+                                    </select></td>
+                                <td>@twitter</td>
+                            </tr>
+                            <tr>
+                            <th scope="row">8</th>
+                                <td>louloukoupetere</td>
+                                <td><select id="inputState" class="form-control col-8">
+                                        <option selected>Active</option>
+                                        <option>averti</option>
+                                        <option>Puni</option>
+                                        <option>Ban</option>
+                                    </select></td>
+                                <td>@twitter</td>
+                            </tr>
+                            <tr>
+                            <th scope="row">9</th>
+                                <td>commentoutoutpelle42</td>
+                                <td><select id="inputState" class="form-control col-8">
+                                        <option selected>Active</option>
+                                        <option>averti</option>
+                                        <option>Puni</option>
+                                        <option>Ban</option>
+                                    </select></td>
+                                <td>@twitter</td>
+                            </tr> -->
             {% endif %}
+        </div>
+
+        <div class="col-12 col-md-3 col-lg-4 offset-lg-1 ml-0 mt-3">
+            <h1 class="text-center col-lg-10 offset-lg-1">Voir utilisateurs</h1><br>
+            <div class="row col-lg-10 offset-lg-1">
+                <ul class="m-auto text-center col-12">
+                    <li class="admintag"><a href="{{ path('admin', {type: 'all', page: 1}) }}" class="btn btn-danger btn-lg col-12 list-button">Tous</a></li><br>
+                    <li class="admintag"><a href="{{ path('admin', {type: 'banned', page: 1}) }}" class="btn btn-danger btn-lg col-12 list-button">Bannis</a></li><br>
+                    <li class="admintag"><a href="{{ path('admin', {type: 'moderator', page: 1}) }}" class="btn btn-danger btn-lg col-12 list-button">Admin/modo</a></li><br>
+                </ul>
             </div>
         </div>
     </div>
+</div>
 {% endblock %}
 {% block javascripts %}
-    <script>var changeStatus ="{{ path('apiAdminStatus') }}"</script>
-    <script src="{{ asset('js/admin.js') }}"></script>
+<script>var changeStatus = "{{ path('apiAdminStatus') }}"</script>
+<script src="{{ asset('js/admin.js') }}"></script>
 {% endblock %}
