@@ -65,15 +65,16 @@ class ApiController extends AbstractController{
                         $em = $this->getDoctrine()->getManager();
                         $em->persist($newUser);
                         $em->flush();
+                        $id = $newUser->getId();
                         $mail = (new \Swift_Message('Sujet du mail'))
                             ->setFrom('malac.company@gmail.fr')
                             ->setTo($email)
                             ->setBody(
-                                $this->renderView('email/email-register.html.twig', array('token' => $token)),
+                                $this->renderView('email/email-register.html.twig', array('token' => $token, 'id' => $id)),
                                 'text/html'
                             )
                             ->addPart(
-                                $this->renderView('email/email-register.txt.twig', array('token' => $token)),
+                                $this->renderView('email/email-register.txt.twig', array('token' => $token, 'id' => $id)),
                                 'text/plain'
                             )
                         ;
@@ -217,7 +218,7 @@ class ApiController extends AbstractController{
     }
 
     /**
-     * @route("delete-subject", name="apiDeleteSubject", methods="POST")
+     * @route("delete-subject/", name="apiDeleteSubject", methods="POST")
      */
     public function apiDeleteSubject(Request $request){
         $id = $request->request->get('subjectId');
@@ -336,17 +337,25 @@ class ApiController extends AbstractController{
         if ($request->getMethod() == "POST"){
             $datastr = $request->request->get('datastr');
             $data = explode("/", $datastr);
-            $repo = $this->getDoctrine()->getRepository(User::class);
-            $user = $repo->findOneById($data[0]);
-            if ($user != null){
-                $user->setStatus($data[1]);
-                $em = $this->getDoctrine()->getManager();
-                $em->merge($user);
-                $em->flush();
-                $msg['success'] = true;
+            $message = $request->request->get('message');
+
+            if(preg_match('/^[a-záàâäãåçéèêëíìîïñóòôöõúùûüýÿæœ0-9\s\'\"]{10,255}$/i', $message)){
+                $repo = $this->getDoctrine()->getRepository(User::class);
+                $user = $repo->findOneById($data[0]);
+                if ($user != null){
+                    $user->setStatus($data[1]);
+                    $user->setWarning($message);
+                    $em = $this->getDoctrine()->getManager();
+                    $em->merge($user);
+                    $em->flush();
+                    $msg['success'] = true;
+                } else {
+                    $msg['noUser'] = true;
+                }
             } else {
-                $msg['noUser'] = true;
+                $msg['failed'] = true;
             }
+
         } else {
             $msg['failed'] = true;
         }
