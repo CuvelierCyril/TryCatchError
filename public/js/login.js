@@ -12,7 +12,6 @@ $(document).ready(function(){
             timeout: 4000,
             data: form.serialize(),
             success:function(data){
-                console.log(data);
                 if (data.success){
                     form.remove();
                     $('.toremove').remove();
@@ -46,7 +45,37 @@ $(document).ready(function(){
                     $('#emailError').html('<span style="color:red;">Adresse mail inexistante</span>');
                 }
                 if(data.notActive){
-                    $('#divFailed').html('<span style="color:red;">Votre compte n\'est pas actif. <br><button class="btn btn-danger">Renvoyer un mail</button></span>');
+                    $('#divFailed').html('<span style="color:red;">Votre compte n\'est pas actif. <br><button id="renvoi-mail" class="btn btn-danger">Renvoyer un mail</button></span>');
+                    $('#renvoi-mail').click(function(e){
+                        e.preventDefault();
+                        $.ajax({
+                            url: rout_mail,
+                            method: "POST",
+                            dataType: 'json',
+                            timeout: 4000,
+                            data: {
+                                email: $('#register-form-email').val()
+                            },
+                            success:function(data){
+                                console.log(data);
+                                if (data.success){
+                                    $('#divFailed').html('<span style="color:green;">Un mail vous a été envoyé</span>');
+                                }
+                                if (data.noEmail){
+                                    $('#divFailed').html('<span style="color:red;">L\'email est inexistant</span>');
+                                }
+                            },
+                            error:function(){
+                                $('#divFailed').html('<span style="color:red;">Erreur lors du traitement des données</span>');
+                            },
+                            beforeSend:function(){
+                                setOverlay();
+                            },
+                            complete:function(){
+                                removeOverlay();
+                            }
+                        });
+                    });
                 }
                 if (data.passwordInvalid){
                     $('#divFailed').html('<span style="color:red;">Adresse et/ou mot de passe incorrect</span>');
