@@ -133,28 +133,35 @@ class MainController extends AbstractController{
      */
     public function searchResult(Request $request){
         $search = $request->request->get('search');
-        $keywords = explode(" ", $search);
-        $search = '%';
-        foreach($keywords as $keyword){
-            $search = $search.$keyword.'%';
-        }
-        $repo = $this->getDoctrine()->getRepository(Subject::class);
-        $articles = $repo->findByKeyWord($search);
-
-        foreach($articles as $article){
-            $letters = [];
-            $title = strtolower($article->getTitle());
+        if(!preg_match('#^[a-z ]{2,50}$#i', $search)){
+            $msg['SearchError'] = true;
+            return $this->render('results.html.twig', array('msg' => $msg));
+        } else {
+            $keywords = explode(" ", $search);
+            $search = '%';
             foreach($keywords as $keyword){
-                if (strpos($title, $keyword) !== false){
-                    $title = str_replace($keyword, '<mark>'. $keyword .'</mark>', $title);
-                }
+                $search = $search.$keyword.'%';
             }
-            $article->setTitle($title);
+            $repo = $this->getDoctrine()->getRepository(Subject::class);
+            $articles = $repo->findByKeyWord($search);
+    
+            foreach($articles as $article){
+                $letters = [];
+                $title = strtolower($article->getTitle());
+                foreach($keywords as $keyword){
+                    if (strpos($title, strtolower($keyword)) !== false){
+                        dump($title);
+                        $title = str_replace(strtolower($keyword), '<mark>'. strtolower($keyword) .'</mark>', $title);
+                        dump($title);
+                    }
+                }
+                $article->setTitle($title);
+            }
+            if (empty($articles)){
+                return $this->render('results.html.twig', array('msg' => false));
+            }
+            return $this->render('results.html.twig', array('articles' => $articles));
         }
-        if (empty($articles)){
-            return $this->render('results.html.twig', array('vide' => true));
-        }
-        return $this->render('results.html.twig', array('articles' => $articles));
     }
 
     /**
