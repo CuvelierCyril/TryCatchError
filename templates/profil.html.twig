@@ -8,13 +8,153 @@
                 <h1 class="text-center mb-4">mon profil</h1>
                 <div class="card offset-1 offset-sm-4 col-md-9 offset-md-3 offset-lg-4 mt-3 mb-3" style="width: 18rem;">
                     <div>
-                        <div class="card-img-top"><img class="col-12" src="{{ asset(app.session.get('account').picture) }}" alt="Profilimage" height="220" width="220">
+                        <div class="card-img-top"><img class="col-12" src="{{ asset(app.session.get('account').picture) }}"
+                                alt="Profilimage" height="220" width="220">
                         </div>
                         <div class="card-body">
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">Nom d'utilisateur: <i>{{ app.session.get('account').nickname }}</i></li>
-                                    <li class="list-group-item">Adresse Email:<i>{{ app.session.get('account').email }}</i></li>
-                                </ul>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Nom d'utilisateur: <i>{{ app.session.get('account').nickname }}</i></li>
+                                <li class="list-group-item">Adresse Email:<i>{{ app.session.get('account').email }}</i></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-12 offset-sm-0 col-lg-8 offset-lg-4">
+                    <a id="btnArticle" class="btn btn-danger" data-toggle="collapse" href="#multiCollapseExample1" role="button"
+                        aria-expanded="false" aria-controls="multiCollapseExample1">Mes articles</a>
+                    <a id="btnComment" class="btn btn-danger" data-toggle="collapse" href="#Collapsearticle" role="button"
+                        aria-expanded="false" aria-controls="Collapsearticle">Mes commentaires</a>
+                </div>
+                <div class="row">
+                    <div class="row">
+                        <div class="col">
+                            <div class="collapse multi-collapse" id="multiCollapseExample1">
+                                <div class="card card-body">
+                                    <div class="accordion" id="articleliste">
+                                        <h1 class="m-auto text-center">Mes Article</h1>
+                                        <div class="card">
+                                            <div class="card-header" id="headingThree">
+                                                <h5 class="mb-0">
+                                                    <p>Titre Article #1</p>
+                                                </h5>
+                                            </div>
+                                            <div id="collapseThree">
+                                                <div class="card-body">
+                                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam sit
+                                                    voluptatum,
+                                                    facilis exercitationem placeat ab dolores sunt neque commodi
+                                                    reprehenderit unde soluta
+                                                    consectetur maxime earum illo excepturi assumenda culpa consequatur!<a
+                                                    href="#" class="btn btn-secondary btn-sm active m-2" role="button">Voir l'article</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-header" id="headingThree">
+                                                <h5 class="mb-0">
+                                                    <p>Titre Article #2</p>
+                                                </h5>
+                                            </div>
+                                            <div id="collapseThree">
+                                                <div class="card-body">
+                                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam sit
+                                                    voluptatum,
+                                                    facilis exercitationem placeat ab dolores sunt neque commodi
+                                                    reprehenderit unde soluta
+                                                    consectetur maxime earum illo excepturi assumenda culpa consequatur!<a
+                                                        href="#" class="btn btn-secondary btn-sm active m-2" role="button">Voir
+                                                        l'article</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-header" id="headingThree">
+                                                <h5 class="mb-0">
+                                                    <p>Titre Article #3</p>
+                                                </h5>
+                                            </div>
+                                            <div id="card_article">
+                                                <div class="card-body">
+                                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam sit
+                                                    voluptatum,
+                                                    facilis exercitationem placeat ab dolores sunt neque commodi
+                                                    reprehenderit unde soluta
+                                                    consectetur maxime earum illo excepturi assumenda culpa consequatur!<a
+                                                        href="#" class="btn btn-secondary btn-sm active m-2" role="button">Voir
+                                                        l'article</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="comments" class="row">
+                    <div class="row">
+                        <div class="col">
+                            <div class="collapse multi-collapse" id="Collapsearticle">
+                                <div class="card card-body">
+                                    <div class="accordion" id="articleliste">
+                                        <h1 class="m-auto text-center">Mes commentaires</h1><br>
+                                        <div class="card">
+                                            <div class="card-header" id="headingThree">
+                                                <h5 class="mb-0">
+                                                    <p>Titre Article #1</p>
+                                                </h5>
+                                            </div>
+                                            <div id="collapseThree">
+                                                <div class="card-body">
+                                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam sit
+                                                    voluptatum,
+                                                    facilis exercitationem placeat ab dolores sunt neque commodi
+                                                    reprehenderit unde soluta
+                                                    consectetur maxime earum illo excepturi assumenda culpa consequatur!<a
+                                                        href="#" class="btn btn-secondary btn-sm active m-2" role="button">Voir
+                                                        l'article</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-header" id="headingThree">
+                                                <h5 class="mb-0">
+                                                    <p>Titre Article #2</p>
+                                                </h5>
+                                            </div>
+                                            <div id="collapseThree">
+                                                <div class="card-body">
+                                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam sit
+                                                    voluptatum,
+                                                    facilis exercitationem placeat ab dolores sunt neque commodi
+                                                    reprehenderit unde soluta
+                                                    consectetur maxime earum illo excepturi assumenda culpa consequatur!<br><a
+                                                        href="#" class="btn btn-secondary btn-sm active m-2" role="button">Voir
+                                                        l'article</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-header" id="headingThree">
+                                                <h5 class="mb-0">
+                                                    <p>Titre Article #3</p>
+                                                </h5>
+                                            </div>
+                                            <div id="card_article">
+                                                <div class="card-body">
+                                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam sit
+                                                    voluptatum,
+                                                    facilis exercitationem placeat ab dolores sunt neque commodi
+                                                    reprehenderit unde soluta
+                                                    consectetur maxime earum illo excepturi assumenda culpa consequatur!<br><a
+                                                        href="#" class="btn btn-secondary btn-sm active m-2" role="button">Voir
+                                                        l'article</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -25,46 +165,55 @@
                 <div class="row">
                     <ul class="row m-auto">
                         <li class="admintag mt-3 col-12 col-md-12">
-                            <button type="button" class="btn btn-danger btn-lg col-10 col-sm-12 col-md-12 col-lg-12" data-toggle="modal" data-target="#modalpassword">Changer mot de passe</button>
-                            <div class="modal fade" id="modalpassword" tabindex="-1" role="dialog" aria-labelledby="modalpassword" aria-hidden="true">
+                            <button type="button" class="btn btn-danger btn-lg col-10 col-sm-12 col-md-12 col-lg-12"
+                                data-toggle="modal" data-target="#modalpassword">Changer mot de passe</button>
+                            <div class="modal fade" id="modalpassword" tabindex="-1" role="dialog" aria-labelledby="modalpassword"
+                                aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                     <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="modalpassword">Changer de mot de passe</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="card card-body">
-                                            <form class="col-12">
-                                                <div class="input-group mb-2 mr-sm-2">
-                                                    <input type="password" class="form-control" id="passwordchange" placeholder="Changer de mot de passe">
-                                                </div>
-                                                <div class="input-group mb-2 mr-sm-2">
-                                                    <input type="password" class="form-control" id="passwordcomfirmchange" placeholder="comfirmer le mot de passe">
-                                                </div>
-                                                <button type="submit" class="btn btn-primary col-12">Modifier</button>
-                                            </form>
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="modalpassword">Changer de mot de passe</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
                                         </div>
-                                    </div>
+                                        <div class="modal-body">
+                                            <div class="card card-body">
+                                                <form class="col-12">
+                                                    <div class="input-group mb-2 mr-sm-2">
+                                                        <input type="password" class="form-control" id="passwordchange"
+                                                            placeholder="Ancien mot de passe">
+                                                    </div>
+                                                    <div class="input-group mb-2 mr-sm-2">
+                                                        <input type="password" class="form-control" id="newpassword"
+                                                            placeholder="Nouveau mot de passe">
+                                                    </div>
+                                                    <div class="input-group mb-2 mr-sm-2">
+                                                        <input type="password" class="form-control" id="passwordcomfirmchange"
+                                                            placeholder="comfirmer le mot de passe">
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                                            <button type="button" class="btn btn-primary">Comfirmer</button>
+                                            <button type="button" class="btn btn-info">Comfirmer</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </li>
                         <li class="admintag mt-3 col-12 col-md-12">
-                            <button type="button" class="btn btn-danger btn-lg col-10 col-sm-12 col-md-12 col-lg-12" data-toggle="modal" data-target="#modalimg">Changer image de profil</button>
-                            <div class="modal fade" id="modalimg" tabindex="-1" role="dialog" aria-labelledby="modalimg" aria-hidden="true">
+                            <button type="button" class="btn btn-danger btn-lg col-10 col-sm-12 col-md-12 col-lg-12"
+                                data-toggle="modal" data-target="#modalimg">Changer image de profil</button>
+                            <div class="modal fade" id="modalimg" tabindex="-1" role="dialog" aria-labelledby="modalimg"
+                                aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="modalimg">Changer image de profil</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
+                                                <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
                                         <div class="modal-body">
@@ -72,16 +221,57 @@
                                                 <div class="input-group col-12">
                                                     <div class="custom-file">
                                                         <input type="file" class="custom-file-input" id="uploadform">
-                                                        <label class="custom-file-label" for="uploadform">Choisisez une image</label>
+                                                        <label class="custom-file-label" for="uploadform">Choisisez une
+                                                            image</label>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                                            <button type="button" class="btn btn-primary">Comfirmer</button>
+                                            <button type="button" class="btn btn-info">Comfirmer</button>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="admintag mt-3 col-12 col-md-12">
+                            <button type="button" class="btn btn-danger btn-lg col-10 col-sm-12 col-md-12 col-lg-12"
+                                data-toggle="modal" data-target="#modalnickname">Changer nom d'utilisateur</button>
+                            <div class="modal fade" id="modalnickname" tabindex="-1" role="dialog" aria-labelledby="modalnickname"
+                                aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="modalnickname">Changer de nom d'utilisateur</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="card card-body">
+                                                <form class="col-12">
+                                                    <div class="input-group mb-2 mr-sm-2">
+                                                        <input type="text" class="form-control" id="passwordcomfirmchange"
+                                                            placeholder="changer de nom d'utilisateur">
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                                            <button type="button" class="btn btn-info">Comfirmer</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="admintag mt-3 col-10 col-md-9 offset-md-3 col-lg-10 offset-lg-2">
+                            <div class="card border-warning mb-3" style="max-width: 18rem;">
+                                <div class="card-header">Attention</div>
+                                <div class="card-body text-warning">
+                                    <h5 class="card-title">Vous avez un avertisement</h5>
+                                    <p class="card-text"> Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eligendi dolore earum nobis enim, libero in. Cupiditate, quo earum debitis doloremque, libero similique facilis sint incidunt deserunt ipsam, voluptates perferendis aliquam. </p>
                                 </div>
                             </div>
                         </li>
