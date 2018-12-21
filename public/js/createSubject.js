@@ -59,7 +59,7 @@ $(document).ready(function(){
                 console.log(data);
                 if(data.success){
                     $('#form-subject').remove();
-                    $('#success').html('<span style="color:green; font-size : 2rem;">Félicitation, votre article est créé !</span>')
+                    $('#success').html('<p class="alert alert-success">Félicitation, votre article a été posté !</p>')
                 }
                 if (data.title){
                     $('#errorTitle').html('Titre : <span style="color:red;">Format du titre invalide</span>');

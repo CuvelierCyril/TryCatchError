@@ -12,7 +12,7 @@ $(document).ready(function(){
                 console.log(data);
                 if (data.success){
                     form.remove();
-                    $('#formSuccess').html('<span style="color : green;">Compte crée, bienvenue !</span>');
+                    $('#formSuccess').html('<p class="alert alert-success">Compte crée, bienvenue !</p>');
                 }
                 if (data.email){
                     $('#emailError').html('<span style="color:red;">Format adresse mail invalide</span>');

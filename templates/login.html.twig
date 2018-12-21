@@ -2,17 +2,16 @@
 
 {% block title %}Se connecter{% endblock %}
 {% block body %}
-<h1 class="col-12 text-center mt-5 mb-5">Se connecter</h1>
     <div class="container-fluid">
-
         <div class="row">
-            <div class="col-xs-6 col-sm-3 m-auto">
+            <div class="col-xs-6 col-sm-3 col-lg-9 offset-lg-1 box-shadow-page pb-4">
+                <h1 class="col-12 text-center mb-5">Se connecter</h1>
                 <form id="login-form" method="POST" action="{{ path('apiLogin') }}">
-                    <div class="form-group m-auto">
+                    <div class="form-group m-auto col-4">
                         <label class="col-12 pl-0" for="register-form-email">Adresse Email<span class="pl-4" id="emailError"></span></label>
                         <input type="email" class="form-control" id="register-form-email" placeholder="jean@exemple.com" name="email">
                     </div><br>
-                    <div class="form-group m-auto">
+                    <div class="form-group m-auto col-4">
                         <label class="col-12 pl-0" for="register-form-password">Mot de passe<span class="pl-4" id="passwordError"></span></label>
                         <input type="password" class="form-control" id="register-form-password" placeholder="Mot de passe" name="password">
                     </div><br>
@@ -28,7 +27,7 @@
 {% endblock %}
 {% block javascripts %}
 <script>
-    var addBtn = ["{{ url('profil') }}", "{{ url('createSubject') }}", "{{ url('disconnect') }}"];
+    var addBtn = ["{{ url('profil') }}", "{{ url('createSubject') }}", "{{ url('disconnect') }}", "{{ url('admin', {type : 'all', page : 1}) }}"];
 </script>
 <script src="{{ asset('js/login.js') }}"></script>
 {% endblock %}

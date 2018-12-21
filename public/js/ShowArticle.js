@@ -19,7 +19,6 @@ $(document).ready(function(){
             filter = '';
         }
         apiControllerAjax(window.location.hash.substr(1));
-        console.log(nb);
     });
     function apiControllerAjax(value){
        $.ajax({
@@ -32,8 +31,6 @@ $(document).ready(function(){
             },
             success:function(data){
                 nbpage = data[data.length - 2];
-                console.log(nbpage);
-                console.log(data);
                 if (!data.nan){
                     createDisplay(data);
                 } else {
@@ -48,7 +45,6 @@ $(document).ready(function(){
                 </div>`);
                 $('#displayPagination').html('');
                 $('#next-current').click(function(){
-                    console.log('oui');
                     nb++;
                     if (filter == ''){
                         window.location.hash = nb;
@@ -170,7 +166,7 @@ $(document).ready(function(){
                                     <h5 class="mb-0">
                                         <p class="title">` + element.title + `</p>
                                     </h5>
-                                    <p>` + element.content + `</p>
+                                    <p>` + element.desc + `</p>
                                 <a href="../sujet/`+ element.id +`" class="btn btn-info btn-sm active m-2" role="button">Voir l'article</a>
                             </div>
                             <div class="card-body">
@@ -191,7 +187,6 @@ $(document).ready(function(){
     $('#displayPagination').html('');
         }
         if(pagi){
-            console.log(nb == nbpage);
             if (nb == 1){
                 if(nb == nbpage -1){
                     str2 = `<li class="page-item">

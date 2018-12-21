@@ -12,16 +12,25 @@ $(document).ready(function(){
                 if (data.success){
                     form.remove();
                     $('.toremove').remove();
-                    $('#formSuccess').html(`<p style="color : green;">Connexion réussie, bienvenue !</p>`);
+                    $('#formSuccess').html(`<p class="alert alert-success">Connexion réussie, bienvenue !</p>`);
                     $(`<li id="profilBtn" class="nav-item btn-effect text-center">
                     <a class="nav-link text-light" href="`+ addBtn[0] +`"><i class="far fa-user-circle"></i> Mon compte</a>
-                </li>`).insertAfter($('#subjectsBtn'));
-                $(`<li id="createBtn" class="nav-item btn-effect text-center">
-                    <a class="nav-link text-light" href="`+ addBtn[1] +`"><i class="fas fa-pen-fancy"></i> Créer un sujet</a>
-                </li>`).insertAfter($('#profilBtn'));
-                $(`<li class="nav-item btn-effect text-center">
-                    <a class="nav-link text-light" href="`+ addBtn[2] +`"><i class="fas fa-user"></i> Déconnexion</a>
-                </li>`).insertAfter($('#createBtn'));
+                    </li>`).insertAfter($('#subjectsBtn'));
+                    $(`<li id="createBtn" class="nav-item btn-effect text-center">
+                        <a class="nav-link text-light" href="`+ addBtn[1] +`"><i class="fas fa-pen-fancy"></i> Créer un sujet</a>
+                    </li>`).insertAfter($('#profilBtn'));
+                    if (data.rank == 2){
+                        $(`<li id="adminBtn" class="nav-item btn-effect text-center">
+                        <a class="nav-link text-light" href="`+ addBtn[3] +`"><i class="fas fa-tools"></i> Administration
+                        </li>`).insertAfter($('#createBtn'));
+                        $(`<li class="nav-item btn-effect text-center">
+                        <a class="nav-link text-light" href="`+ addBtn[2] +`"><i class="fas fa-user"></i> Déconnexion</a>
+                        </li>`).insertAfter($('#adminBtn'));
+                    } else {
+                        $(`<li class="nav-item btn-effect text-center">
+                        <a class="nav-link text-light" href="`+ addBtn[2] +`"><i class="fas fa-user"></i> Déconnexion</a>
+                        </li>`).insertAfter($('#createBtn'));
+                    }
                 }
                 if (data.email){
                     $('#emailError').html('<span style="color:red;">Format adresse mail invalide</span>');

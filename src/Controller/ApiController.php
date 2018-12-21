@@ -93,6 +93,7 @@ class ApiController extends AbstractController{
                 if ($user != null){
                     if (password_verify($password, $user->getPassword())){
                         $this->get('session')->set('account', $user);
+                        $msg['rank'] = $user->getRank();
                         $msg['success'] = true;
                     } else {
                         $msg['passwordInvalid'] = true;
@@ -293,7 +294,8 @@ class ApiController extends AbstractController{
                     'title' => $subject->getTitle(),
                     'content' => $subject->getContent(),
                     'id' => $subject->getId(),
-                    'cat' => explode(' ',$subject->getCategories())
+                    'cat' => explode(' ',$subject->getCategories()),
+                    'desc' => $subject->getDescription()
                 );
             }
             $newarray[] = $repo->findCount(0, '%'.$lang.'%')[0][1];
