@@ -54,7 +54,7 @@ $(document).ready(function(){
                             dataType: 'json',
                             timeout: 4000,
                             data: {
-                                email: $('#register-form-email').val()
+                                email: $('#register-form-email').val(),
                             },
                             success:function(data){
                                 console.log(data);
