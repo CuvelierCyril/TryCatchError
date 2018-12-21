@@ -29,7 +29,7 @@ class ApiController extends AbstractController{
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)){
                 $msg['email'] = true;
             }
-            if (!preg_match('#^[a-zA-Z0-9áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ._-]{3,50}$#', $nickname)){
+            if (!preg_match('#^[a-0-9áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœ._-]{3,50}$#i', $nickname)){
                 $msg['nickname'] = true;
             }
             if (!preg_match('#^.{3,100}$#', $password)){
@@ -141,10 +141,10 @@ class ApiController extends AbstractController{
 
             $languages = ['html', 'php', 'css', 'js', 'jquery', 'symfony', 'bootstrap', 'mySql'];
 
-            if (!preg_match('#^[a-zA-Z0-9 \'\-_ !,.?:/]{5,100}$#', $title)){
+            if (!preg_match('#^[a-z0-9 \'\-_ !,.?:/]{5,100}$#i', $title)){
                 $msg['title'] = true;
             }
-            if (!preg_match('#^[a-zA-Z0-9 \'\-_ !,.?:/]{5,100}$#', $description)){
+            if (!preg_match('#^[a-z0-9 \'\-_ !,.?:/]{5,100}$#i', $description)){
                 $msg['description'] = true;
             }
             if (mb_strlen($content) < 5 || mb_strlen($content) > 10000){
@@ -190,7 +190,7 @@ class ApiController extends AbstractController{
             $content = $request->request->get('content');
             $id = $request->request->get('subjectId');
 
-            if (!preg_match('#^[a-zA-Z0-9 \'\-_ !,.?:/]{5,10000}$#', $content)){
+            if (!preg_match('#^[a-z0-9 \'\-_ !,.?:/]{5,10000}$#i', $content)){
                 $msg['content'] = true;
             }
             if (!preg_match('#^[0-9]+$#', $id)){

@@ -37,6 +37,8 @@ class MainController extends AbstractController{
         if (!$this->get('session')->has('account')){
             throw new AccessDeniedHttpException();
         }
+
+        dump($this->get('session')->get('account'));
         if ($request->getMethod() == "POST"){
             $typeAccepted = array('image/png', 'image/jpeg', 'image/gif');
             $extensionPossible = array('png', 'jpeg', 'gif');
@@ -61,6 +63,7 @@ class MainController extends AbstractController{
                     $em = $this->getDoctrine()->getManager();
                     $em->merge($user);
                     $em->flush();
+                    $this->get('session')->get('account')->set('picture', 'img/'.$fileName);
                     $msg['success'] = true;
                 }
             }
@@ -120,7 +123,7 @@ class MainController extends AbstractController{
      */
     public function searchResult(Request $request){
         $search = $request->request->get('search');
-        if(!preg_match('#^[a-z ]{2,50}$#i', $search)){
+        if(!preg_match('/^[a-z \/\\]{2,50}$/i', $search)){
             $msg['SearchError'] = true;
             return $this->render('results.html.twig', array('msg' => $msg));
         } else {
