@@ -65,15 +65,16 @@ class ApiController extends AbstractController{
                         $em = $this->getDoctrine()->getManager();
                         $em->persist($newUser);
                         $em->flush();
+                        $id = $newUser->getId();
                         $mail = (new \Swift_Message('Sujet du mail'))
                             ->setFrom('malac.company@gmail.fr')
                             ->setTo($email)
                             ->setBody(
-                                $this->renderView('email/email-register.html.twig', array('token' => $token)),
+                                $this->renderView('email/email-register.html.twig', array('token' => $token, 'id' => $id)),
                                 'text/html'
                             )
                             ->addPart(
-                                $this->renderView('email/email-register.txt.twig', array('token' => $token)),
+                                $this->renderView('email/email-register.txt.twig', array('token' => $token, 'id' => $id)),
                                 'text/plain'
                             )
                         ;

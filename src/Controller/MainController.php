@@ -171,4 +171,28 @@ class MainController extends AbstractController{
     public function createSubject(){
         return $this->render('createSubject.html.twig');
     }
+
+    /**
+     * @route("/activation/", name="activation")
+     */
+    public function activation(Request $request){
+        $id = $request->query->get('id');
+        $token = $request->query->get('token');
+        $repo = $this->getDoctrine()->getRepository(User::class);
+        $user = $repo->findOneById($id);
+        if ($user != null){
+            if ($token == $user->getToken()){
+                $user->setActive(1);
+                $em = $this->getDoctrine()->getManager();
+                $em->merge($user);
+                $em->flush();
+                $msg['success'] = true;
+            } else {
+                throw new AccessDeniedHttpException();
+            }
+        } else {
+            throw new AccessDeniedHttpException();
+        }
+        return $this->render('activation.html.twig', array('msg' => $msg));
+    }
 }
