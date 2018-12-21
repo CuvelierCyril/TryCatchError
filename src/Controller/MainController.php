@@ -104,19 +104,6 @@ class MainController extends AbstractController{
     }
 
     /**
-     * @route("/liste-utilisateur/{page}/", name="userList")
-     */
-    public function userList($page, Request $request){
-        $repo = $this->getDoctrine()->getRepository(User::class);
-        $users = $repo->findAll();
-        if (empty($users)){
-            return $this->render('userlist.html.twig', array('vide' => true));
-        }
-        dump($this->get('session')->get('account'));
-        return $this->render('userlist.html.twig', array('users' => $users));
-    }
-
-    /**
      * @route("/deconnexion/", name="disconnect")
      */
     public function disconnect(){
@@ -161,6 +148,9 @@ class MainController extends AbstractController{
      * @route("/administration/{type}/{page}", name="admin")
      */
     public function administration(Request $request, $type, $page){
+        if ($this->get('session')->get('account')->getRank() < 2){
+            throw new AccessDeniedHttpException();
+        }
         $repo = $this->getDoctrine()->getRepository(User::class);
         if ($type == 'banned'){
             $users = $repo->findByStatusOffset(0);

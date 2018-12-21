@@ -9,6 +9,7 @@ use App\Entity\User;
 use App\Entity\Subject;
 use App\Entity\Answer;
 use \DateTime;
+use App\Service\Recaptcha;
 
 /**
  * @route("/api/")
@@ -18,7 +19,7 @@ class ApiController extends AbstractController{
     /**
      * @route("register/", name="apiRegister", methods="POST")
      */
-    public function apiRegister(Request $request){
+    public function apiRegister(Request $request, Recaptcha $recaptcha, \Swift_Mailer $mailer){
         if ($request->getMethod() == 'POST'){
             $email = $request->request->get('email');
             $nickname = $request->request->get('nickname');
@@ -36,6 +37,9 @@ class ApiController extends AbstractController{
             }
             if ($password != $passwordConfirm){
                 $msg['passwordConfirm'] = true;
+            }
+            if(!$recaptcha->recaptcha_valid($request->request->get('g-recaptcha-response'), $request->server->get('REMOTE_ADDR'))){
+                $msg['recaptcha'] = true;
             }
 
             if (!isset($msg)){
@@ -61,6 +65,20 @@ class ApiController extends AbstractController{
                         $em = $this->getDoctrine()->getManager();
                         $em->persist($newUser);
                         $em->flush();
+                        $mail = (new \Swift_Message('Sujet du mail'))
+                            ->setFrom('malac.company@gmail.fr')
+                            ->setTo($email)
+                            ->setBody(
+                                $this->renderView('email/email-register.html.twig', array('token' => $token)),
+                                'text/html'
+                            )
+                            ->addPart(
+                                $this->renderView('email/email-register.txt.twig', array('token' => $token)),
+                                'text/plain'
+                            )
+                        ;
+
+                $mailer->send($mail);
                         $msg['success'] = true;
                     } else {
                         $msg['nicknameExists'] = true;
@@ -92,9 +110,13 @@ class ApiController extends AbstractController{
                 $user = $repo->findOneByEmail($email);
                 if ($user != null){
                     if (password_verify($password, $user->getPassword())){
-                        $this->get('session')->set('account', $user);
-                        $msg['rank'] = $user->getRank();
-                        $msg['success'] = true;
+                        if ($user->getActive() == 0){
+                            $msg['notActive'] = true;
+                        } else {
+                            $this->get('session')->set('account', $user);
+                            $msg['rank'] = $user->getRank();
+                            $msg['success'] = true;
+                        }
                     } else {
                         $msg['passwordInvalid'] = true;
                     }
