@@ -9,6 +9,7 @@ use App\Entity\User;
 use App\Entity\Subject;
 use App\Entity\Answer;
 use \DateTime;
+use App\Service\Recaptcha;
 
 /**
  * @route("/api/")
@@ -18,7 +19,7 @@ class ApiController extends AbstractController{
     /**
      * @route("register/", name="apiRegister", methods="POST")
      */
-    public function apiRegister(Request $request){
+    public function apiRegister(Request $request, Recaptcha $recaptcha, \Swift_Mailer $mailer){
         if ($request->getMethod() == 'POST'){
             $email = $request->request->get('email');
             $nickname = $request->request->get('nickname');
@@ -36,6 +37,9 @@ class ApiController extends AbstractController{
             }
             if ($password != $passwordConfirm){
                 $msg['passwordConfirm'] = true;
+            }
+            if(!$recaptcha->recaptcha_valid($request->request->get('g-recaptcha-response'), $request->server->get('REMOTE_ADDR'))){
+                $msg['recaptcha'] = true;
             }
 
             if (!isset($msg)){
@@ -61,6 +65,21 @@ class ApiController extends AbstractController{
                         $em = $this->getDoctrine()->getManager();
                         $em->persist($newUser);
                         $em->flush();
+                        $id = $newUser->getId();
+                        $mail = (new \Swift_Message('Sujet du mail'))
+                            ->setFrom('malac.company@gmail.fr')
+                            ->setTo($email)
+                            ->setBody(
+                                $this->renderView('email/email-register.html.twig', array('token' => $token, 'id' => $id)),
+                                'text/html'
+                            )
+                            ->addPart(
+                                $this->renderView('email/email-register.txt.twig', array('token' => $token, 'id' => $id)),
+                                'text/plain'
+                            )
+                        ;
+
+                $mailer->send($mail);
                         $msg['success'] = true;
                     } else {
                         $msg['nicknameExists'] = true;
@@ -92,9 +111,13 @@ class ApiController extends AbstractController{
                 $user = $repo->findOneByEmail($email);
                 if ($user != null){
                     if (password_verify($password, $user->getPassword())){
-                        $this->get('session')->set('account', $user);
-                        $msg['rank'] = $user->getRank();
-                        $msg['success'] = true;
+                        if ($user->getActive() == 0){
+                            $msg['notActive'] = true;
+                        } else {
+                            $this->get('session')->set('account', $user);
+                            $msg['rank'] = $user->getRank();
+                            $msg['success'] = true;
+                        }
                     } else {
                         $msg['passwordInvalid'] = true;
                     }
@@ -195,7 +218,7 @@ class ApiController extends AbstractController{
     }
 
     /**
-     * @route("delete-subject", name="apiDeleteSubject", methods="POST")
+     * @route("delete-subject/", name="apiDeleteSubject", methods="POST")
      */
     public function apiDeleteSubject(Request $request){
         $id = $request->request->get('subjectId');
@@ -314,17 +337,25 @@ class ApiController extends AbstractController{
         if ($request->getMethod() == "POST"){
             $datastr = $request->request->get('datastr');
             $data = explode("/", $datastr);
-            $repo = $this->getDoctrine()->getRepository(User::class);
-            $user = $repo->findOneById($data[0]);
-            if ($user != null){
-                $user->setStatus($data[1]);
-                $em = $this->getDoctrine()->getManager();
-                $em->merge($user);
-                $em->flush();
-                $msg['success'] = true;
+            $message = $request->request->get('message');
+
+            if(preg_match('/^[a-záàâäãåçéèêëíìîïñóòôöõúùûüýÿæœ0-9\s\'\"]{10,255}$/i', $message)){
+                $repo = $this->getDoctrine()->getRepository(User::class);
+                $user = $repo->findOneById($data[0]);
+                if ($user != null){
+                    $user->setStatus($data[1]);
+                    $user->setWarning($message);
+                    $em = $this->getDoctrine()->getManager();
+                    $em->merge($user);
+                    $em->flush();
+                    $msg['success'] = true;
+                } else {
+                    $msg['noUser'] = true;
+                }
             } else {
-                $msg['noUser'] = true;
+                $msg['failed'] = true;
             }
+
         } else {
             $msg['failed'] = true;
         }

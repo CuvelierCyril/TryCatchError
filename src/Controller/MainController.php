@@ -104,19 +104,6 @@ class MainController extends AbstractController{
     }
 
     /**
-     * @route("/liste-utilisateur/{page}/", name="userList")
-     */
-    public function userList($page, Request $request){
-        $repo = $this->getDoctrine()->getRepository(User::class);
-        $users = $repo->findAll();
-        if (empty($users)){
-            return $this->render('userlist.html.twig', array('vide' => true));
-        }
-        dump($this->get('session')->get('account'));
-        return $this->render('userlist.html.twig', array('users' => $users));
-    }
-
-    /**
      * @route("/deconnexion/", name="disconnect")
      */
     public function disconnect(){
@@ -168,6 +155,9 @@ class MainController extends AbstractController{
      * @route("/administration/{type}/{page}", name="admin")
      */
     public function administration(Request $request, $type, $page){
+        if (!$this->get('session')->has('account') || $this->get('session')->get('account')->getRank() < 2){
+            throw new AccessDeniedHttpException();
+        }
         $repo = $this->getDoctrine()->getRepository(User::class);
         if ($type == 'banned'){
             $users = $repo->findByStatusOffset(0);
@@ -186,6 +176,33 @@ class MainController extends AbstractController{
      * @route("/creer-sujet/", name="createSubject")
      */
     public function createSubject(){
+        if (!$this->get('session')->has('account')){
+            throw new AccessDeniedHttpException();
+        }
         return $this->render('createSubject.html.twig');
+    }
+
+    /**
+     * @route("/activation/", name="activation")
+     */
+    public function activation(Request $request){
+        $id = $request->query->get('id');
+        $token = $request->query->get('token');
+        $repo = $this->getDoctrine()->getRepository(User::class);
+        $user = $repo->findOneById($id);
+        if ($user != null){
+            if ($token == $user->getToken()){
+                $user->setActive(1);
+                $em = $this->getDoctrine()->getManager();
+                $em->merge($user);
+                $em->flush();
+                $msg['success'] = true;
+            } else {
+                throw new AccessDeniedHttpException();
+            }
+        } else {
+            throw new AccessDeniedHttpException();
+        }
+        return $this->render('activation.html.twig', array('msg' => $msg));
     }
 }

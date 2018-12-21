@@ -1,0 +1,7 @@
+{% extends "base.html.twig" %}
+{% block title %}Activation{% endblock %}
+{% block body %}
+    {% if msg.success is defined %}
+        <p class="alert alert-success">Votre compte est activé</p>
+    {% endif %}
+{% endblock %}

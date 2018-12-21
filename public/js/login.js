@@ -1,5 +1,8 @@
 $(document).ready(function(){
     $('#login-form').submit(function(e){
+        $('#emailError').html('');
+        $('#passwordError').html('');
+        $('#divFailed').html('');
         var form = $(this);
         e.preventDefault();
         $.ajax({
@@ -9,6 +12,7 @@ $(document).ready(function(){
             timeout: 4000,
             data: form.serialize(),
             success:function(data){
+                console.log(data);
                 if (data.success){
                     form.remove();
                     $('.toremove').remove();
@@ -41,6 +45,9 @@ $(document).ready(function(){
                 if (data.emailDoesntExist){
                     $('#emailError').html('<span style="color:red;">Adresse mail inexistante</span>');
                 }
+                if(data.notActive){
+                    $('#divFailed').html('<span style="color:red;">Votre compte n\'est pas actif. <br><button class="btn btn-danger">Renvoyer un mail</button></span>');
+                }
                 if (data.passwordInvalid){
                     $('#divFailed').html('<span style="color:red;">Adresse et/ou mot de passe incorrect</span>');
                 }
@@ -49,10 +56,10 @@ $(document).ready(function(){
                 $('#divFailed').html('<span style="color:red;">Erreur lors du traitement des données</span>');
             },
             beforeSend:function(){
-
+                setOverlay();
             },
             complete:function(){
-
+                removeOverlay();
             }
         });
     });
