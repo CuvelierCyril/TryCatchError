@@ -53,7 +53,7 @@ $(document).ready(function(){
                 }
             },
             error:function(){
-                $('#divFailed').html('<span style="color:red;">Erreur lors du traitement des donées</span>');
+                $('#divFailed').html('<span style="color:red;">Erreur lors du traitement des données</span>');
             },
             beforeSend:function(){
                 setOverlay();

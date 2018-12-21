@@ -7,20 +7,20 @@
 {% block body %}
 <div class="container-fluid">
   <div class="row">
-    <div class="col-10 offset-1 box-shadow-page">
+    <div class="col-lg-10 offset-lg-1 box-shadow-page">
       <h1 class="text-center">Postez votre problème</h1>
       <div id="success"></div>
       <form action="{{ path('apiCreateSubject') }}" method="POST" id="form-subject">
-        <div class="form-group mt-5">
+        <div class="form-group mt-5 col-lg-6 p-0 col-sm-9">
             <label for="title" id="errorTitle">Titre : </label>
-            <input class="form-control" type="text" id="title" name="title" placeholder="Ceci est un exemple de titre" style="width:250px;">
+            <input class="form-control" type="text" id="title" name="title" placeholder="Ceci est un exemple de titre">
         </div>
         <div class="row mt-5">
-          <div class="form-group col-6">
+          <div class="form-group col-lg-6 pr-0 col-sm-9">
             <label for="description" id="errorDescription">Description : </label>
-            <input class="form-control" type="text" id="description" name="description" placeholder="Ceci est un exemple de description" style="width:500px;">
+            <input class="form-control" type="text" id="description" name="description" placeholder="Ceci est un exemple de description">
           </div>
-          <div class="form-group col-6">
+          <div class="form-group col-lg-6">
             <label for="categories" id="errorCategories">Catégories : </label>
             <div id="categories">
               <button class="btn btn-secondary btn-category mb-1" value="html">html</button>
