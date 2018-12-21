@@ -137,9 +137,7 @@ class MainController extends AbstractController{
                 $title = strtolower($article->getTitle());
                 foreach($keywords as $keyword){
                     if (strpos($title, strtolower($keyword)) !== false){
-                        dump($title);
                         $title = str_replace(strtolower($keyword), '<mark>'. strtolower($keyword) .'</mark>', $title);
-                        dump($title);
                     }
                 }
                 $article->setTitle($title);
