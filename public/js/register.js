@@ -17,7 +17,7 @@ $(document).ready(function(){
                 console.log(data);
                 if (data.success){
                     form.remove();
-                    $('#formSuccess').html('<p class="alert alert-success">Compte crée, bienvenue !</p>');
+                    $('#formSuccess').html('<p class="alert alert-success">Compte crée, un email vous a été envoyé afin d\'activer votre compte !</p>');
                 } else {
                     grecaptcha.reset();
                 }

@@ -28,6 +28,7 @@
 {% block javascripts %}
 <script>
     var addBtn = ["{{ url('profil') }}", "{{ url('createSubject') }}", "{{ url('disconnect') }}", "{{ url('admin', {type : 'all', page : 1}) }}"];
+    var rout_mail = ["{{ url('apiSendMail') }}"]
 </script>
 <script src="{{ asset('js/login.js') }}"></script>
 {% endblock %}

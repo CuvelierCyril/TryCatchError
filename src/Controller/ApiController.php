@@ -79,7 +79,7 @@ class ApiController extends AbstractController{
                             )
                         ;
 
-                $mailer->send($mail);
+                        $mailer->send($mail);
                         $msg['success'] = true;
                     } else {
                         $msg['nicknameExists'] = true;
@@ -358,6 +358,40 @@ class ApiController extends AbstractController{
 
         } else {
             $msg['failed'] = true;
+        }
+        return $this->json($msg);
+    }
+
+    /**
+     * @route("sendMail", name="apiSendMail")
+     */
+    public function apiSendMail(\Swift_Mailer $mailer, Request $request){
+        $email = $request->request->get('email');
+        $repo = $this->getDoctrine()->getRepository(User::class);
+        $user = $repo->findOneByEmail($email);
+        if ($user != null){
+            $id = $user->getId();
+            $token = md5(uniqid().rand().time());
+            $user->setToken($token);
+            $em = $this->getDoctrine()->getManager();
+            $em->merge($user);
+            $em->flush();
+            $mail = (new \Swift_Message('Sujet du mail'))
+                ->setFrom('malac.company@gmail.fr')
+                ->setTo($email)
+                ->setBody(
+                    $this->renderView('email/email-register.html.twig', array('token' => $token, 'id' => $id)),
+                    'text/html'
+                )
+                ->addPart(
+                    $this->renderView('email/email-register.txt.twig', array('token' => $token, 'id' => $id)),
+                    'text/plain'
+                )
+            ;
+            $mailer->send($mail);
+            $msg['success'] = true;
+        } else {
+            $msg['noEmail'] = true;
         }
         return $this->json($msg);
     }
