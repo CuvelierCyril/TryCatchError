@@ -148,6 +148,9 @@ class MainController extends AbstractController{
      * @route("/administration/{type}/{page}", name="admin")
      */
     public function administration(Request $request, $type, $page){
+        if ($this->get('session')->get('account')->getRank() < 2){
+            throw new AccessDeniedHttpException();
+        }
         $repo = $this->getDoctrine()->getRepository(User::class);
         if ($type == 'banned'){
             $users = $repo->findByStatusOffset(0);
