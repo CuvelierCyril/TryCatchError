@@ -78,6 +78,11 @@ class User
      */
     private $answers;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $warning;
+
     public function __construct()
     {
         $this->subjects = new ArrayCollection();
@@ -267,6 +272,18 @@ class User
                 $answer->setAuthor(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getWarning(): ?string
+    {
+        return $this->warning;
+    }
+
+    public function setWarning(?string $warning): self
+    {
+        $this->warning = $warning;
 
         return $this;
     }

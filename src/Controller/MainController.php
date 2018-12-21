@@ -104,19 +104,6 @@ class MainController extends AbstractController{
     }
 
     /**
-     * @route("/liste-utilisateur/{page}/", name="userList")
-     */
-    public function userList($page, Request $request){
-        $repo = $this->getDoctrine()->getRepository(User::class);
-        $users = $repo->findAll();
-        if (empty($users)){
-            return $this->render('userlist.html.twig', array('vide' => true));
-        }
-        dump($this->get('session')->get('account'));
-        return $this->render('userlist.html.twig', array('users' => $users));
-    }
-
-    /**
      * @route("/deconnexion/", name="disconnect")
      */
     public function disconnect(){
