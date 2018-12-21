@@ -148,7 +148,7 @@ class MainController extends AbstractController{
      * @route("/administration/{type}/{page}", name="admin")
      */
     public function administration(Request $request, $type, $page){
-        if ($this->get('session')->get('account')->getRank() < 2){
+        if (!$this->get('session')->has('account') || $this->get('session')->get('account')->getRank() < 2){
             throw new AccessDeniedHttpException();
         }
         $repo = $this->getDoctrine()->getRepository(User::class);
@@ -169,6 +169,9 @@ class MainController extends AbstractController{
      * @route("/creer-sujet/", name="createSubject")
      */
     public function createSubject(){
+        if (!$this->get('session')->has('account')){
+            throw new AccessDeniedHttpException();
+        }
         return $this->render('createSubject.html.twig');
     }
 
