@@ -295,7 +295,7 @@ class ApiController extends AbstractController{
      * @route("list-subjects/", name="apiSubjects", methods="POST")
      */
     public function apiSubjects(Request $request){
-        $languages = ['symfony', 'php', 'ajax', 'js','html','css','phppoo','jquery'];
+        $languages = ['symfony', 'php', 'bootstrap', 'js','html','css','mySql','jquery'];
         $filter = $request->request->get('filter');
         $filters = explode('&', $filter);
         $page = $filters[0];
@@ -320,7 +320,9 @@ class ApiController extends AbstractController{
                     'content' => $subject->getContent(),
                     'id' => $subject->getId(),
                     'cat' => explode(' ',$subject->getCategories()),
-                    'desc' => $subject->getDescription()
+                    'desc' => $subject->getDescription(),
+                    'view' => $subject->getView(),
+                    'answer' => count($subject->getAnswers())
                 );
             }
             $newarray[] = $repo->findCount(0, '%'.$lang.'%')[0][1];

@@ -98,6 +98,10 @@ class MainController extends AbstractController{
         if ($article == null){
             return $this->render('subject.html.twig', array('vide' => true));
         }
+        $article->setView($article->getView() + 1);
+        $em = $this->getDoctrine()->getManager();
+        $em->merge($article);
+        $em->flush();
         $content = $article->getContent();
         $content = str_replace('[code=', '<p><pre><code class="language-', $content);
         $content = str_replace('[/code]', '</code></pre></p>', $content);

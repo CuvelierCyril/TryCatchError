@@ -32,6 +32,7 @@ $(document).ready(function(){
             success:function(data){
                 nbpage = data[data.length - 2];
                 if (!data.nan){
+                    console.log(data);
                     createDisplay(data);
                 } else {
                     $('#main-container').html(`<h1 class="text-center">Liste des sujets</h1><div class="card">
@@ -97,8 +98,8 @@ $(document).ready(function(){
                     nb = 1;
                     window.location.hash = nb+'&'+filter;
                 });
-                $('#filtreAjax').click(function(){
-                    filter = 'ajax';
+                $('#filtreBoostrap').click(function(){
+                    filter = 'bootstrap';
                     nb = 1;
                     window.location.hash = nb+'&'+filter;
                 });
@@ -127,8 +128,8 @@ $(document).ready(function(){
                     nb = 1;
                     window.location.hash = nb+'&'+filter;
                 });
-                $('#FiltreCharp').click(function(){
-                    filter = 'c#';
+                $('#FiltreMysql').click(function(){
+                    filter = 'mySql';
                     nb = 1;
                     window.location.hash = nb+'&'+filter;
                 });
@@ -160,16 +161,18 @@ $(document).ready(function(){
                 if(index < maxindex){
                     str = str + `
                     <div class="card">
-                        <div class="card-header" id="headingThree">
-                            <div class="card-body">
-                                </div>
-                                    <h5 class="mb-0">
-                                        <p class="title">` + element.title + `</p>
-                                    </h5>
-                                    <p>` + element.desc + `</p>
+                        <div class="card-header row" id="headingThree">
+                            <div class="col-8">
+                                <h5 class="mb-0">
+                                    <p class="title">` + element.title + `</p>
+                                </h5>
+                                <p>` + element.desc + `</p>
                                 <a href="../sujet/`+ element.id +`" class="btn btn-info btn-sm active m-2" role="button">Voir l'article</a>
                             </div>
-                            <div class="card-body">
+                            <div class="col-4 offset-xl-3 col-xl-1 col-md-2 offset-md-2 text-center">
+                                <p class="border bg-white">Vues : ` + element.view + `</p>
+                                <p class="border bg-white">Réponses : ` + element.answer + `</p>
+                            </div>
                         </div>
                     </div>`;
                 }
@@ -398,8 +401,8 @@ $(document).ready(function(){
             nb = 1;
             window.location.hash = nb+'&'+filter;
         });
-        $('#filtreAjax').click(function(){
-            filter = 'ajax';
+        $('#filtreBootstrap').click(function(){
+            filter = 'bootstrap';
             nb = 1;
             window.location.hash = nb+'&'+filter;
         });
@@ -428,8 +431,8 @@ $(document).ready(function(){
             nb = 1;
             window.location.hash = nb+'&'+filter;
         });
-        $('#FiltreCharp').click(function(){
-            filter = 'c#';
+        $('#FiltreMysql').click(function(){
+            filter = 'mySql';
             nb = 1;
             window.location.hash = nb+'&'+filter;
         });
