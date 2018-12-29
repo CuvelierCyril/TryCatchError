@@ -103,7 +103,7 @@ class MainController extends AbstractController{
         $content = str_replace('[/code]', '</code></pre></p>', $content);
         $content = str_replace(']', '>', $content);
         $article->setContent($content);
-        return $this->render('subject.html.twig', array('articles' => $article, 'answers' => $answers));
+        return $this->render('subject.html.twig', array('article' => $article, 'answers' => $answers));
     }
 
     /**
@@ -123,7 +123,7 @@ class MainController extends AbstractController{
      */
     public function searchResult(Request $request){
         $search = $request->request->get('search');
-        if(!preg_match('/^[a-z \/\\]{2,50}$/i', $search)){
+        if(!preg_match('#^[a-z,.\-_\'\s]{2,50}$#i', $search)){
             $msg['SearchError'] = true;
             return $this->render('results.html.twig', array('msg' => $msg));
         } else {

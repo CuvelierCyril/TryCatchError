@@ -22,6 +22,27 @@ $(document).ready(function(){
                     $(`<li id="createBtn" class="nav-item btn-effect text-center">
                         <a class="nav-link text-light" href="`+ addBtn[1] +`"><i class="fas fa-pen-fancy"></i> Créer un sujet</a>
                     </li>`).insertAfter($('#profilBtn'));
+                    if (data.status > 0){
+                        $('body').append(`<div class="modal fade" id="modalWarning" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">Avertissement : </h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                            `+ data.warning +`
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>`)
+                        $('#modalWarning').modal();
+                    }
                     if (data.rank == 2){
                         $(`<li id="adminBtn" class="nav-item btn-effect text-center">
                         <a class="nav-link text-light" href="`+ addBtn[3] +`"><i class="fas fa-tools"></i> Administration

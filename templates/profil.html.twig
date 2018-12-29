@@ -252,7 +252,7 @@
                                             <div class="card card-body">
                                                 <form class="col-12">
                                                     <div class="input-group mb-2 mr-sm-2">
-                                                        <input type="text" class="form-control" id="passwordcomfirmchange"
+                                                        <input type="text" class="form-control" id="nickname_change"
                                                             placeholder="changer de nom d'utilisateur">
                                                     </div>
                                                 </form>
@@ -266,15 +266,17 @@
                                 </div>
                             </div>
                         </li>
+                        {% if app.session.get('account').status > 0 %}
                         <li class="admintag mt-3 col-10 col-md-9 offset-md-3 col-lg-10 offset-lg-2">
                             <div class="card border-warning mb-3" style="max-width: 18rem;">
                                 <div class="card-header">Attention</div>
                                 <div class="card-body text-warning">
                                     <h5 class="card-title">Vous avez un avertisement</h5>
-                                    <p class="card-text"> Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eligendi dolore earum nobis enim, libero in. Cupiditate, quo earum debitis doloremque, libero similique facilis sint incidunt deserunt ipsam, voluptates perferendis aliquam. </p>
+                                    <p class="card-text">{{ app.session.get('account').warning }}</p>
                                 </div>
                             </div>
                         </li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>

@@ -29,7 +29,7 @@ class ApiController extends AbstractController{
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)){
                 $msg['email'] = true;
             }
-            if (!preg_match('#^[a-0-9áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœ._-]{3,50}$#i', $nickname)){
+            if (!preg_match('#^[a-z0-9áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœ._\-\']{3,50}$#i', $nickname)){
                 $msg['nickname'] = true;
             }
             if (!preg_match('#^.{3,100}$#', $password)){
@@ -116,6 +116,8 @@ class ApiController extends AbstractController{
                         } else {
                             $this->get('session')->set('account', $user);
                             $msg['rank'] = $user->getRank();
+                            $msg['status'] = $user->getStatus();
+                        $msg['warning'] = $user->getWarning();
                             $msg['success'] = true;
                         }
                     } else {
