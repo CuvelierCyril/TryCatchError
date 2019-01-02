@@ -266,12 +266,23 @@
                                 </div>
                             </div>
                         </li>
-                        {% if app.session.get('account').status > 0 %}
-                        <li class="admintag mt-3 col-10 col-md-9 offset-md-3 col-lg-10 offset-lg-2">
-                            <div class="card border-warning mb-3" style="max-width: 18rem;">
-                                <div class="card-header">Attention</div>
+                        {% if app.session.get('account').status == 1 %}
+                        <li class="admintag mt-3 col-12 col-sm-10 offset-sm-1">
+                            <div class="card border-warning mb-3">
+                                <div class="card-header">Attention !</div>
                                 <div class="card-body text-warning">
-                                    <h5 class="card-title">Vous avez un avertisement</h5>
+                                    <h5 class="card-title">Vous avez recu un avertissement valable jusqu'au : {{ app.session.get('account').waringDuration|date('d/m/Y H:i:s') }}</h5>
+                                    <p class="card-text">{{ app.session.get('account').warning }}</p>
+                                </div>
+                            </div>
+                        </li>
+                        {% endif %}
+                        {% if app.session.get('account').status == 2 %}
+                        <li class="admintag mt-3 col-12 col-sm-10 offset-sm-1">
+                            <div class="card border-danger mb-3">
+                                <div class="card-header">Attention !</div>
+                                <div class="card-body text-danger">
+                                    <h5 class="card-title">Vous avez recu un avertissement important valable jusqu'au : {{ app.session.get('account').waringDuration|date('d/m/Y H:i:s') }}</h5>
                                     <p class="card-text">{{ app.session.get('account').warning }}</p>
                                 </div>
                             </div>

@@ -114,10 +114,16 @@ class ApiController extends AbstractController{
                         if ($user->getActive() == 0){
                             $msg['notActive'] = true;
                         } else {
+                            if ($user->getWaringDuration() <= strtotime("now")){
+                                $user->setStatus(0);
+                                $em = $this->getDoctrine()->getManager();
+                                $em->merge($user);
+                                $em->flush();
+                            }
                             $this->get('session')->set('account', $user);
                             $msg['rank'] = $user->getRank();
                             $msg['status'] = $user->getStatus();
-                        $msg['warning'] = $user->getWarning();
+                            $msg['warning'] = $user->getWarning();
                             $msg['success'] = true;
                         }
                     } else {
@@ -128,6 +134,7 @@ class ApiController extends AbstractController{
                 }
             }
         }
+        dump($msg);
         return $this->json($msg);
     }
     /**
@@ -340,15 +347,18 @@ class ApiController extends AbstractController{
     public function apiAdmin(Request $request){
         if ($request->getMethod() == "POST"){
             $datastr = $request->request->get('datastr');
+            dump($datastr);
             $data = explode("/", $datastr);
             $message = $request->request->get('message');
+            $duration = $request->request->get('duration');
 
-            if(preg_match('/^[a-záàâäãåçéèêëíìîïñóòôöõúùûüýÿæœ0-9\s\'\"]{10,255}$/i', $message)){
+            if(preg_match('/^[a-záàâäãåçéèêëíìîïñóòôöõúùûüýÿæœ0-9\s\'\"]{3,255}$/i', $message) || $data[1] == 0){
                 $repo = $this->getDoctrine()->getRepository(User::class);
                 $user = $repo->findOneById($data[0]);
                 if ($user != null){
                     $user->setStatus($data[1]);
                     $user->setWarning($message);
+                    $user->setWaringDuration(intval(strtotime("now")) + intval($duration));
                     $em = $this->getDoctrine()->getManager();
                     $em->merge($user);
                     $em->flush();
@@ -357,7 +367,7 @@ class ApiController extends AbstractController{
                     $msg['noUser'] = true;
                 }
             } else {
-                $msg['failed'] = true;
+                $msg['reason'] = true;
             }
 
         } else {

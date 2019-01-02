@@ -83,6 +83,11 @@ class User
      */
     private $warning;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $waringDuration;
+
     public function __construct()
     {
         $this->subjects = new ArrayCollection();
@@ -284,6 +289,18 @@ class User
     public function setWarning(?string $warning): self
     {
         $this->warning = $warning;
+
+        return $this;
+    }
+
+    public function getWaringDuration(): ?int
+    {
+        return $this->waringDuration;
+    }
+
+    public function setWaringDuration(int $waringDuration): self
+    {
+        $this->waringDuration = $waringDuration;
 
         return $this;
     }

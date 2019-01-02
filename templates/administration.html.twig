@@ -12,7 +12,6 @@
             {% if vide is defined %}
             <p class="text-center">Aucun utilisateurs trouvés</p>
             {% else %}
-            <div id="view"></div>
             <table class="table">
                 <thead>
                     <tr>
@@ -75,9 +74,28 @@
                             </div>
                             <div class="modal-body">
                                 <form id="formAdmin" action="{{ path('apiAdminStatus') }}" method="POST">
-                                    <label for="messageToUser">Raison du changement de status</label>
+                                    <label for="messageToUser">Raison du changement de status : </label>
                                     <textarea id="messageToUser"></textarea>
+                                    <p class="mt-3 mb-1">Durée : </p>
+                                    <div>
+                                        <input type="radio" id="contactChoice1"
+                                        name="contact" value="86400">
+                                        <label for="contactChoice1">1 jour</label>
+                                        <input type="radio" id="contactChoice2"
+                                        name="contact" value="604800">
+                                        <label for="contactChoice2">7 jours</label>
+                                        <input type="radio" id="contactChoice3"
+                                        name="contact" value="2592000">
+                                        <label for="contactChoice3">30 jours</label>
+                                        <input type="radio" id="contactChoice4"
+                                        name="contact" value="7776000">
+                                        <label for="contactChoice4">90 jours</label>
+                                        <input type="radio" id="contactChoice5"
+                                        name="contact" value="15552000">
+                                        <label for="contactChoice5">180 jours</label>
+                                    </div>
                                 </form>
+                                <div id="view"></div>
                                 <div class="modal-footer" id="adminModalFooter">
                                     <button id="confirmAdminForm" type="submit" class="btn btn-primary">Confirmer</button>
                                     <button id="cancelAdminForm" type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
@@ -86,105 +104,6 @@
                         </div>
                     </div>
                 </div>
-                    <!-- <tr>
-                                <th scope="row">1</th>
-                                <td>thedarklord69</td>
-                                <td><select id="inputState" class="form-control col-8">
-                                    <option selected>Active</option>
-                                    <option>averti</option>
-                                    <option>Puni</option>
-                                    <option>Ban</option>
-                                </select></td>
-                                <td>@mdo</td>
-                            </tr>
-                            <tr>
-                            <th scope="row">2</th>
-                                <td>ara_cl3tte</td>
-                                <td><select id="inputState" class="form-control col-8">
-                                        <option selected>Active</option>
-                                        <option>averti</option>
-                                        <option>Puni</option>
-                                        <option>Ban</option>
-                                    </select></td>
-                                <td>@fat</td>
-                            </tr>
-                            <tr>
-                            <th scope="row">3</th>
-                                <td>pikachu78400</td>
-                                <td><select id="inputState" class="form-control col-8">
-                                        <option selected>Active</option>
-                                        <option>averti</option>
-                                        <option>Puni</option>
-                                        <option>Ban</option>
-                                    </select></td>
-                                <td>@twitter</td>
-                            </tr>
-                            <tr>
-                            <th scope="row">4</th>
-                                <td>charloote42</td>
-                                <td><select id="inputState" class="form-control col-8">
-                                        <option selected>Active</option>
-                                        <option>averti</option>
-                                        <option>Puni</option>
-                                        <option>Ban</option>
-                                    </select></td>
-                                <td>@twitter</td>
-                            </tr>
-                            <tr>
-                            <th scope="row">5</th>
-                                <td>kikkoolol45600</td>
-                                <td><select id="inputState" class="form-control col-8">
-                                        <option selected>Active</option>
-                                        <option>averti</option>
-                                        <option>Puni</option>
-                                        <option>Ban</option>
-                                    </select></td>
-                                <td>lol@lol.com</td>
-                            </tr>
-                            <tr>
-                            <th scope="row">6</th>
-                                <td>mister_symfony</td>
-                                <td><select id="inputState" class="form-control col-8">
-                                        <option selected>Active</option>
-                                        <option>averti</option>
-                                        <option>Puni</option>
-                                        <option>Ban</option>
-                                    </select></td>
-                                <td>@twitter</td>
-                            </tr>
-                            <tr>
-                            <th scope="row">7</th>
-                                <td>nicoporter</td>
-                                <td><select id="inputState" class="form-control col-8">
-                                        <option selected>Active</option>
-                                        <option>averti</option>
-                                        <option>Puni</option>
-                                        <option>Ban</option>
-                                    </select></td>
-                                <td>@twitter</td>
-                            </tr>
-                            <tr>
-                            <th scope="row">8</th>
-                                <td>louloukoupetere</td>
-                                <td><select id="inputState" class="form-control col-8">
-                                        <option selected>Active</option>
-                                        <option>averti</option>
-                                        <option>Puni</option>
-                                        <option>Ban</option>
-                                    </select></td>
-                                <td>@twitter</td>
-                            </tr>
-                            <tr>
-                            <th scope="row">9</th>
-                                <td>commentoutoutpelle42</td>
-                                <td><select id="inputState" class="form-control col-8">
-                                        <option selected>Active</option>
-                                        <option>averti</option>
-                                        <option>Puni</option>
-                                        <option>Ban</option>
-                                    </select></td>
-                                <td>@twitter</td>
-                            </tr> -->
             {% endif %}
         </div>
 

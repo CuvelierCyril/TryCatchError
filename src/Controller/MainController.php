@@ -17,6 +17,9 @@ class MainController extends AbstractController{
      * @route("/", name="index")
      */
     public function index(){
+        if ($this->get('session')->has('account')){
+            dump(password_verify('motdepasse', $this->get('session')->get('account')->getPassword()));
+        }
         return $this->render('index.html.twig');
     }
 
