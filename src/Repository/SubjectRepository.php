@@ -52,6 +52,15 @@ class SubjectRepository extends ServiceEntityRepository
         ;
     }
 
+    public function lastThree(){
+        return $this->createQueryBuilder('s')
+        ->orderBy('s.date', 'DESC')
+        ->setMaxResults(3)
+        ->getQuery()
+        ->getResult()
+        ;
+    }
+
     // /**
     //  * @return Subject[] Returns an array of Subject objects
     //  */

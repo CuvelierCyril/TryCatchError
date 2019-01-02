@@ -40,8 +40,10 @@ class MainController extends AbstractController{
         if (!$this->get('session')->has('account')){
             throw new AccessDeniedHttpException();
         }
-
-        dump($this->get('session')->get('account'));
+        $repo = $this->getDoctrine()->getRepository(Subject::class);
+        $subjects = $repo->lastThree();
+        $repo = $this->getDoctrine()->getRepository(Answer::class);
+        $answers = $repo->lastThree();
         if ($request->getMethod() == "POST"){
             $typeAccepted = array('image/png', 'image/jpeg', 'image/gif');
             $extensionPossible = array('png', 'jpeg', 'gif');
@@ -70,9 +72,9 @@ class MainController extends AbstractController{
                     $msg['success'] = true;
                 }
             }
-            return $this->render('profil.html.twig', array('msg' => $msg));
+            return $this->render('profil.html.twig', array('msg' => $msg, 'subjects' => $subjects, 'answers' => $answers));
         }
-        return $this->render('profil.html.twig');
+        return $this->render('profil.html.twig', array('subjects' => $subjects, 'answers' => $answers));
     }
     /**
      * @route("/se-connecter/", name="login")
