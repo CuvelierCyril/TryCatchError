@@ -17,10 +17,40 @@ class MainController extends AbstractController{
      * @route("/", name="index")
      */
     public function index(){
-        if ($this->get('session')->has('account')){
-            dump(password_verify('motdepasse', $this->get('session')->get('account')->getPassword()));
+        $keyWord = '';
+        $repo = $this->getDoctrine()->getRepository(Subject::class);
+        $lastSubjects = $repo->lastThree();
+
+        if ($this->get('session')->has('lastResearch')){
+            $search = $this->get('session')->get('lastResearch');
+            $keywords = explode(" ", $search);
+            $search = '%';
+            foreach($keywords as $keyword){
+                $search = $search.$keyword.'%';
+            }
+            $lastResearch = $repo->findByKeyWordLimited($search);
+            $keyWord = str_replace('%', '', $search);
         }
-        return $this->render('index.html.twig');
+
+        if ($this->get('session')->has('lastSubjects')){
+            $lastId = $this->get('session')->get('lastSubjects');
+            foreach($lastId as $id){
+                if ($id > 0){
+                    $lastThree[] = $repo->findOneById($id);
+                }
+            }
+        }
+
+        if (!isset($lastSubjects) || count($lastSubjects) == 0){
+            $lastSubjects = null;
+        }
+        if (!isset($lastResearch) || count($lastResearch) == 0){
+            $lastResearch = null;
+        }
+        if (!isset($lastThree) || count($lastThree) == 0){
+            $lastThree = null;
+        }
+        return $this->render('index.html.twig', array('lastSubjects'=> $lastSubjects, 'lastResearch' => $lastResearch, 'keyWord' => $keyWord, 'lastThree' => $lastThree));
     }
 
     /**
@@ -112,6 +142,15 @@ class MainController extends AbstractController{
         $content = str_replace('[/code]', '</code></pre></p>', $content);
         $content = str_replace(']', '>', $content);
         $article->setContent($content);
+        if (!$this->get('session')->has('lastSubjects')){
+            $lastSubjects = array($article->getId(), 0, 0);
+        } else {
+            $lastSubjects = $this->get('session')->get('lastSubjects');
+            $lastSubjects[2] = $lastSubjects[1];
+            $lastSubjects[1] = $lastSubjects[0];
+            $lastSubjects[0] = $article->getId();
+        }
+        $this->get('session')->set('lastSubjects', $lastSubjects);
         return $this->render('subject.html.twig', array('article' => $article, 'answers' => $answers));
     }
 
@@ -143,7 +182,7 @@ class MainController extends AbstractController{
             }
             $repo = $this->getDoctrine()->getRepository(Subject::class);
             $articles = $repo->findByKeyWord($search);
-    
+
             foreach($articles as $article){
                 $letters = [];
                 $title = strtolower($article->getTitle());
@@ -157,6 +196,7 @@ class MainController extends AbstractController{
             if (empty($articles)){
                 return $this->render('results.html.twig', array('msg' => false));
             }
+            $this->get('session')->set('lastResearch', $search);
             return $this->render('results.html.twig', array('articles' => $articles));
         }
     }

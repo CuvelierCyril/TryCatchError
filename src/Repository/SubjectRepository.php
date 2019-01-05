@@ -41,6 +41,17 @@ class SubjectRepository extends ServiceEntityRepository
         ;
     }
 
+    public function findByKeyWordLimited($keyword){
+        return $this->createQueryBuilder('s')
+        ->andWhere('s.title LIKE :key')
+        ->setParameter('key', $keyword)
+        ->orderBy('s.date', 'DESC')
+        ->setMaxResults(3)
+        ->getQuery()
+        ->getResult()
+        ;
+    }
+
     public function findCount($offset, $like){
         return $this->createQueryBuilder('s')
         ->select('COUNT(s.id)')

@@ -10,15 +10,26 @@
                     </div>
                 </div>
                 <div class="row">
-                    <p class="col-md-6 text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit sed ratione quidem dolorum quaerat recusandae at mollitia cupiditate delectus consequuntur aliquid velit nam voluptate accusantium dignissimos ipsam, facere facilis repudiandae!</p>
-                    <p class="col-md-6 text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit sed ratione quidem dolorum quaerat recusandae at mollitia cupiditate delectus consequuntur aliquid velit nam voluptate accusantium dignissimos ipsam, facere facilis repudiandae!</p>
-                    <button class="btn btn-danger btn-lg m-auto" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="fas fa-chevron-circle-down"></i> En savoir plus <i class="fas fa-chevron-circle-down"></i></button>
-                    <div class="collapse" id="collapseExample">
-                        <div class="card card-body col-12 col-lg-12 mt-2">
-                            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Illum fuga dolores magni ad amet dolore nam error voluptatum? Reprehenderit eaque error omnis ullam explicabo inventore modi perspiciatis eum? Inventore, cumque. Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt, qui ducimus. Neque commodi necessitatibus nesciunt et aut consequuntur in sequi earum delectus, minus fugit reiciendis tenetur dolor vel id voluptatem. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores ut animi nemo debitis assumenda nisi minima quidem odit sit nulla eius soluta expedita non similique, perspiciatis distinctio sequi pariatur ipsam.
-                        </div>
-                    </div>
+                    <p class="col-md-12 text-left">PRESENTATION : Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur consequatur similique repellendus, sit sint quibusdam assumenda distinctio voluptatum sapiente? Eius corporis, ipsa ullam maiores, non quo temporibus eos ratione eligendi, quam aspernatur aperiam ipsam soluta pariatur itaque. Id adipisci, ipsam assumenda velit iusto repudiandae quod exercitationem eveniet laborum saepe ex quasi recusandae ab porro molestias tenetur consequatur nulla! Rem quidem qui mollitia dolore veniam, unde sit fugit beatae corrupti, enim eaque quod odio et dicta excepturi explicabo obcaecati ducimus labore, temporibus aperiam incidunt doloremque? Voluptatibus asperiores, amet laboriosam id ad quisquam eum velit magni esse incidunt molestias, minus rem unde sequi soluta ea iure non qui laudantium necessitatibus sed architecto quasi consequatur saepe? Libero cumque facere magni officia dolores dolor esse hic deserunt tempore quas perferendis odio consequuntur, quod molestias quia corporis! Dolorem excepturi ab voluptatem unde dolorum iusto porro nam, libero quae nulla maiores consectetur nobis architecto odit eius, sit voluptas ratione molestiae, molestias ut quibusdam? Nostrum commodi ea ex dignissimos. Ex illo dolore, atque numquam, ab assumenda harum sed, labore ratione officiis soluta ducimus recusandae exercitationem officia placeat! Reiciendis quos, perferendis aut inventore doloribus quia dolore odio tenetur eligendi aliquam hic non necessitatibus numquam rerum laborum assumenda animi? Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit sed ratione quidem dolorum quaerat recusandae at mollitia cupiditate delectus consequuntur aliquid velit nam voluptate accusantium dignissimos ipsam, facere facilis repudiandae!</p>
                 </div>
+                {% if lastSubjects is not null %}
+                <p>Sujets recrement créés : </p>
+                    {% for lastSubject in lastSubjects %}
+                        <p>{{lastSubject.title}}</p>
+                    {% endfor %}
+                {% endif %}
+                {% if lastThree is not null %}
+                <p>Sujets recrement vues : </p>
+                    {% for lastOneThree in lastThree %}
+                        <p>{{lastOneThree.title}}</p>
+                    {% endfor %}
+                {% endif %}
+                {% if lastResearch is not null %}
+                <p>Dernière recherche avec le mot clés {{keyWord}} : </p>
+                    {% for lastSearch in lastResearch %}
+                        <p>{{lastSearch.title}}</p>
+                    {% endfor %}
+                {% endif %}
             </div>
         {% endblock %}
         {% block javascripts %}{% endblock %}
