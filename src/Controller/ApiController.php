@@ -120,6 +120,11 @@ class ApiController extends AbstractController{
                                 $em->merge($user);
                                 $em->flush();
                             }
+                            if ($user->getRank() == 2){
+                                $tokenAdmin = md5(uniqid().rand().time());
+                                $user->setToken($tokenAdmin);
+                                $this->get('session')->set('tokenAdmin', $tokenAdmin);
+                            }
                             $this->get('session')->set('account', $user);
                             $msg['rank'] = $user->getRank();
                             $msg['status'] = $user->getStatus();
@@ -406,6 +411,71 @@ class ApiController extends AbstractController{
             $msg['success'] = true;
         } else {
             $msg['noEmail'] = true;
+        }
+        return $this->json($msg);
+    }
+
+    /**
+     * @route("resetPasswordMail", name="apiResetPasswordMail")
+     */
+    public function apiResetPasswordMail(Request $request, \Swift_Mailer $mailer){
+        $email = $request->request->get('emailReset');
+        $repo = $this->getDoctrine()->getRepository(User::class);
+        $user = $repo->findOneByEmail($email);
+        if ($user == null){
+            $msg['noUser'] = true;
+        } else {
+            $token = md5(rand().uniqid().time());
+            $user->setToken($token);
+            $em = $this->getDoctrine()->getManager();
+            $em->merge($user);
+            $em->flush();
+            $id = $user->getId();
+            $mail = (new \Swift_Message('Sujet du mail'))
+                ->setFrom('malac.company@gmail.fr')
+                ->setTo($email)
+                ->setBody(
+                    $this->renderView('email/email-resetPassword.html.twig', array('token' => $token, 'id' => $id)),
+                    'text/html'
+                )
+                ->addPart(
+                    $this->renderView('email/email-resetPassword.txt.twig', array('token' => $token, 'id' => $id)),
+                    'text/plain'
+                )
+            ;
+
+            $mailer->send($mail);
+            $msg['success'] = true;
+        }
+        return $this->json($msg);
+    }
+
+    /**
+     * @route("resetPassword", name="apiResetPassword")
+     */
+    public function apiResetPassword(Request $request){
+        $newPass = $request->request->get('new-pass');
+        $passConf = $request->request->get('confirm-pass');
+        $id = $request->request->get('id');
+        $repo = $this->getDoctrine()->getRepository(User::class);
+        $user = $repo->findOneById($id);
+        if (password_verify($newPass, $user->getPassword())){
+            $msg['passwordSameCurrent'] = true;
+        } else {
+            if (!preg_match("#^.{3,500}$#", $newPass)){
+                $msg['passIncorrect'] = true;
+            } else {
+                if ($newPass != $passConf){
+                    $msg['passDiff'] = true;
+                }
+            }
+        }
+        if (!isset($msg)){
+            $user->setPassword(password_hash($newPass, PASSWORD_BCRYPT));
+            $em = $this->getDoctrine()->getManager();
+            $em->merge($user);
+            $em->flush();
+            $msg['success'] = true;
         }
         return $this->json($msg);
     }

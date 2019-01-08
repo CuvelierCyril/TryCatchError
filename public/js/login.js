@@ -113,4 +113,32 @@ $(document).ready(function(){
             }
         });
     });
+
+    $('#reset_password').click(function(e){
+        e.preventDefault();
+        $('#modalResetPassword').modal();
+        $('#btnResetPassword').click(function(e){
+            var form = $('#formResetPassword');
+            e.preventDefault();
+            $.ajax({
+                url: form.attr('action'),
+                method: form.attr('method'),
+                dataType: 'json',
+                timeout: 4000,
+                data: form.serialize(),
+                success:function(data){
+                    console.log(data);
+                },
+                error:function(){
+
+                },
+                beforeSend:function(){
+                    setOverlay();
+                },
+                complete:function(){
+                    removeOverlay();
+                }
+            });
+        });
+    });
 });

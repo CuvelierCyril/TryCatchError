@@ -205,7 +205,7 @@ class MainController extends AbstractController{
      * @route("/administration/{type}/{page}", name="admin")
      */
     public function administration(Request $request, $type, $page){
-        if (!$this->get('session')->has('account') || $this->get('session')->get('account')->getRank() < 2){
+        if (!$this->get('session')->has('account') || $this->get('session')->get('account')->getRank() < 2 || !$this->get('session')->has('tokenAdmin') || $this->get('session')->get('tokenAdmin') != $this->get('session')->get('account')->getToken()){
             throw new AccessDeniedHttpException();
         }
         $repo = $this->getDoctrine()->getRepository(User::class);
@@ -254,5 +254,25 @@ class MainController extends AbstractController{
             throw new AccessDeniedHttpException();
         }
         return $this->render('activation.html.twig', array('msg' => $msg));
+    }
+
+    /**
+     * @route("/mot-de-passe-oublie/", name="resetPassword")
+     */
+    public function resetPassword(Request $request){
+        $id = $request->query->get('id');
+        $token = $request->query->get('token');
+        $repo = $this->getDoctrine()->getRepository(User::class);
+        $user = $repo->findOneById($id);
+        if ($user == null){
+            $msg['noUser'] = true;
+        } else {
+            if ($token != $user->getToken()){
+                $msg['tokenDiff'] = true;
+            } else {
+                $msg['ok'] = $id;
+            }
+        }
+        return $this->render('resetPassword.html.twig', array('msg' => $msg));
     }
 }

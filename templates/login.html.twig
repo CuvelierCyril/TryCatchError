@@ -15,8 +15,8 @@
                         <label class="col-12 pl-0" for="register-form-password">Mot de passe<span class="pl-4" id="passwordError"></span></label>
                         <input type="password" class="form-control" id="register-form-password" placeholder="Mot de passe" name="password">
                     </div><br>
-                    <div class="row col-12">
-                        <button type="submit" class="btn btn_background m-auto">Se connecter</button>
+                    <div class="row col-4 offset-4">
+                        <button type="submit" class="btn btn_background col-5">Se connecter</button><span class="col-2 text-center">~~</span><button type="button" id="reset_password" class="col-5 btn btn_background">Mot de passe oublié</button>
                         <span id="divFailed" class="col-12 text-center"></span>
                     </div>
                 </form>
@@ -24,6 +24,30 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="modalResetPassword" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Mot de passe oublié</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form action="{{ path('apiResetPasswordMail') }}" method="POST" id="formResetPassword">
+                <div class="form-group m-auto col-12">
+                    <label class="col-12 pl-0" for="register-form-email">Adresse Email<span class="pl-4" id="emailError"></span></label>
+                    <input type="email" class="form-control" id="resetPasswordEmail" placeholder="jean@exemple.com" name="emailReset">
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+              <button type="button" class="btn btn-primary" id="btnResetPassword">Valider</button>
+            </div>
+          </div>
+        </div>
+      </div>
 {% endblock %}
 {% block javascripts %}
 <script>
