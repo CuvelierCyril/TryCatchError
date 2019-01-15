@@ -144,7 +144,7 @@ class MainController extends AbstractController{
         $content = str_replace('[/underline]', '</span>', $content);
         $content = str_replace('[mark]', '<mark>', $content);
         $content = str_replace('[/mark]', '</mark>', $content);
-        $content = str_replace('[error]', '<span style="color: red; font-weight: bold;">', $content);
+        $content = str_replace('[error]', '<span style="color: red; font-weight: bold; background-color: white;">', $content);
         $content = str_replace('[/error]', '</span>', $content);
         $content = str_replace('[code=', '<p><pre><code class="language-', $content);
         $content = str_replace('[/code]', '</code></pre></p>', $content);
