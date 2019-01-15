@@ -138,6 +138,14 @@ class MainController extends AbstractController{
         $em->merge($article);
         $em->flush();
         $content = $article->getContent();
+        $content = str_replace('[overline]', '<span style="text-decoration: line-through;">', $content);
+        $content = str_replace('[/overline]', '</span>', $content);
+        $content = str_replace('[underline]', '<span style="text-decoration : underline;">', $content);
+        $content = str_replace('[/underline]', '</span>', $content);
+        $content = str_replace('[mark]', '<mark>', $content);
+        $content = str_replace('[/mark]', '</mark>', $content);
+        $content = str_replace('[error]', '<span style="color: red; font-weight: bold;">', $content);
+        $content = str_replace('[/error]', '</span>', $content);
         $content = str_replace('[code=', '<p><pre><code class="language-', $content);
         $content = str_replace('[/code]', '</code></pre></p>', $content);
         $content = str_replace(']', '>', $content);
