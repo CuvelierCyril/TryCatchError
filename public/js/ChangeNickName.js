@@ -13,6 +13,7 @@ $(document).ready(function(){
                 if (data.success){
                     form.hide();
                     $('.currentname').html('<p class="success alert-success"> Nom Changer ! </p>');
+                    $('#nickname').text('Nom d\'utilisateur : '+ form.serialize().substr(9));
                 }
                 if(data.pregmatchNickName){
                     $('.currentname').html('<p class="alert alert-danger"> Votre nom doit être entre 5, et 500 caractèress ! </p>');
