@@ -8,51 +8,51 @@ $(document).ready(function(){
         var form = $(this);
         e.preventDefault();
         console.log($('#register-form-password').val());
-        // $.ajax({
-        //     url: form.attr('action'),
-        //     method: form.attr('method'),
-        //     dataType: 'json',
-        //     timeout: 4000,
-        //     data: form.serialize(),
-        //     success:function(data){
-        //         console.log(data);
-        //         if (data.success){
-        //             form.remove();
-        //             $('#formSuccess').html('<p class="alert alert-success">Compte crée, un email vous a été envoyé afin d\'activer votre compte !</p>');
-        //         } else {
-        //             grecaptcha.reset();
-        //         }
-        //         if (data.email){
-        //             $('#emailError').html('<span style="color:red;">Format adresse mail invalide</span>');
-        //         }
-        //         if (data.password){
-        //             $('#passwordError').html('<span style="color:red;">Format mot de passe invalide</span>');
-        //         }
-        //         if (data.passwordConfirm){
-        //             $('#passwordConfirmError').html('<span style="color:red;">Les mots de passe doivent être identiques</span>');
-        //         }
-        //         if (data.nickname){
-        //             $('#nicknameError').html('<span style="color:red;">Pseudo invalide</span>');
-        //         }
-        //         if (data.emailExists){
-        //             $('#emailError').html('<span style="color:red;">Adresse mail déjà utilisé</span>');
-        //         }
-        //         if (data.nicknameExists){
-        //             $('#nicknameError').html('<span style="color:red;">Pseudo déjà utilisé</span>');
-        //         }
-        //         if(data.recaptcha){
-        //             $('#recaptchaError').html('<span style="color:red;">Recaptcha invalid</span>');
-        //         }
-        //     },
-        //     error:function(){
-        //         $('#divFailed').html('<span style="color:red;">Erreur lors du traitement des données</span>');
-        //     },
-        //     beforeSend:function(){
-        //         setOverlay();
-        //     },
-        //     complete:function(){
-        //         removeOverlay();
-        //     }
-        // });
+        $.ajax({
+            url: form.attr('action'),
+            method: form.attr('method'),
+            dataType: 'json',
+            timeout: 4000,
+            data: form.serialize(),
+            success:function(data){
+                console.log(data);
+                if (data.success){
+                    form.remove();
+                    $('#formSuccess').html('<p class="alert alert-success">Compte crée, un email vous a été envoyé afin d\'activer votre compte !</p>');
+                } else {
+                    grecaptcha.reset();
+                }
+                if (data.email){
+                    $('#emailError').html('<p class="alert alert-danger col-12"">Format adresse mail invalide</p>');
+                }
+                if (data.password){
+                    $('#passwordError').html('<p class="alert alert-danger col-12"">Format mot de passe invalide</p>');
+                }
+                if (data.passwordConfirm){
+                    $('#passwordConfirmError').html('<p class="alert alert-danger col-12">Les mots de passe doivent être identiques</p>');
+                }
+                if (data.nickname){
+                    $('#nicknameError').html('<p class="alert alert-danger col-12">Pseudo invalide</p>');
+                }
+                if (data.emailExists){
+                    $('#emailError').html('<p class="alert alert-danger col-12"">Adresse mail déjà utilisé</p>');
+                }
+                if (data.nicknameExists){
+                    $('#nicknameError').html('<p class="alert alert-danger col-12">Pseudo déjà utilisé</p>');
+                }
+                if(data.recaptcha){
+                    $('#recaptchaError').html('<p class="alert alert-danger col-12 text-center">Recaptcha invalid</p>');
+                }
+            },
+            error:function(){
+                $('#divFailed').html('<p class="alert alert-danger col-12">Erreur lors du traitement des données</p>');
+            },
+            beforeSend:function(){
+                setOverlay();
+            },
+            complete:function(){
+                removeOverlay();
+            }
+        });
     });
 });

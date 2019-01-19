@@ -1,35 +1,53 @@
 {% extends 'base.html.twig' %}
 
 {% block title %} Acceuil {% endblock %}
-{% block body %}
+{% block body %} {# HOMEPAGE START #}
         <div class="container-fluid">
 
                 <div class="row">
                     <div class="col-12 text-center">
-                        <img src="{{ asset('img/logov6.2.png') }}" id="imgIndex" alt="logo" width="350" height="350" class="m-auto">'
+                        <img src="{{ asset('img/logov7.png') }}" id="imgIndex" alt="logo" width="350" height="350" class="m-auto">'
                     </div>
                 </div>
                 <div class="row">
-                    <p class="col-md-12 text-left">PRESENTATION : Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur consequatur similique repellendus, sit sint quibusdam assumenda distinctio voluptatum sapiente? Eius corporis, ipsa ullam maiores, non quo temporibus eos ratione eligendi, quam aspernatur aperiam ipsam soluta pariatur itaque. Id adipisci, ipsam assumenda velit iusto repudiandae quod exercitationem eveniet laborum saepe ex quasi recusandae ab porro molestias tenetur consequatur nulla! Rem quidem qui mollitia dolore veniam, unde sit fugit beatae corrupti, enim eaque quod odio et dicta excepturi explicabo obcaecati ducimus labore, temporibus aperiam incidunt doloremque? Voluptatibus asperiores, amet laboriosam id ad quisquam eum velit magni esse incidunt molestias, minus rem unde sequi soluta ea iure non qui laudantium necessitatibus sed architecto quasi consequatur saepe? Libero cumque facere magni officia dolores dolor esse hic deserunt tempore quas perferendis odio consequuntur, quod molestias quia corporis! Dolorem excepturi ab voluptatem unde dolorum iusto porro nam, libero quae nulla maiores consectetur nobis architecto odit eius, sit voluptas ratione molestiae, molestias ut quibusdam? Nostrum commodi ea ex dignissimos. Ex illo dolore, atque numquam, ab assumenda harum sed, labore ratione officiis soluta ducimus recusandae exercitationem officia placeat! Reiciendis quos, perferendis aut inventore doloribus quia dolore odio tenetur eligendi aliquam hic non necessitatibus numquam rerum laborum assumenda animi? Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit sed ratione quidem dolorum quaerat recusandae at mollitia cupiditate delectus consequuntur aliquid velit nam voluptate accusantium dignissimos ipsam, facere facilis repudiandae!</p>
+                    <p class="col-md-12 text-lef text-light">PRESENTATION : Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur consequatur similique repellendus, sit sint quibusdam assumenda distinctio voluptatum sapiente? Eius corporis, ipsa ullam maiores, non quo temporibus eos ratione eligendi, quam aspernatur aperiam ipsam soluta pariatur itaque. Id adipisci, ipsam assumenda velit iusto repudiandae quod exercitationem eveniet laborum saepe ex quasi recusandae ab porro molestias tenetur consequatur nulla! Rem quidem qui mollitia dolore veniam, unde sit fugit beatae corrupti, enim eaque quod odio et dicta excepturi explicabo obcaecati ducimus labore, temporibus aperiam incidunt doloremque? Voluptatibus asperiores, amet laboriosam id ad quisquam eum velit magni esse incidunt molestias, minus rem unde sequi soluta ea iure non qui laudantium necessitatibus sed architecto quasi consequatur saepe? Libero cumque facere magni officia dolores dolor esse hic deserunt tempore quas perferendis odio consequuntur, quod molestias quia corporis! Dolorem excepturi ab voluptatem unde dolorum iusto porro nam, libero quae nulla maiores consectetur nobis architecto odit eius, sit voluptas ratione molestiae, molestias ut quibusdam? Nostrum commodi ea ex dignissimos. Ex illo dolore, atque numquam, ab assumenda harum sed, labore ratione officiis soluta ducimus recusandae exercitationem officia placeat! Reiciendis quos, perferendis aut inventore doloribus quia dolore odio tenetur eligendi aliquam hic non necessitatibus numquam rerum laborum assumenda animi? Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit sed ratione quidem dolorum quaerat recusandae at mollitia cupiditate delectus consequuntur aliquid velit nam voluptate accusantium dignissimos ipsam, facere facilis repudiandae!</p>
                 </div>
+
                 {% if lastSubjects is not null %}
-                <p>Sujets recrement créés : </p>
-                    {% for lastSubject in lastSubjects %}
-                        <p>{{lastSubject.title}}</p>
-                    {% endfor %}
-                {% endif %}
-                {% if lastThree is not null %}
-                <p>Sujets recrement vues : </p>
+                <h1 class="m-auto text-center text-light police-text">Sujets recemment créés : </h1>
+                <div class="card page-trans">
+                    <div class="card-header row" id="headingThree">
+                        <div class="col-8">
+                            <h5 class="mb-0">
+                                {% for lastSubject in lastSubjects %}
+                                    <p class="text-light">{{lastSubject.title}}</p>
+                                    <a href="../sujet/{{ lastSubject.id }}" class="btn btn-color active m-2" role="button">Voir l'article</a>
+                                {% endfor %}
+                            {% endif %}
+                            </h5>
+                            <p class="text-light"></p>
+                        </div>
+                    </div>
+                </div>
+            {# HOMEPAGE END #}
+            {# {% if lastThree is not null %}
+                <p class="text-color police-text">Sujets recrement vues : </p>
                     {% for lastOneThree in lastThree %}
-                        <p>{{lastOneThree.title}}</p>
+                        <p class="text-light">{{lastOneThree.title}}</p>
                     {% endfor %}
-                {% endif %}
+                {% endif %} #}
                 {% if lastResearch is not null %}
-                <p>Dernière recherche avec le mot clés {{keyWord}} : </p>
+                <p class="text-color police-text">Dernière recherche avec le mot clés {{keyWord}} : </p>
                     {% for lastSearch in lastResearch %}
-                        <p>{{lastSearch.title}}</p>
+                        <p class="text-light">{{lastSearch.title}}</p>
                     {% endfor %}
                 {% endif %}
             </div>
         {% endblock %}
-        {% block javascripts %}{% endblock %}
+        {% block javascripts %}
+        <script>
+            var page = '{{ path("apiSubjects") }}';
+        </script>
+        <script src="{{ asset('/js/overlay.js')}}"></script>
+        <script src="/js/ShowArticle.js"></script>
+        {% endblock %}

@@ -79,32 +79,35 @@ class MainController extends AbstractController{
             $extensionPossible = array('png', 'jpeg', 'gif');
             $img = $request->files->get('img');
 
-            if($img->getError() == 1 || $img->getError() == 2 || $img->getSize() > 1000000){
-                $msg['fileBig'] = true;
-            }
-            if($img->getError() == 3){
-                $msg['fileSend'] = true;
-            }
-            if($img->getError() == 6 || $img->getError() == 7 || $img->getError() == 8){
-                $msg['fileServer'] = true;
-            }
-            if (!isset($msg)){
-                $user = $this->get('session')->get('account');
-                if (in_array($img->getMimeType(), $typeAccepted)){
-                    $extension = $extensionPossible[array_keys($typeAccepted, $img->getMimeType())[0]];
-                    $fileName = $user->getId().'-profil.'.$extension;
-                    move_uploaded_file($img->getPathname(), '../public/img/'.$fileName);
-                    $user->setImage('img/'.$fileName);
-                    $em = $this->getDoctrine()->getManager();
-                    $em->merge($user);
-                    $em->flush();
-                    $this->get('session')->get('account')->set('picture', 'img/'.$fileName);
-                    $msg['success'] = true;
+            if($img == null){
+                $msg[] = "<p class='alert alert-danger'>Aucun fichier reçu</p>";
+            } else {
+                if($img->getError() == 1 || $img->getError() == 2 || $img->getSize() > 4000000){
+                    $msg[] = "<p class='alert alert-danger'>Taille du fichier trop élevée</p>";
+                }
+                if($img->getError() == 3){
+                    $msg[] = "<p class='alert alert-danger'>Erreur lors du traitement</p>";
+                }
+                if($img->getError() == 6 || $img->getError() == 7 || $img->getError() == 8){
+                    $msg[] = "<p class='alert alert-danger'>Erreur serveur</p>";
+                }
+                if (!isset($msg)){
+                    $user = $this->get('session')->get('account');
+                    if (in_array($img->getMimeType(), $typeAccepted)){
+                        $extension = $extensionPossible[array_keys($typeAccepted, $img->getMimeType())[0]];
+                        $fileName = $user->getId().'-profil.'.$extension;
+                        move_uploaded_file($img->getPathname(), '../public/img/'.$fileName);
+                        $user->setPicture('img/'.$fileName);
+                        $em = $this->getDoctrine()->getManager();
+                        $em->merge($user);
+                        $em->flush();
+                        $msg[] = "<p class='alert alert-success'>Votre image à bien été changer</p>";
+                    }
                 }
             }
             return $this->render('profil.html.twig', array('msg' => $msg, 'subjects' => $subjects, 'answers' => $answers));
         }
-        return $this->render('profil.html.twig', array('subjects' => $subjects, 'answers' => $answers));
+        return $this->render('profil.html.twig', array('subjects' => $subjects, 'answers' => $answers));        
     }
     /**
      * @route("/se-connecter/", name="login")
@@ -138,6 +141,14 @@ class MainController extends AbstractController{
         $em->merge($article);
         $em->flush();
         $content = $article->getContent();
+        $content = str_replace('[overline]', '<span style="text-decoration: line-through;">', $content);
+        $content = str_replace('[/overline]', '</span>', $content);
+        $content = str_replace('[underline]', '<span style="text-decoration : underline;">', $content);
+        $content = str_replace('[/underline]', '</span>', $content);
+        $content = str_replace('[mark]', '<mark>', $content);
+        $content = str_replace('[/mark]', '</mark>', $content);
+        $content = str_replace('[error]', '<span style="color: red; font-weight: bold; background-color: white;">', $content);
+        $content = str_replace('[/error]', '</span>', $content);
         $content = str_replace('[code=', '<p><pre><code class="language-', $content);
         $content = str_replace('[/code]', '</code></pre></p>', $content);
         $content = str_replace(']', '>', $content);

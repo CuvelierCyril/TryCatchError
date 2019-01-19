@@ -35,12 +35,12 @@ $(document).ready(function(){
                     console.log(data);
                     createDisplay(data);
                 } else {
-                    $('#main-container').html(`<h1 class="text-center">Liste des sujets</h1><div class="card">
+                    $('#main-container').html(`<h1 class="text-center text-light">Liste des sujets</h1><div class="card">
                     <div class="card-header" id="headingThree">
                         <div class="card-body">
                             </div>
                                 <h5 class="mb-0">
-                                    <p class="title">Aucun article trouvé !</p>
+                                    <p class="title text-light">Aucun article trouvé !</p>
                                 </h5>
                         </div>
                 </div>`);
@@ -146,7 +146,7 @@ $(document).ready(function(){
                  setOverlay();
             },
             complete:function(){
-                $('.view-title').html(`<h1 class="text-center">Liste des sujets</h1>`);
+                $('.view-title').html(`<h1 class="text-center text-light">Liste des sujets</h1>`);
                  removeOverlay();
             }
         });
@@ -154,22 +154,22 @@ $(document).ready(function(){
     function createDisplay(tableau){
         var maxindex = $(tableau).length - 3;
         var pagi = true;
-        var str = `<h1 class="m-auto text-center">Liste des article</h1>`;
+        var str = `<h1 class="m-auto text-center text-light police-text">Liste des articles</h1>`;
         var str2 = "";
         if (tableau[0].title){
             $(tableau).each(function(index, element){
                 if(index < maxindex){
                     str = str + `
-                    <div class="card">
+                    <div class="card page-trans">
                         <div class="card-header row" id="headingThree">
                             <div class="col-8">
                                 <h5 class="mb-0">
-                                    <p class="title">` + element.title + `</p>
+                                    <p class="title text-light">` + element.title + `</p>
                                 </h5>
-                                <p>` + element.desc + `</p>
-                                <a href="../sujet/`+ element.id +`" class="btn btn-info btn-sm active m-2" role="button">Voir l'article</a>
+                                <p class="text-light">` + element.desc + `</p>
+                                <a href="../sujet/`+ element.id +`" class="btn btn-color active m-2" role="button">Voir l'article</a>
                             </div>
-                            <div class="col-4 offset-xl-3 col-xl-1 col-md-2 offset-md-2 text-center">
+                            <div class="col-12 offset-xl-3 col-xl-1 col-md-2 offset-md-2 text-center">
                                 <p class="border bg-white">Vues : ` + element.view + `</p>
                                 <p class="border bg-white">Réponses : ` + element.answer + `</p>
                             </div>
@@ -182,7 +182,7 @@ $(document).ready(function(){
             <div class="card-body">
                 </div>
                     <h5 class="mb-0">
-                        <p class="title">Aucun article trouvé !</p>
+                        <p class="title text-light">Aucun article trouvé !</p>
                     </h5>
             </div>
     </div>`;

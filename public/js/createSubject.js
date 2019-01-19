@@ -7,12 +7,12 @@ $(document).ready(function(){
         if ($.inArray(cat, category) == -1){
             category.push(cat);
             $(this).removeClass('btn-secondary');
-            $(this).addClass('btn-danger');
+            $(this).addClass('btn-color');
         } else {
             category = jQuery.grep(category, function(n){
                 return n !== cat;
             });
-            $(this).removeClass('btn-danger');
+            $(this).removeClass('btn-color');
             $(this).addClass('btn-secondary');
         }
         console.log(category);
@@ -43,7 +43,7 @@ $(document).ready(function(){
         e.preventDefault();
         $('#errorTitle').html('Titre : ');
         $('#Success').html('');
-        $('#errorContent').html(`Contenu du sujet : <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">
+        $('#errorContent').html(`Contenu du sujet : <button type="button" class="btn btn-color" data-toggle="modal" data-target="#exampleModal">
         Ajouter du code
     </button>`);
         $('#errorTraitement').html('');
@@ -65,7 +65,7 @@ $(document).ready(function(){
                     $('#errorTitle').html('Titre : <span style="color:red;">Format du titre invalide</span>');
                 }
                 if(data.content){
-                    $('#errorContent').html(`Contenu du sujet : <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">
+                    $('#errorContent').html(`Contenu du sujet : <button type="button" class="btn btn-color" data-toggle="modal" data-target="#exampleModal">
                     Ajouter du code
                 </button><span style="color:red;">Format du contenu invalide</span>`);
                 }

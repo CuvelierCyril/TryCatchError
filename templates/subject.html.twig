@@ -1,62 +1,90 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}sujet{% endblock %}
+
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('css/prism.css') }}">
 {% endblock %}
 {% block body %}
-<h1 class="text-center">Sujet</h1>
-{% if vide is defined %}
-    <p>Aucun article trouvé</p>
-{% else %}
-    {% if article is defined %}
-        <p>Titre : {{ article.title }}</p>
-        <p>Contenu : <span class="content">{{ article.content|raw }}</span></p>
-        <p>Fait le : {{ article.date|date('Y-m-d H:i:s') }} par {{ article.author.nickname }}</p>
-        {% if answers is defined %}
-            {% for answer in answers %}
-                {% if answer.verified == 1 %}
-                    <div class="border answer{{ answer.id }} bg-success">
-                        <p>Réponse : {{answer.content}}</p>
-                        <p>Fait le : {{ answer.date|date('Y-m-d H:i:s') }} par {{ answer.author.nickname }}</p>
-                        {% if app.session.get('account') is not null %}
-                            {% if app.session.get('account').rank == 2 %}
-                                <button class="delete-answer" id="{{ answer.id }}">Supprimer la reponse</button>
-                                <button class="validate-answer" id="{{ answer.id }}">Valider la reponse</button>
+<body class="font-image">
+        <div class="container-fluid">
+            {% if article is defined %}
+                <div class="col-12 col-md-12 col-sm-12 col-lg-8 offset-lg-2 box-shadow-page order-1 order-sm-1 order-md-1 order-lg-1">
+                    <h1 class="text-center card-header text-light" id="anchor-top">{{ article.title }}</h1>
+                    <div class="card page-trans text-light">
+                        <div class="card-footer text-light label-color">Posté par: {{ article.author.nickname }}, le : {{ article.date|date('d-m-Y H:i:s') }}</div>
+                        <p class="card-body mb-3">{{ article.content|raw }}</p>
+                            <a class="btn btn-color col-12 col-lg-3 col-md-6 m-auto" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Répondre</a>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="collapse multi-collapse" id="multiCollapseExample1">
+                                    <div class="card card-body page-trans border-1px">
+                                        <form action="{{ path('apiCreateAnswer') }}" method="POST" id="answer-form">
+                                            <div class="form-group">
+                                            <label for="exampleFormControlTextarea1 text-light text-height-x2">Répondre</label>
+                                            <textarea class="form-control" name="content" id="exampleFormControlTextarea1" placeholder="Votre réponse" rows="3"></textarea><div id="contentError"></div>
+                                            <input class="btn btn-color mt-3 mb-3" type="submit" value="Publier"><div id="divFailed"></div>
+                                            </div>
+                                        </form>
+                                        <div id="formSuccess"></div>
+                                    </div>
+                                    </div>
+                                </div>
+                                </div>
+                                {% if app.session.get('account') is not null %}
+                                {% if app.session.get('account').rank == 2 %}
+                                    <button id="delete-subject" class="btn btn-color col-lg-3 m-auto col-12 col-md-6">Supprimer l'article</button>
+                                {% endif %}
                             {% endif %}
-                        {% endif %}
+
+                    </div>
+                    {% if answers is not empty %}
+                    <div class="row">
+                        <div class="col-12">
+                            <div id='anchor-response' class="card-header text-center mt-3 mb-3 bg-secondary text-light">
+                                    derniers commentaires postés
+                            </div>
+                            {% for answer in answers %}
+                                {% if answer.verified == 1 %}
+                                <div class="card mb-3 mt-3 page-trans answer{{ answer.id }} bg-success">
+                                    <div class="card-footer text-light label-color">posté par : {{ answer.author.nickname }}, le : {{ answer.date|date('d-m-Y H:i:s') }}</div>
+                                    <div class="card-body">
+                                        <p class="card-text text-light">{{answer.content}}</p>
+                                    </div>
+                                    {% if app.session.get('account') is not null %}
+                                        {% if app.session.get('account').rank == 2 %}
+                                            <button class="delete-answer btn btn-color col-lg-3 m-auto col-12 col-md-6" id="{{ answer.id }}">Supprimer la reponse</button>
+                                        {% endif %}
+                                    {% endif %}
+                                </div>
+                                {% endif %}
+                            {% endfor %}
+                            {% for answer in answers %}
+                            {% if answer.verified == 0 %}
+                            <div class="card mb-3 mt-3 page-trans answer{{ answer.id }}">
+                                    <div class="card-footer text-light label-color">
+                                            posté par : {{ answer.author.nickname }}, le : {{ answer.date|date('d-m-Y H:i:s') }}
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="card-text text-light">{{answer.content}}</p>
+                                    </div>
+                                    {% if app.session.get('account') is not null %}
+                                        {% if app.session.get('account').rank == 2 %}
+                                            <button class="delete-answer btn btn-color col-lg-3 m-auto col-12 col-md-6" id="{{ answer.id }}">Supprimer la reponse</button>
+                                            <button class="validate-answer btn btn-color col-lg-3 m-auto col-12 col-md-6" id="{{ answer.id }}">Valider la reponse</button>
+                                        {% endif %}
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                        </div>
                     </div>
                     {% endif %}
-            {% endfor %}
-            {% for answer in answers %}
-                {% if answer.verified == 0 %}
-                    <div class="border answer{{ answer.id }}">
-                        <p>Réponse : {{answer.content}}</p>
-                        <p>Fait le : {{ answer.date|date('Y-m-d H:i:s') }} par {{ answer.author.nickname }}</p>
-                        {% if app.session.get('account') is not null %}
-                            {% if app.session.get('account').rank == 2 %}
-                                <button class="delete-answer" id="{{ answer.id }}">Supprimer la reponse</button>
-                                <button class="validate-answer" id="{{ answer.id }}">Valider la reponse</button>
-                            {% endif %}
-                        {% endif %}
-                    </div>
                 {% endif %}
-            {% endfor %}
-        {% endif %}
-        {% if app.session.get('account') is not null %}
-            {% if app.session.get('account').rank == 2 %}
-                <button id="delete-subject">Supprimer l'article</button>
-            {% endif %}
-            <form action="{{ path('apiCreateAnswer') }}" method="POST" id="answer-form">
-                <p><textarea name="content" id="content" cols="30" rows="10" placeholder="Votre réponse"></textarea><div id="contentError"></div></p>
-                <p><input type="submit"><div id="divFailed"></div></p>
-            </form>
-            <div id="formSuccess"></div>
-        {% endif %}
-    {% endif %}
-{% endif %}
-{% endblock %}
-{% block javascripts %}
+            </div>
+        <footer class="main-footer"></footer>
+        {% endblock %}
+        {% block javascripts %}
 {% if article is defined %}
     <script>
         var subjectId = "{{ article.id }}";

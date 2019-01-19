@@ -30,9 +30,33 @@ bottom: 0;
 width: 100%;
 height: 60px; /* Set the fixed height of the footer here */
 line-height: 60px; /* Vertically center the text there */
-background-image: url(../img/banner-4.jpg);
-background-repeat: no-repeat;
-background-size: cover;
+background-color: rgba(0, 0, 0, 0.767);
+}
+
+.page-trans{
+    background-color: #696969dc;
+}
+
+.label-color{
+    background-color: #1e1e1ed9 !important;
+}
+
+.btn-color{
+    background-color: #ef4800;
+    color: white;
+    transition: 0.5s;
+    -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
+    -ms-transition: 0.5s;
+    -o-transition: 0.5s;
+}
+.btn-color:hover{
+    transform:scale(1.2);
+    color: white;
+    -webkit-transform:scale(1.2);
+    -moz-transform:scale(1.2);
+    -ms-transform:scale(1.2);
+    -o-transform:scale(1.2);
 }
 
 .icon_profil{
@@ -55,11 +79,43 @@ background-size: cover;
     -o-border-radius: 15px;
 }
 
-.background-image{
-    background-image: url(../img/banner-4.jpg);
+.font-image{
+    background-image: url(../../../img/web.jpg);
     background-repeat: no-repeat;
+    background-attachment: fixed;
     background-size: cover;
 }
+
+.text-height-x2{
+    font-size:1.5rem;
+}
+
+.text-color{
+    color: #ff4d00;
+}
+
+.article-header{
+    background-color:#616161;
+}
+
+.background-image{
+    background-color: rgba(0, 0, 0, 0.767);
+}
+
+.police-text{
+    font-family: 'Coiny', cursive;
+    font-family: 'Lobster', cursive;
+}
+
+.sans-serif-text{
+    font-family: 'Francois One', sans-serif;
+}
+
+.modal-title-color{
+    background-color: #ef4800;
+    color:white;
+}
+
 .btn-effect{
     font-size: 1.3rem;
     transition: 0.2s;
@@ -69,7 +125,7 @@ background-size: cover;
     -o-transition: 0.2s;
 }
 .btn-effect:hover{
-    background-color: darkred;
+    background-color: #ef4800c0;
     border-radius:10px;
     -webkit-border-radius:10px;
     -moz-border-radius:10px;
@@ -110,4 +166,8 @@ background-size: cover;
 mark{
     background-color: rgba(219, 126, 49, 0.555);
     padding : 4px 0;
+}
+
+.text-black{
+    color:black;
 }

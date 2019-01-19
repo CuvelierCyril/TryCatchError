@@ -2,6 +2,7 @@ $(document).ready(function(){
     $('#answer-form').submit(function(e){
         var form = $(this);
         e.preventDefault();
+        $('#contentError').html('');
         $.ajax({
             url: form.attr('action'),
             method: form.attr('method'),
@@ -11,18 +12,18 @@ $(document).ready(function(){
             success:function(data){
                 if (data.success){
                     form.remove();
-                    $('#formSuccess').html(`<p style="color : green;">Réponse créé</p>`);
+                    $('#formSuccess').html(`<p class="alert alert-success">Réponse créé</p>`);
                     location.reload(true);
                 }
                 if (data.content){
-                    $('#contentError').html('<span style="color:red;">Contenu invalide</span>');
+                    $('#contentError').html('<p class="alert alert-danger">Contenu invalide</p>');
                 }
                 if (data.id){
-                    $('#divFailed').html('<span style="color:red;">Veuillez rentrer un identifiant valide</span>');
+                    $('#divFailed').html('<p class="alert alert-danger">Veuillez rentrer un identifiant valide</p>');
                 }
             },
             error:function(){
-                $('#divFailed').html('<span style="color:red;">Erreur lors du traitement des donées</span>');
+                $('#divFailed').html('<p class="alert alert-danger">Erreur lors du traitement des donées</p>');
             },
             beforeSend:function(){
 

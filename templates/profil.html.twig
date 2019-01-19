@@ -5,32 +5,32 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12 col-md-12 col-sm-12 col-lg-7 offset-lg-1 box-shadow-page order-1 order-sm-1 order-md-1 order-lg-1">
-                <h1 class="text-center mb-4">mon profil</h1>
-                <div class="card offset-1 offset-sm-4 col-md-9 offset-md-3 offset-lg-4 mt-3 mb-3" style="width: 18rem;">
+                <h1 class="text-center mb-4 text-light">mon profil</h1>
+                <div class="card page-trans offset-1 offset-sm-4 col-md-9 offset-md-3 offset-lg-4 mt-3 mb-3" style="width: 18rem;">
                     <div>
                         <div class="card-img-top"><img class="col-12" src="{{ asset(app.session.get('account').picture) }}"
                                 alt="Profilimage" height="220" width="220">
                         </div>
                         <div class="card-body">
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item">Nom d'utilisateur: <i>{{ app.session.get('account').nickname }}</i></li>
-                                <li class="list-group-item">Adresse Email:<i>{{ app.session.get('account').email }}</i></li>
+                                <li class="list-group-item text-light page-trans">Nom d'utilisateur: <i>{{ app.session.get('account').nickname }}</i></li>
+                                <li class="list-group-item text-light page-trans">Adresse Email:<i>{{ app.session.get('account').email }}</i></li>
                             </ul>
                         </div>
                     </div>
                 </div>
                 <div class="col-12 col-sm-12 offset-sm-0 col-lg-8 offset-lg-4">
-                    <a id="btnArticle" class="btn btn-danger" data-toggle="collapse" href="#multiCollapseExample1" role="button"
+                    <a id="btnArticle" class="btn btn-color" data-toggle="collapse" href="#multiCollapseExample1" role="button"
                         aria-expanded="false" aria-controls="multiCollapseExample1">Mes articles</a>
-                    <a id="btnComment" class="btn btn-danger" data-toggle="collapse" href="#Collapsearticle" role="button"
+                    <a id="btnComment" class="btn btn-color" data-toggle="collapse" href="#Collapsearticle" role="button"
                         aria-expanded="false" aria-controls="Collapsearticle">Mes commentaires</a>
                 </div>
                 <div class="row">
                     <div class="col">
                         <div class="collapse multi-collapse" id="multiCollapseExample1">
-                            <div class="card card-body">
-                                <div class="accordion" id="articleliste">
-                                    <h1 class="m-auto text-center">Mes Articles</h1>
+                            <div class="card card-body page-trans">
+                                <div class="accordion page-trans" id="articleliste">
+                                    <h1 class="m-auto text-center text-light">Mes Articles</h1>
                                     {% if subjects is not defined %}
                                         <p>Aucun article</p>
                                     {% else %}
@@ -43,7 +43,7 @@
                                                 </div>
                                                 <div id="collapseThree">
                                                     <div class="card-body">{{ subject.description }}<a
-                                                        href="{{path('subject', {id : subject.id})}}" class="btn btn-secondary btn-sm active m-2" role="button">Voir l'article</a>
+                                                        href="{{path('subject', {id : subject.id})}}" class="btn btn-color btn-sm active m-2" role="button">Voir l'article</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -57,9 +57,9 @@
                 <div class="row">
                     <div class="col">
                         <div class="collapse multi-collapse" id="Collapsearticle">
-                            <div class="card card-body">
+                            <div class="card card-body page-trans">
                                 <div class="accordion" id="articleliste">
-                                    <h1 class="m-auto text-center">Mes réponses</h1>
+                                    <h1 class="m-auto text-center text-light">Mes réponses</h1>
                                     {% if answers is not defined %}
                                         <p>Aucune réponse</p>
                                     {% else %}
@@ -71,7 +71,7 @@
                                                     </h5>
                                                 </div>
                                                 <div id="collapseThree">
-                                                    <div class="card-body"><a href="{{path('subject', {id : answer.subject.id})}}" class="btn btn-secondary btn-sm active m-2" role="button">Voir l'article</a>
+                                                    <div class="card-body"><a href="{{path('subject', {id : answer.subject.id})}}" class="btn btn-color btn-sm active m-2 text-light" role="button">Voir l'article</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -84,18 +84,18 @@
                 </div>
             </div>
             <div class="col-12 col-md-12 text-center col-lg-4 offset-lg-1 ml-0 mt-3 mb-3 order-2 order-lg-2 order-sm-2">
-                <h2 class="col-12">Modifier mes information</h2>
+                <h2 class="col-12 text-light">Modifier mes information</h2>
                 <div class="row">
                     <ul class="row m-auto">
                         <li class="admintag mt-3 col-12 col-md-12">
-                            <button type="button" class="btn btn-danger btn-lg col-10 col-sm-12 col-md-12 col-lg-12"
+                            <button type="button" class="btn btn-color btn-lg col-10 col-sm-12 col-md-12 col-lg-12"
                                 data-toggle="modal" data-target="#modalpassword">Changer mot de passe</button>
                             <div class="modal fade" id="modalpassword" tabindex="-1" role="dialog" aria-labelledby="modalpassword"
                                 aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="modalpassword">Changer de mot de passe</h5>
+                                    <div class="modal-content page-trans">
+                                        <div class="modal-header page-trans">
+                                            <h5 class="modal-title text-light" id="modalpassword">Changer de mot de passe</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
@@ -120,21 +120,21 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                                            <button type="button" class="btn btn-info">Comfirmer</button>
+                                            <button type="button" class="btn btn-color">Comfirmer</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </li>
                         <li class="admintag mt-3 col-12 col-md-12">
-                            <button type="button" class="btn btn-danger btn-lg col-10 col-sm-12 col-md-12 col-lg-12"
+                            <button type="button" class="btn btn-color btn-lg col-10 col-sm-12 col-md-12 col-lg-12"
                                 data-toggle="modal" data-target="#modalimg">Changer image de profil</button>
                             <div class="modal fade" id="modalimg" tabindex="-1" role="dialog" aria-labelledby="modalimg"
                                 aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
+                                    <div class="modal-content page-trans">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="modalimg">Changer image de profil</h5>
+                                            <h5 class="modal-title text-light" id="modalimg">Changer image de profil</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
@@ -152,27 +152,27 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                                            <button type="button" class="btn btn-info">Comfirmer</button>
+                                            <button type="button" class="btn btn-color">Comfirmer</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </li>
                         <li class="admintag mt-3 col-12 col-md-12">
-                            <button type="button" class="btn btn-danger btn-lg col-10 col-sm-12 col-md-12 col-lg-12"
+                            <button type="button" class="btn btn-color btn-lg col-10 col-sm-12 col-md-12 col-lg-12"
                                 data-toggle="modal" data-target="#modalnickname">Changer nom d'utilisateur</button>
                             <div class="modal fade" id="modalnickname" tabindex="-1" role="dialog" aria-labelledby="modalnickname"
                                 aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
+                                    <div class="modal-content page-trans">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="modalnickname">Changer de nom d'utilisateur</h5>
+                                            <h5 class="modal-title text-light" id="modalnickname">Changer de nom d'utilisateur</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            <div class="card card-body">
+                                            <div class="card card-body page-trans">
                                                 <form class="col-12">
                                                     <div class="input-group mb-2 mr-sm-2">
                                                         <input type="text" class="form-control" id="nickname_change"
@@ -183,7 +183,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                                            <button type="button" class="btn btn-info">Comfirmer</button>
+                                            <button type="button" class="btn btn-color">Comfirmer</button>
                                         </div>
                                     </div>
                                 </div>

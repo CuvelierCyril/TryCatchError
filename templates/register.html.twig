@@ -4,28 +4,28 @@
 {% block body %}
     <div class="container-fluid">
         <div class="row">
-            <div class="col-xs-6 col-sm-3 col-lg-9 offset-lg-1 box-shadow-page pb-4">
-                <h1 class="col-12 text-center mb-5">Inscription</h1>
+            <div class="col-xs-6 col-sm-3 col-md-12 col-lg-9 offset-lg-1 box-shadow-page pb-4">
+                <h1 class="col-12 text-center mb-5 text-light police-text">Inscription</h1>
                 <form id="register-form" method="POST" action="{{ path('apiRegister') }}">
-                    <div class="form-group m-auto col-4">
-                        <label class="col-12 pl-0" for="register-form-email">Adresse Email<span class="pl-4" id="emailError"></span></label>
-                        <input type="email" class="form-control" id="register-form-email" placeholder="jean@exemple.com" name="email">
+                    <div class="form-group m-auto col-lg-4 col-md-6 col-12">
+                        <label class="col-12 pl-0 text-light police-text text-height-x2" for="register-form-email">Adresse Email<span class="pl-4" id="emailError"></span></label>
+                        <input type="email" class="form-control police-text" id="register-form-email" placeholder="jean@exemple.com" name="email">
                     </div><br>
-                    <div class="form-group m-auto col-4">
-                        <label class="col-12 pl-0" for="register-form-nickname">Nom d'utilisateur<span class="pl-4" id="nicknameError"></span></label>
-                        <input type="text" class="form-control" id="register-form-nickname" placeholder="Jeans" name="nickname">
+                    <div class="form-group m-auto col-lg-4 col-md-6 col-12">
+                        <label class="col-12 pl-0 text-light police-text text-height-x2" for="register-form-nickname">Nom d'utilisateur<span class="pl-4" id="nicknameError"></span></label>
+                        <input type="text" class="form-control police-text" id="register-form-nickname" placeholder="Jeans" name="nickname">
                     </div><br>
-                    <div class="form-group m-auto col-4">
-                        <label class="col-12 pl-0" for="register-form-password">Mot de passe<span class="pl-4" id="passwordError"></span></label>
-                        <input type="password" class="form-control" id="register-form-password" placeholder="Mot de passe" name="password">
+                    <div class="form-group m-auto col-lg-4 col-md-6 col-12">
+                        <label class="col-12 pl-0 text-light police-text text-height-x2" for="register-form-password">Mot de passe<span class="pl-4" id="passwordError"></span></label>
+                        <input type="password" class="form-control police-text" id="register-form-password" placeholder="Mot de passe" name="password">
                     </div><br>
-                    <div class="form-group m-auto col-4">
-                        <label class="col-12 pl-0" for="register-form-password-comfirm">Comfirmation mot de passe<span class="pl-4" id="passwordConfirmError"></span></label>
-                        <input type="password" class="form-control" id="register-form-password-comfirm" placeholder=" Comfirmation Mot de passe" name="passwordConfirm">
+                    <div class="form-group m-auto col-lg-4 col-md-6 col-12">
+                        <label class="col-12 pl-0 text-light police-text text-height-x2" for="register-form-password-comfirm">Comfirmation mot de passe<span class="pl-4" id="passwordConfirmError"></span></label>
+                        <input type="password" class="form-control police-text" id="register-form-password-comfirm" placeholder=" Comfirmation Mot de passe" name="passwordConfirm">
                     </div><br>
                     {{ recaptcha.Display()|raw }}<span class="pl-4" id="recaptchaError"></span>
                     <div class="row col-12">
-                        <button type="submit" class="btn btn_background m-auto">S'inscrire</button>
+                        <button type="submit" class="btn btn-color btn-lg m-auto police-text">S'inscrire</button>
                         <span id="divFailed" class="col-12 text-center"></span>
                     </div>
                 </form>

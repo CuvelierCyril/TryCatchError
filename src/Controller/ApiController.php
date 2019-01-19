@@ -479,4 +479,77 @@ class ApiController extends AbstractController{
         }
         return $this->json($msg);
     }
+    /**
+     * @route("PasswordChange", name="apiPasswordChange")
+     */
+    public function apiPasswordChange(Request $request){
+        $AccountPassword = $this->get('session')->get('account')->getPassword();
+        $NewPass = $request->request->get('NewPass');
+        $newpass2 = $request->request->get('NewPass2');
+        $currentPass = $request->request->get('CurrentPass');
+
+        if($request->getMethod() == 'POST'){
+            if($currentPass == "" || $NewPass == "" || $newpass2 == ""){
+                $msg['emptypassword'] = true;
+            } else {
+                if(password_verify($currentPass, $AccountPassword)){
+                    if($NewPass != $currentPass){
+                        if(preg_match("#^.{3,500}$#", $NewPass)){
+                            if($NewPass == $newpass2){
+                                $repo = $this->getDoctrine()->getRepository(User::class);
+    
+                                $this->get('session')->get('account')->setPassword(password_hash($newpass2, PASSWORD_BCRYPT));
+                                $em = $this->getDoctrine()->getManager();
+                                $em->merge($this->get('session')->get('account'));
+                                $em->flush();
+                                $msg['success'] = true;
+                            } else {
+                                $msg['newpass'] = true;
+                            }
+                        } else {
+                            $msg['newPassPregMatch'] = true;
+                        }
+                    } else {
+                        $msg['CurrentPass'] = true;
+                    }
+                } else {
+                    $msg['passwordhash'] = true;
+                }
+            }
+            
+        }
+        return $this->json($msg);
+    }
+    /**
+     * @route("NameChange", name="apiNameChange")
+     */
+    public function apiNameChange(Request $request){
+
+        $oldName = $this->get('session')->get('account')->getNickname();
+        $newName = $request->request->get('Nickname');
+
+        if($request->getMethod() == 'POST'){
+            if($newName == ""){
+                $msg['emptyNickName'] = true;
+            } else {
+                if($newName != $oldName){
+                    if(preg_match('#^.{3,100}$#', $newName)){
+                        $repo = $this->getDoctrine()->getRepository(User::class);
+            
+                        $this->get('session')->get('account')->setNickname($newName);
+                        $em = $this->getDoctrine()->getManager();
+                        $em->merge($this->get('session')->get('account'));
+                        $em->flush();
+                        $msg['success'] = true;
+                    } else {
+                        $msg['pregmatchNickName'] = true;
+                    }
+                } else {
+                    $msg['sameNickName'] = true;
+                }
+            }
+
+        }
+        return $this->json($msg);
+    }
 }

@@ -58,6 +58,6 @@ class Recaptcha
         }
 
     public function Display(){
-        return '<div class="form-group offset-4 col-6 g-recaptcha" data-sitekey="' . $this->getKeys()['publicKey'] . '"></div><br>';
+        return '<div class="form-group offset-md-3 col-md-6 offset-lg-4 col-lg-6 col-12 g-recaptcha" data-sitekey="' . $this->getKeys()['publicKey'] . '"></div><br>';
     }
 }

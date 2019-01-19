@@ -7,53 +7,56 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
         <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0">
         <link rel="stylesheet" href="{{ asset('css/style-commun.css')}}">
+        <link href="https://fonts.googleapis.com/css?family=Coiny|Lobster" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Francois+One" rel="stylesheet"> 
         {% block stylesheets %}{% endblock %}
     </head>
-    <body>
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark background-image">
-                    <a href="{{ path('index') }}"><img src="{{ asset('img/logov6.2.png') }}" alt="logo" width="74" height="74"></a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar_menu" aria-controls="navbar_menu" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-
-                    <div class="collapse navbar-collapse" id="navbar_menu">
-                        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                            <li class="nav-item btn-effect text-center">
-                                <a class="nav-link text-light" href="{{ path('index') }}"><i class="fas fa-home"></i> Accueil</a>
-                            </li>
-                            <li id="subjectsBtn" class="nav-item btn-effect text-center">
-                                    <a class="nav-link text-light" href="{{ path('subjects') }}"><i class="fas fa-book"></i> Liste des sujets</a>
-                            </li>
-                            {% if app.session.get('account') is null %}
-                            <li class="nav-item btn-effect text-center toremove">
-                                <a class="nav-link text-light" href="{{ path('register')}}"><i class="fab fa-wpforms"></i> Inscription</a>
-                            </li>
-                            <li class="nav-item btn-effect text-center toremove">
-                                <a class="nav-link text-light" href="{{ path('login') }}"><i class="fas fa-user"></i> Connexion</a>
-                            </li>
-                            {% else %}
-                            <li class="nav-item btn-effect text-center">
-                                <a class="nav-link text-light" href="{{ path('profil') }}"><i class="far fa-user-circle"></i> Mon compte</a>
-                            </li>
-                            <li class="nav-item btn-effect text-center">
-                                <a class="nav-link text-light" href="{{ path('createSubject') }}"><i class="fas fa-pen-fancy"></i> Créer un sujet</a>
-                            </li>
-                            {% if app.session.get('account').rank == 2 %}
-                            <li class="nav-item btn-effect text-center">
-                                <a class="nav-link text-light" href="{{ path('admin', {type : 'all', page : 1}) }}"><i class="fas fa-tools"></i> Administration</a>
-                            </li>
-                            {% endif %}
-                            <li class="nav-item btn-effect text-center">
-                                <a class="nav-link text-light" href="{{ path('disconnect') }}"><i class="fas fa-user"></i> Déconnexion</a>
-                            </li>
-                            {% endif %}
-                        </ul>
-                       <form class="form-inline my-2 my-lg-0" id="search-form" action="{{ path('searchResults') }}" method="POST">
+    <body class="font-image sans-serif-text">
+        <nav class="navbar navbar-expand-lg navbar-dark background-image police-text">
+            <a href="{{ path('index') }}"><img src="{{asset("img/LogoV7.png")}}" alt="logo" width="64" height="64"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar_menu" aria-controls="navbar_menu" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbar_menu">
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                    <li class="nav-item btn-effect text-center">
+                        <a class="nav-link text-light" href="{{ path('index') }}"><i class="fas fa-home"></i> Accueil</a>
+                    </li>
+                    <li class="nav-item btn-effect text-center" id="subjectsBtn">
+                        <a class="nav-link text-light" href="{{ path('subjects') }}"><i class="fas fa-paperclip"></i> Liste des articles</a>
+                    </li>
+                    {% if app.session.get('account') is null %}
+                    <li class="nav-item btn-effect text-center toremove">
+                        <a class="nav-link text-light" href="{{ path('register') }}"><i class="fab fa-wpforms"></i> Inscription</a>
+                    </li>
+                    <li class="nav-item btn-effect text-center toremove">
+                        <a class="nav-link text-light" href="{{ path('login') }}"><i class="fas fa-user"></i> Connexion</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item btn-effect text-center">
+                        <a class="nav-link text-light" href="{{ path('profil') }}"><i class="far fa-user-circle"></i> Mon compte</a>
+                    </li>
+                    <li class="nav-item btn-effect text-center">
+                        <a class="nav-link text-light" href="{{ path('createSubject') }}"><i class="fas fa-pen-fancy"></i> Créer un sujet</a>
+                    </li>
+                    {% if app.session.get('account').rank == 2 %}
+                    <li class="nav-item btn-effect text-center">
+                        <a class="nav-link text-light" href="{{ path('admin', {type : 'all', page : 1}) }}"><i class="fas fa-tools"></i> Administration</a>
+                    </li>
+                    {% endif %}
+                    <li class="nav-item btn-effect text-center">
+                        <a class="nav-link text-light" href="{{ path('disconnect') }}"><i class="fas fa-user"></i> Déconnexion</a>
+                    </li>
+                    {% endif %}
+                </ul>
+                <form class="form-inline my-2 my-lg-0" id="search-form" action="{{ path('searchResults') }}" method="POST">
                     <input class="form-control mr-sm-2" type="search" name="search" placeholder="Recherche..." aria-label="Search">
-                    <button class="btn my-2 my-sm-0" type="submit">Rechercher</button>
+                    <button class="btn my-2 my-sm-0 btn-color" type="submit">Rechercher</button>
                 </form>
-                    </div>
-                </nav>
+            </div>
+        </nav>
+        
         {% block body %}{% endblock %}
         <footer class="main-footer"></footer>
         <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
