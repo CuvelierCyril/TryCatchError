@@ -42,11 +42,11 @@
         </div>
         <div class="form-group mt-4"><input class="btn btn_background" type="submit" value="Postez"><span id="errorTraitement" class="pl-4"></span></div>
       </form>
-      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal fade" id="modalCode" tabindex="-1" role="dialog" aria-labelledby="modalCodeLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Ajouter du code</h5>
+              <h5 class="modal-title" id="modalCodeLabel">Ajouter du code</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -60,15 +60,46 @@
                 <option value="css">css</option>
                 <option value="php">php</option>
               </select>
-              <p><label for="selected-language">Ecrivrez ici le code à insérer : </label></p>
-              <textarea name="" id="txt" cols="60" rows="10" placeholder="exemple : <p>Bonjour</p>"></textarea>
+              <p><label for="txt-code">Ecrivrez ici le code à insérer : </label></p>
+              <textarea name="" id="txt-code" cols="60" rows="10" placeholder="exemple : <p>Bonjour</p>"></textarea>
               <div>
-                  <pre><code id="simulation"> </code></pre>
+                  <pre><code id="simulation-code"> </code></pre>
               </div>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary btn-category mb-1" data-dismiss="modal">Fermer</button>
               <button id="valider" type="button" class="btn btn-info" data-dismiss="modal">Valider</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="modalStyle" tabindex="-1" role="dialog" aria-labelledby="modalStyleLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalStyleLabel">Ajouter du texte stylisé</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p><label for="selected-style">Sélectionnez le type de style : </label>
+              <select name="selected" id="selected-style"></p>
+                <option value="" selected>Style</option>
+                <option value="error">zone d'erreur</option>
+                <option value="underline">zone soulignée</option>
+                <option value="mark">zone surlignée</option>
+                <option value="overline">zone rayée</option>
+              </select>
+              <p><label for="txt-style">Ecrivrez ici le texte à insérer : </label></p>
+              <textarea name="" id="txt-style" cols="60" rows="10" placeholder="exemple : Ce texte sera souligné"></textarea>
+              <div>
+                  <pre><code id="simulation-style"> </code></pre>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary btn-category mb-1" data-dismiss="modal">Fermer</button>
+              <button id="valider-style" type="button" class="btn btn-info" data-dismiss="modal">Valider</button>
             </div>
           </div>
         </div>
