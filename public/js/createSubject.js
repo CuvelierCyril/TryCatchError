@@ -68,7 +68,7 @@ $(document).ready(function(){
         $('#Success').html('');
         $('#errorContent').html(`Contenu du sujet : <button type="button" class="btn btn-color" data-toggle="modal" data-target="#exampleModal">
         Ajouter du code
-    </button>`);
+    </button><button type="button" class="btn btn-color ml-2 mr-2"  data-toggle="modal" data-target="#modalStyle">Texte stylisé</button>`);
         $('#errorTraitement').html('');
         $('#errorDescription').html('Description : ');
         $('#errorCategories').html('Catégories : ');
@@ -84,18 +84,18 @@ $(document).ready(function(){
                     $('#success').html('<p class="alert alert-success">Félicitation, votre article a été posté !</p>')
                 }
                 if (data.title){
-                    $('#errorTitle').html('Titre : <span class="alert alert-danger">Format du titre invalide</span>');
+                    $('#errorTitle').html('Titre : <p class="alert alert-danger">Format du titre invalide</p>');
                 }
                 if(data.content){
                     $('#errorContent').html(`Contenu du sujet : <button type="button" class="btn btn-color" data-toggle="modal" data-target="#exampleModal">
                     Ajouter du code
-                </button><span style="color:red;">Format du contenu invalide</span>`);
+                </button><button type="button" class="btn btn-color ml-2 mr-2"  data-toggle="modal" data-target="#modalStyle">Texte stylisé</button><p class="alert alert-danger">Format du contenu invalide</p>`);
                 }
                 if(data.description){
-                    $('#errorDescription').html('Description : <span class="alert alert-danger">Format de la description invalide</span>');
+                    $('#errorDescription').html('Description : <p class="alert alert-danger">Format de la description invalide</p>');
                 }
                 if(data.category){
-                    $('#errorCategories').html('Catégories : <span class="alert alert-danger">Une ou plusieurs categorie(s) est invalide(s)</span>');
+                    $('#errorCategories').html('Catégories : <p class="alert alert-danger">Une ou plusieurs categorie(s) est invalide(s)</p>');
                 }
             }, error:function(){
 
