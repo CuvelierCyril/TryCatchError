@@ -9,79 +9,67 @@
                         <img src="{{ asset('img/logov7.png') }}" id="imgIndex" alt="logo" width="350" height="350" class="m-auto">'
                     </div>
                 </div>
-                <div class="row">
-                    <p class="col-md-12 text-lef text-light">PRESENTATION : Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur consequatur similique repellendus, sit sint quibusdam assumenda distinctio voluptatum sapiente? Eius corporis, ipsa ullam maiores, non quo temporibus eos ratione eligendi, quam aspernatur aperiam ipsam soluta pariatur itaque. Id adipisci, ipsam assumenda velit iusto repudiandae quod exercitationem eveniet laborum saepe ex quasi recusandae ab porro molestias tenetur consequatur nulla! Rem quidem qui mollitia dolore veniam, unde sit fugit beatae corrupti, enim eaque quod odio et dicta excepturi explicabo obcaecati ducimus labore, temporibus aperiam incidunt doloremque? Voluptatibus asperiores, amet laboriosam id ad quisquam eum velit magni esse incidunt molestias, minus rem unde sequi soluta ea iure non qui laudantium necessitatibus sed architecto quasi consequatur saepe? Libero cumque facere magni officia dolores dolor esse hic deserunt tempore quas perferendis odio consequuntur, quod molestias quia corporis! Dolorem excepturi ab voluptatem unde dolorum iusto porro nam, libero quae nulla maiores consectetur nobis architecto odit eius, sit voluptas ratione molestiae, molestias ut quibusdam? Nostrum commodi ea ex dignissimos. Ex illo dolore, atque numquam, ab assumenda harum sed, labore ratione officiis soluta ducimus recusandae exercitationem officia placeat! Reiciendis quos, perferendis aut inventore doloribus quia dolore odio tenetur eligendi aliquam hic non necessitatibus numquam rerum laborum assumenda animi? Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit sed ratione quidem dolorum quaerat recusandae at mollitia cupiditate delectus consequuntur aliquid velit nam voluptate accusantium dignissimos ipsam, facere facilis repudiandae!</p>
-                </div>
 
                 {% if lastSubjects is not null %}
                 <h1 class="m-auto text-center text-light police-text">Sujets recemment créés : </h1>
                 <div class="accordion page-trans">
-                                {% for lastSubject in lastSubjects %}
-                                <div class="row p-2">
-                                    <div class="col-8">
-                                        <h5 class="mb-0">
-                                            <p class="title text-light">{{ lastSubject.title }}</p>
-                                        </h5>
-                                        <p class="text-light">{{ lastSubject.description }}</p>
-                                        <a  href="{{path('subject', {id : lastSubject.id})}}" class="btn btn-color active m-2" role="button">Voir l'article</a>
-                                    </div>
-                                    <div class="col-12 offset-xl-3 col-xl-1 col-md-2 offset-md-2 text-center">
-                                        <p class="border bg-white">Vues : {{ lastSubject.view }}</p>
-                                        <p class="border bg-white">réponses : {{ lastSubject.answers|length }}</p>
-                                    </div>
-                                </div>
-                                {% endfor %}
-                            <p class="text-light"></p>
+                    {% for lastSubject in lastSubjects %}
+                    <div class="row p-2">
+                        <div class="col-8">
+                            <h5 class="mb-0">
+                                <p class="title text-light">{{ lastSubject.title }}</p>
+                            </h5>
+                            <p class="text-light">{{ lastSubject.description }}</p>
+                            <a  href="{{path('subject', {id : lastSubject.id})}}" class="btn btn-color active m-2" role="button">Voir l'article</a>
+                        </div>
+                        <div class="col-12 offset-xl-3 col-xl-1 col-md-2 offset-md-2 text-center">
+                            <p class="border bg-white">Vues : {{ lastSubject.view }}</p>
+                            <p class="border bg-white">réponses : {{ lastSubject.answers|length }}</p>
                         </div>
                     </div>
+                    {% endfor %}
                 </div>
                 {% endif %}
 
                 {% if lastThree is not null %}
-                <h1 class="m-auto text-center text-light police-text">Sujets recemment créés : </h1>
+                <h1 class="m-auto text-center text-light police-text">Sujets recemment vus : </h1>
                 <div class="accordion page-trans">
-                                {% for lastThre in lastThree %}
-                                <div class="row p-2" >
-                                    <div class="col-8">
-                                        <h5 class="mb-0">
-                                            <p class="title text-light">{{ lastThre.title }}</p>
-                                        </h5>
-                                        <p class="text-light">{{ lastThre.description }}</p>
-                                        <a  href="{{path('subject', {id : lastThre.id})}}" class="btn btn-color active m-2" role="button">Voir l'article</a>
-                                    </div>
-                                    <div class="col-12 offset-xl-3 col-xl-1 col-md-2 offset-md-2 text-center">
-                                        <p class="border bg-white">Vues : {{ lastThre.view }}</p>
-                                        <p class="border bg-white">réponses : {{ lastThre.answers|length }}</p>
-                                    </div>
-                                </div>
-                                {% endfor %}
-                            <p class="text-light"></p>
+                    {% for lastThre in lastThree %}
+                    <div class="row p-2" >
+                        <div class="col-8">
+                            <h5 class="mb-0">
+                                <p class="title text-light">{{ lastThre.title }}</p>
+                            </h5>
+                            <p class="text-light">{{ lastThre.description }}</p>
+                            <a  href="{{path('subject', {id : lastThre.id})}}" class="btn btn-color active m-2" role="button">Voir l'article</a>
+                        </div>
+                        <div class="col-12 offset-xl-3 col-xl-1 col-md-2 offset-md-2 text-center">
+                            <p class="border bg-white">Vues : {{ lastThre.view }}</p>
+                            <p class="border bg-white">réponses : {{ lastThre.answers|length }}</p>
                         </div>
                     </div>
+                    {% endfor %}
                 </div>
                 {% endif %}
 
                 {% if lastResearch is not null %}
-                <h1 class="m-auto text-center text-light police-text">Sujets recemment créés : </h1>
+                <h1 class="m-auto text-center text-light police-text">Sujets recemment cherchés avec le mot-clé '{{ keyWord }}' : </h1>
                 <div class="accordion page-trans">
-                                {% for lastSearch in lastResearch %}
-                                <div class="row p-2" >
-                                    <div class="col-8">
-                                        <h5 class="mb-0">
-                                            <p class="title text-light">{{ lastSearch.title }}</p>
-                                        </h5>
-                                        <p class="text-light">{{ lastSearch.description }}</p>
-                                        <a  href="{{path('subject', {id : lastSearch.id})}}" class="btn btn-color active m-2" role="button">Voir l'article</a>
-                                    </div>
-                                    <div class="col-12 offset-xl-3 col-xl-1 col-md-2 offset-md-2 text-center">
-                                        <p class="border bg-white">Vues : {{ lastSearch.view }}</p>
-                                        <p class="border bg-white">réponses : {{ lastSearch.answers|length }}</p>
-                                    </div>
-                                </div>
-                                {% endfor %}
-                            <p class="text-light"></p>
+                    {% for lastSearch in lastResearch %}
+                    <div class="row p-2" >
+                        <div class="col-8">
+                            <h5 class="mb-0">
+                                <p class="title text-light">{{ lastSearch.title }}</p>
+                            </h5>
+                            <p class="text-light">{{ lastSearch.description }}</p>
+                            <a  href="{{path('subject', {id : lastSearch.id})}}" class="btn btn-color active m-2" role="button">Voir l'article</a>
+                        </div>
+                        <div class="col-12 offset-xl-3 col-xl-1 col-md-2 offset-md-2 text-center">
+                            <p class="border bg-white">Vues : {{ lastSearch.view }}</p>
+                            <p class="border bg-white">réponses : {{ lastSearch.answers|length }}</p>
                         </div>
                     </div>
+                    {% endfor %}
                 </div>
                 {% endif %}
             </div>

@@ -5,12 +5,11 @@
 {% endblock %}
 {% block body %}
 <div class="container-fluid">
-
-    <div class="row">
-        <div class="col-12 col-md-9 col-lg-7 offset-lg-1 box-shadow-page page-trans">
-            <h1 class="text-center mt-3 mb-5 text-light">Liste utilisateurs</h1>
+        <h1 class="text-center mt-3 mb-5 text-light police-text">Liste utilisateurs</h1>
+        <div class="row">
+        <div class="col-12 col-md-9 col-lg-7 offset-lg-1{% if vide is not defined %} page-trans{% endif %}">
             {% if vide is defined %}
-            <p class="text-center text-light">Aucun utilisateurs trouvés</p>
+            <p class="alert alert-danger col-6 offset-6">Aucun utilisateurs trouvés</p>
             {% else %}
             <table class="table text-light">
                 <thead>
@@ -97,8 +96,8 @@
                                 </form>
                                 <div id="view"></div>
                                 <div class="modal-footer" id="adminModalFooter">
-                                    <button id="confirmAdminForm" type="submit" class="btn btn-color">Confirmer</button>
                                     <button id="cancelAdminForm" type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                    <button id="confirmAdminForm" type="submit" class="btn btn-color">Valider</button>
                                 </div>
                             </div>
                         </div>
@@ -108,7 +107,7 @@
         </div>
 
         <div class="col-12 col-md-3 col-lg-4 offset-lg-1 ml-0 mt-3">
-            <h1 class="text-center col-lg-10 offset-lg-1 text-light">Voir utilisateurs</h1><br>
+            <h1 class="text-center col-lg-10 offset-lg-1 text-light police-text">Filtres : </h1><br>
             <div class="row col-lg-10 offset-lg-1">
                 <ul class="m-auto text-center col-12">
                     <li class="admintag"><a href="{{ path('admin', {type: 'all', page: 1}) }}" class="btn btn-color btn-lg col-12 list-button">Tous</a></li><br>
