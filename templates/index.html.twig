@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %} Acceuil {% endblock %}
-{% block body %} {# HOMEPAGE START #}
+{% block body %}
         <div class="container-fluid">
 
                 <div class="row">
@@ -18,36 +18,42 @@
                 <div class="card page-trans">
                     <div class="card-header row" id="headingThree">
                         <div class="col-8">
-                            <h5 class="mb-0">
                                 {% for lastSubject in lastSubjects %}
-                                    <p class="text-light">{{lastSubject.title}}</p>
-                                    <a href="../sujet/{{ lastSubject.id }}" class="btn btn-color active m-2" role="button">Voir l'article</a>
+                                    <p class="mb-0" class="text-light">{{lastSubject.title}}</p>
+                                    <a href="{{ path('subject', {id: lastSubject.id}) }}" class="btn btn-color active m-2" role="button">Voir l'article</a>
                                 {% endfor %}
-                            {% endif %}
-                            </h5>
                             <p class="text-light"></p>
                         </div>
                     </div>
                 </div>
-            {# HOMEPAGE END #}
-            {# {% if lastThree is not null %}
-                <p class="text-color police-text">Sujets recrement vues : </p>
-                    {% for lastOneThree in lastThree %}
-                        <p class="text-light">{{lastOneThree.title}}</p>
-                    {% endfor %}
-                {% endif %} #}
+                {% endif %}
+                {% if lastThree is not null %}
+                <h1 class="m-auto text-center text-light police-text">Sujets recemment vus : </h1>
+                <div class="card page-trans">
+                    <div class="card-header row" id="headingThree">
+                        <div class="col-8">
+                                {% for lastThre in lastThree %}
+                                    <p class="mb-0" class="text-light">{{lastThre.title}}</p>
+                                    <a href="{{ path('subject', {id: lastThre.id}) }}" class="btn btn-color active m-2" role="button">Voir l'article</a>
+                                {% endfor %}
+                            <p class="text-light"></p>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
                 {% if lastResearch is not null %}
-                <p class="text-color police-text">Dernière recherche avec le mot clés {{keyWord}} : </p>
-                    {% for lastSearch in lastResearch %}
-                        <p class="text-light">{{lastSearch.title}}</p>
-                    {% endfor %}
+                <h1 class="m-auto text-center text-light police-text">Sujets recemment recherchés avec le mot-clé '{{keyWord}}' : </h1>
+                <div class="card page-trans">
+                    <div class="card-header row" id="headingThree">
+                        <div class="col-8">
+                                {% for lastSearch in lastResearch %}
+                                    <p class="mb-0" class="text-light">{{lastSearch.title}}</p>
+                                    <a href="{{ path('subject', {id: lastSearch.id}) }}" class="btn btn-color active m-2" role="button">Voir l'article</a>
+                                {% endfor %}
+                            <p class="text-light"></p>
+                        </div>
+                    </div>
+                </div>
                 {% endif %}
             </div>
-        {% endblock %}
-        {% block javascripts %}
-        <script>
-            var page = '{{ path("apiSubjects") }}';
-        </script>
-        <script src="{{ asset('/js/overlay.js')}}"></script>
-        <script src="/js/ShowArticle.js"></script>
         {% endblock %}
