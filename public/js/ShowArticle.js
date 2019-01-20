@@ -341,7 +341,6 @@ $(document).ready(function(){
         $('#displayPagination').html(str2);
         $('#main-container').html(str);
         $('#next-current').click(function(){
-            console.log('oui');
             nb++;
             if (filter == ''){
                 window.location.hash = nb;
