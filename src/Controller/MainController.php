@@ -18,6 +18,7 @@ class MainController extends AbstractController{
      * @route("/", name="index")
      */
     public function index(){
+        $this->get('session')->clear();
         $keyWord = '';
         $repo = $this->getDoctrine()->getRepository(Subject::class);
         $lastSubjects = $repo->lastFive(); // 5 derniers sujets créés
