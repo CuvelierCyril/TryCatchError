@@ -9,12 +9,12 @@
                 <h1 class="col-12 text-center mb-5 text-light police-text">Se connecter</h1>
                 <form id="login-form" method="POST" action="{{ path('apiLogin') }}"> {# formulaire ajax permettant de se connecter via 2 champs à remplir #}
                     <div class="form-group m-auto col-12 col-md-6 col-lg-4">
-                        <label class="col-12 pl-0 text-light police-text text-height-x2" for="register-form-email">Adresse Email : <span class="pl-4" id="emailError"></span></label>
+                        <label class="col-12 pl-0 text-light police-text text-height-x2" for="register-form-email">Adresse Email : </label><span class="pl-4 police-text" id="emailError"></span>
                         <input type="email" class="form-control police-text" id="register-form-email" placeholder="jean@exemple.com"
                             name="email">
                     </div><br>
                     <div class="form-group m-auto col-12 col-md-6 col-lg-4">
-                        <label class="col-12 pl-0 text-light police-text text-height-x2" for="register-form-password">Mot de passe : <span class="pl-4" id="passwordError"></span></label>
+                        <label class="col-12 pl-0 text-light police-text text-height-x2" for="register-form-password">Mot de passe : </label><span class="pl-4 police-text" id="passwordError"></span>
                         <input type="password" class="form-control police-text" id="register-form-password" placeholder="Mot de passe"
                             name="password">
                     </div><br>

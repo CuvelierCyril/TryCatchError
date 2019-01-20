@@ -5,6 +5,8 @@ $(document).ready(function(){
         $('#divFailed').html('');
         $('#passwordConfirmError').html('');
         $('#nicknameError').html('');
+        $('#recaptchaError').removeClass('alert alert-danger');
+        $('#recaptchaError').text('');
         var form = $(this);
         e.preventDefault();
         console.log($('#register-form-password').val());
@@ -41,7 +43,8 @@ $(document).ready(function(){
                     $('#nicknameError').html('<p class="alert alert-danger col-12">Pseudo déjà utilisé</p>');
                 }
                 if(data.recaptcha){
-                    $('#recaptchaError').html('<p class="alert alert-danger col-6 offset-3 text-center">Recaptcha invalid</p>');
+                    $('#recaptchaError').text('Recaptcha invalid');
+                    $('#recaptchaError').addClass('alert alert-danger');
                 }
             },
             error:function(){

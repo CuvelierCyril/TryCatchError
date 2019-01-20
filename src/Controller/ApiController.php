@@ -62,6 +62,8 @@ class ApiController extends AbstractController{
                             ->setDate(new Datetime())
                             ->setRank(0)
                             ->setStatus(0)
+                            ->setWarning('')
+                            ->setWaringDuration(0)
                         ;
                         $em = $this->getDoctrine()->getManager();
                         $em->persist($newUser);

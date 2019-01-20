@@ -178,14 +178,16 @@ class MainController extends AbstractController{
         $content = str_replace(']', '>', $content);
         $article->setContent($content);
         if (!$this->get('session')->has('lastSubjects')){
-            $lastSubjects = array($article->getId(), 0, 0);
+            $lastSubjects = array($article->getId(), 0, 0, 0, 0);
         } else {
             $lastSubjects = $this->get('session')->get('lastSubjects');
-            $lastSubjects[4] = $lastSubjects[3];
-            $lastSubjects[3] = $lastSubjects[2];
-            $lastSubjects[2] = $lastSubjects[1];
-            $lastSubjects[1] = $lastSubjects[0];
-            $lastSubjects[0] = $article->getId();
+            if (!in_array($article->getId(), $lastSubjects)){
+                $lastSubjects[4] = $lastSubjects[3];
+                $lastSubjects[3] = $lastSubjects[2];
+                $lastSubjects[2] = $lastSubjects[1];
+                $lastSubjects[1] = $lastSubjects[0];
+                $lastSubjects[0] = $article->getId();
+            }
         }
         $this->get('session')->set('lastSubjects', $lastSubjects);
         if (isset($verified)){
