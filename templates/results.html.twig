@@ -1,24 +1,23 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Résultats{% endblock %}
-{% block body %}
+
+{% block body %} {# visuel de la page de recherché selon un mot clé #}
 <h1 class="m-auto text-center text-light police-text">Résultats : </h1>
-{% if msg is defined %}
-    {% if msg == true %}
-        <p class="alert alert-danger">Mot clé incorrect, veuillez affiner votre recherche</p>
+    {% if msg is defined %} {# affichage de quelques cas particuliers #}
+        {% if msg == true %}
+            <p class="alert alert-danger col-6 offset-3">Mot clé incorrect, veuillez affiner votre recherche</p>
+        {% else %}
+            <p class="alert alert-danger col-6 offset-3">Aucun article trouvé</p>
+        {% endif %}
     {% else %}
-        <p class="alert alert-danger">Aucun article trouvé</p>
-    {% endif %}
-{% else %}
     <div class="accordion page-trans">
-        {% for article in articles %}
+        {% for article in articles %} {# affichage des sujets trouvés #}
         <div class="row p-2">
             <div class="col-8">
-                <h5 class="mb-0">
-                    <p class="title text-light">{{ article.title|raw }}</p>
-                </h5>
+                <h5 class="mb-0 title text-light">{{ article.title|raw }}</h5>
                 <p class="text-light">{{ article.description }}</p>
-                <a  href="{{path('subject', {id : article.id})}}" class="btn btn-color active m-2" role="button">Voir l'article</a>
+                <a href="{{path('subject', {id : article.id})}}" class="btn btn-color active m-2" role="button">Voir l'article</a>
             </div>
             <div class="col-12 offset-xl-3 col-xl-1 col-md-2 offset-md-2 text-center">
                 <p class="border bg-white">Vues : {{ article.view }}</p>
@@ -27,6 +26,5 @@
         </div>
         {% endfor %}
     </div>
-{% endif %}
+    {% endif %}
 {% endblock %}
-{% block javascripts %}{% endblock %}

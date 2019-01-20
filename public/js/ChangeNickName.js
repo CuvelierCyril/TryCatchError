@@ -3,7 +3,7 @@ $(document).ready(function(){
         var form = $(this);
         e.preventDefault();
         $('.currentname').html("");
-        $.ajax({
+        $.ajax({ //envoie du formulaire en ajax et gestion des erreurs
             url: form.attr('action'),
             method: form.attr('method'),
             dataType: "json",

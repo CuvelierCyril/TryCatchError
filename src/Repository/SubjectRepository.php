@@ -63,10 +63,21 @@ class SubjectRepository extends ServiceEntityRepository
         ;
     }
 
-    public function lastThree(){
+    public function lastFiveWithId($id){
+        return $this->createQueryBuilder('s')
+        ->andWhere('s.author = :key')
+        ->setParameter('key', $id)
+        ->orderBy('s.date', 'DESC')
+        ->setMaxResults(5)
+        ->getQuery()
+        ->getResult()
+        ;
+    }
+
+    public function lastFive(){
         return $this->createQueryBuilder('s')
         ->orderBy('s.date', 'DESC')
-        ->setMaxResults(3)
+        ->setMaxResults(5)
         ->getQuery()
         ->getResult()
         ;

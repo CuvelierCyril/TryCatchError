@@ -2,15 +2,14 @@
 
 {% block title %}Erreur 404{% endblock %}
 
-{% block body %}
-<di class="container-fluid">
+{% block body %} {# visuel de la page d'erreur 404 #}
+<div class="container-fluid">
   <div class="row">
-      <div class="col-12 text-center text-light">
-          <h1>404</h1>
-          <p style="font-size: 2rem;">Page introuvable</p>
-          <a class="btn btn-color" role="button" href='{{ path('index') }}'>Retour a l'Acceuil</a>
+    <div class="col-12 text-center text-light">
+      <h1>Erreur 404</h1>
+      <p style="font-size: 2rem;">Page introuvable</p>
+      <a class="btn btn-color" role="button" href='{{ path('index') }}'>Retour a l'Acceuil</a>
     </div>
   </div>
-</di>
-
+</div>
 {% endblock %}

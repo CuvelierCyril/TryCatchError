@@ -1,16 +1,18 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Créer un sujet{% endblock %}
+
 {% block stylesheets %}
 <link rel="stylesheet" href="{{ asset('css/prism.css') }}">
 {% endblock %}
-{% block body %}
+
+{% block body %} {# visuel de la page de création d'un sujet #}
 <div class="container-fluid">
   <h1 class="text-center text-light police-text">Postez votre problème</h1>
   <div class="row">
     <div class="col-lg-10 offset-lg-1">
       <div id="success"></div>
-      <form action="{{ path('apiCreateSubject') }}" method="POST" id="form-subject">
+      <form action="{{ path('apiCreateSubject') }}" method="POST" id="form-subject"> {# formulaire traitant l'envoi du sujet avec tous les champs valides, affichages d'erreurs dans le cas contraire #}
         <div class="form-group mt-5 col-lg-6 p-0 col-sm-9">
             <label class="text-light text-height-x2 police-text" for="title" id="errorTitle">Titre : </label>
             <input class="form-control" type="text" id="title" name="title" placeholder="Ceci est un exemple de titre">
@@ -21,7 +23,7 @@
             <input class="form-control" type="text" id="description" name="description" placeholder="Ceci est un exemple de description">
           </div>
           <div class="form-group col-lg-6">
-            <label class="text-light text-height-x2 police-text" for="categories" id="errorCategories">Catégories : </label>
+            <label class="text-light text-height-x2 police-text" for="categories" id="errorCategories">Catégories : </label> {# permet d'ajouter des catégories à son problème #}
             <div id="categories">
               <button class="btn btn-secondary btn-category mb-1" value="html">html</button>
               <button class="btn btn-secondary btn-category mb-1" value="php">php</button>
@@ -36,11 +38,11 @@
         </div>
         <div class="form-group mt-4">
             <label class="text-light text-height-x2 police-text" for="content" id="errorContent">Contenu du sujet : <button type="button" class="btn btn-color" data-toggle="modal" data-target="#modalCode">Ajouter du code</button><button type="button" class="btn btn-color ml-2 mr-2"  data-toggle="modal" data-target="#modalStyle">Texte stylisé</button></label>
-            <textarea class="form-control" id="content" id="content" name="content" rows="10" placeholder="Ecrivez ici le contenu de votre problème."></textarea>
+            <textarea class="form-control" id="content" name="content" rows="10" placeholder="Ecrivez ici le contenu de votre problème."></textarea>
         </div>
         <div class="form-group mt-4"><input class="btn btn-color" type="submit" id="form-subject" value="Poster"><span id="errorTraitement" class="pl-4"></span></div>
       </form>
-      <div class="modal fade" id="modalCode" tabindex="-1" role="dialog" aria-labelledby="modalCodeLabel" aria-hidden="true">
+      <div class="modal fade" id="modalCode" tabindex="-1" role="dialog" aria-labelledby="modalCodeLabel" aria-hidden="true"> {# modal permettant l'ajout de code via un bbcode #}
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header modal-title-color">
@@ -59,10 +61,8 @@
                 <option value="php">php</option>
               </select>
               <p><label for="txt-code">Ecrivrez ici le code à insérer : </label></p>
-              <textarea name="" id="txt-code" cols="60" rows="10" placeholder="exemple : <p>Bonjour</p>"></textarea>
-              <div>
-                  <pre><code id="simulation-code"> </code></pre>
-              </div>
+              <textarea id="txt-code" cols="60" rows="10" placeholder="exemple : <p>Bonjour</p>"></textarea>
+              <p><pre><code id="simulation-code"></code></pre></p>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary btn-category mb-1" data-dismiss="modal">Fermer</button>
@@ -71,7 +71,7 @@
           </div>
         </div>
       </div>
-      <div class="modal fade" id="modalStyle" tabindex="-1" role="dialog" aria-labelledby="modalStyleLabel" aria-hidden="true">
+      <div class="modal fade" id="modalStyle" tabindex="-1" role="dialog" aria-labelledby="modalStyleLabel" aria-hidden="true"> {# modal permettant l'ajout de style via un bbcode #}
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header modal-title-color">
@@ -90,7 +90,8 @@
                 <option value="overline">zone rayée</option>
               </select>
               <p><label for="txt-style">Ecrivrez ici le texte à insérer : </label></p>
-              <textarea name="" id="txt-style" cols="60" rows="10" placeholder="exemple : Ce texte sera souligné"></textarea>
+              <textarea id="txt-style" cols="60" rows="10" placeholder="exemple : Ce texte sera souligné"></textarea>
+              <p id="simulation-style"></p>
               <div>
                   <pre><code id="simulation-style"> </code></pre>
               </div>
@@ -106,6 +107,7 @@
   </div>
 </div>
 {% endblock %}
+
 {% block javascripts %}
 <script src="{{ asset('js/prism.js') }}"></script>
 <script src="{{ asset('js/createSubject.js') }}"></script>

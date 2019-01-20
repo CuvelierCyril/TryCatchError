@@ -2,7 +2,7 @@ $(document).ready(function(){
     $('form').submit(function(e){
         e.preventDefault();
         var form = $(this);
-        $.ajax({
+        $.ajax({ //envoie du formulaire en ajax et gestion des erreurs
             url: form.attr('action'),
             method: form.attr('method'),
             dataType: 'json',

@@ -1,17 +1,20 @@
 {% extends "base.html.twig" %}
+
 {% block title %}Administration{% endblock %}
+
 {% block stylesheets %}
 <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
 {% endblock %}
-{% block body %}
+
+{% block body %} {# visuel de la page d'administration réservé aux administrateurs #}
 <div class="container-fluid">
-        <h1 class="text-center mt-3 mb-5 text-light police-text">Liste utilisateurs</h1>
-        <div class="row">
+    <h1 class="text-center mt-3 mb-5 text-light police-text">Liste des utilisateurs</h1>
+    <div class="row">
         <div class="col-12 col-md-9 col-lg-7 offset-lg-1{% if vide is not defined %} page-trans{% endif %}">
             {% if vide is defined %}
-            <p class="alert alert-danger col-6 offset-6">Aucun utilisateurs trouvés</p>
+            <p class="alert alert-danger col-6 offset-6">Aucun utilisateur trouvé</p>
             {% else %}
-            <table class="table text-light">
+            <table class="table text-light"> {# tableau listant les utilisateurs #}
                 <thead>
                     <tr class="bg-dark">
                         <th scope="col">#</th>
@@ -40,7 +43,7 @@
                             {% if user.active == 0 %}
                             Compte non activé
                             {% else %}
-                            <select class="custom-select col-7 inputState">
+                            <select class="custom-select col-7 inputState"> {# gestion du statut de l'utilisateur #}
                                 {% if user.rank == 2 %}
                                 <option value="{{ user.id }}/0" {% if user.status==0 %}selected{% endif %}>Active</option>
                                 <option value="{{ user.id }}/1" {% if user.status==1 %}selected{% endif %}>Averti</option>
@@ -60,53 +63,52 @@
                 </tbody>
             </table>
 
-                <button id="triggerAdminModal" type="button" class="btn btn-color" data-toggle="modal" data-target="#adminModal"></button>
-                <div class="modal fade" id="adminModal" tabindex="-1" role="dialog" aria-labelledby="adminModalCentered"
-                    aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header modal-title-color">
-                                <h5 class="modal-title" id="adminModalTitle">Confirmation changement de status</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <form id="formAdmin" action="{{ path('apiAdminStatus') }}" method="POST">
-                                    <label for="messageToUser">Raison du changement de status : </label>
-                                    <textarea id="messageToUser"></textarea>
-                                    <p class="mt-3 mb-1">Durée : </p>
-                                    <div>
-                                        <input type="radio" id="contactChoice1"
-                                        name="contact" value="86400">
-                                        <label for="contactChoice1">1 jour</label>
-                                        <input type="radio" id="contactChoice2"
-                                        name="contact" value="604800">
-                                        <label for="contactChoice2">7 jours</label>
-                                        <input type="radio" id="contactChoice3"
-                                        name="contact" value="2592000">
-                                        <label for="contactChoice3">30 jours</label>
-                                        <input type="radio" id="contactChoice4"
-                                        name="contact" value="7776000">
-                                        <label for="contactChoice4">90 jours</label>
-                                        <input type="radio" id="contactChoice5"
-                                        name="contact" value="15552000">
-                                        <label for="contactChoice5">180 jours</label>
-                                    </div>
-                                </form>
-                                <div id="view"></div>
-                                <div class="modal-footer" id="adminModalFooter">
-                                    <button id="cancelAdminForm" type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-                                    <button id="confirmAdminForm" type="submit" class="btn btn-color">Valider</button>
+            <button id="triggerAdminModal" type="button" class="btn btn-color" data-toggle="modal" data-target="#adminModal"></button> {# modal permettant l'ajout d'un avertissement à un utilisateur #}
+            <div class="modal fade" id="adminModal" tabindex="-1" role="dialog" aria-labelledby="adminModalCentered" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header modal-title-color">
+                            <h5 class="modal-title" id="adminModalTitle">Confirmation changement de status</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="formAdmin" action="{{ path('apiAdminStatus') }}" method="POST">
+                                <label for="messageToUser">Raison du changement de status : </label>
+                                <textarea id="messageToUser"></textarea>
+                                <p class="mt-3 mb-1">Durée : </p>
+                                <div>
+                                    <input type="radio" id="contactChoice1"
+                                    name="contact" value="86400">
+                                    <label for="contactChoice1">1 jour</label>
+                                    <input type="radio" id="contactChoice2"
+                                    name="contact" value="604800">
+                                    <label for="contactChoice2">7 jours</label>
+                                    <input type="radio" id="contactChoice3"
+                                    name="contact" value="2592000">
+                                    <label for="contactChoice3">30 jours</label>
+                                    <input type="radio" id="contactChoice4"
+                                    name="contact" value="7776000">
+                                    <label for="contactChoice4">90 jours</label>
+                                    <input type="radio" id="contactChoice5"
+                                    name="contact" value="15552000">
+                                    <label for="contactChoice5">180 jours</label>
                                 </div>
+                            </form>
+                            <div id="view"></div>
+                            <div class="modal-footer" id="adminModalFooter">
+                                <button id="cancelAdminForm" type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                <button id="confirmAdminForm" type="submit" class="btn btn-color">Valider</button>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
             {% endif %}
         </div>
 
-        <div class="col-12 col-md-3 col-lg-4 offset-lg-1 ml-0 mt-3">
+        <div class="col-12 col-md-3 col-lg-4 offset-lg-1 ml-0 mt-3"> {# filtre ajax permettant de recherché les utilisateur bannis, ou modo #}
             <h1 class="text-center col-lg-10 offset-lg-1 text-light police-text">Filtres : </h1><br>
             <div class="row col-lg-10 offset-lg-1">
                 <ul class="m-auto text-center col-12">
@@ -119,6 +121,7 @@
     </div>
 </div>
 {% endblock %}
+
 {% block javascripts %}
 <script>var changeStatus = "{{ path('apiAdminStatus') }}"</script>
 <script src="{{ asset('js/admin.js') }}"></script>

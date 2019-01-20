@@ -4,7 +4,7 @@ $(document).ready(function(){
         e.preventDefault();
         $('.currentpass').html("");
         $('.newpassword').html("");
-        $.ajax({
+        $.ajax({ //envoie du formulaire en ajax et gestion des erreurs
             url: form.attr('action'),
             method: form.attr('method'),
             dataType: "json",

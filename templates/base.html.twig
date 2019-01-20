@@ -1,3 +1,4 @@
+{# rendu servant de base aux autres, notament pour la navbar et les fichier css/js commum #}
 <!DOCTYPE html>
 <html>
     <head>
@@ -19,7 +20,7 @@
             </button>
             
             <div class="collapse navbar-collapse" id="navbar_menu">
-                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0"> {# liste avec tous les liens du menu, utilisant le style nav de bootstrap #}
                     <li class="nav-item btn-effect text-center">
                         <a class="nav-link text-light" href="{{ path('index') }}"><i class="fas fa-home"></i> Accueil</a>
                     </li>
@@ -59,6 +60,7 @@
         
         {% block body %}{% endblock %}
         <footer class="main-footer"></footer>
+        {# scripts communs #}
         <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
         <script src="{{ asset('js/bootstrap.min.js') }}"></script>
         <script src="{{ asset('js/overlay.js') }}"></script>

@@ -1,14 +1,16 @@
 {% extends "base.html.twig" %}
+
 {% block title %}Activation{% endblock %}
-{% block body %}
+
+{% block body %} {# visuel de la page d'activation du compte #}
     {% if msg.success is defined %}
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-xs-6 col-sm-3 col-lg-9 offset-lg-1 pb-4">
-                    <h1 class="col-12 text-center mb-5 text-light">Activation de votre compte</h1>
-                    <p class="alert alert-success col-6 offset-3 text-center">Votre compte est activé.</p>
-                </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-6 col-sm-3 col-lg-9 offset-lg-1 pb-4">
+                <h1 class="col-12 text-center mb-5 text-light">Activation de votre compte</h1>
+                <p class="alert alert-success col-6 offset-3 text-center">Votre compte est activé.</p>
             </div>
         </div>
+    </div>
     {% endif %}
 {% endblock %}

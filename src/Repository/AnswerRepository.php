@@ -19,14 +19,26 @@ class AnswerRepository extends ServiceEntityRepository
         parent::__construct($registry, Answer::class);
     }
 
-    public function lastThree(){
+    public function lastFiveWithId($id){
         return $this->createQueryBuilder('a')
+        ->andWhere('a.author = :key')
+        ->setParameter('key', $id)
         ->orderBy('a.date', 'DESC')
-        ->setMaxResults(3)
+        ->setMaxResults(5)
         ->getQuery()
         ->getResult()
         ;
     }
+
+    public function lastFive(){
+        return $this->createQueryBuilder('a')
+        ->orderBy('a.date', 'DESC')
+        ->setMaxResults(5)
+        ->getQuery()
+        ->getResult()
+        ;
+    }
+
     // /**
     //  * @return Answer[] Returns an array of Answer objects
     //  */

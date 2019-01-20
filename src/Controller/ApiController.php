@@ -12,6 +12,7 @@ use \DateTime;
 use App\Service\Recaptcha;
 
 /**
+ * gestion de tous les formulaires ajax
  * @route("/api/")
  */
 class ApiController extends AbstractController{
@@ -20,7 +21,7 @@ class ApiController extends AbstractController{
      * @route("register/", name="apiRegister", methods="POST")
      */
     public function apiRegister(Request $request, Recaptcha $recaptcha, \Swift_Mailer $mailer){
-        if ($request->getMethod() == 'POST'){
+        if ($request->getMethod() == 'POST'){ //appel et vérification de toutes les données recues du formulaire
             $email = $request->request->get('email');
             $nickname = $request->request->get('nickname');
             $password = $request->request->get('password');
@@ -42,7 +43,7 @@ class ApiController extends AbstractController{
                 $msg['recaptcha'] = true;
             }
 
-            if (!isset($msg)){
+            if (!isset($msg)){ // si tout est bon, création du compte en bbd, envoie d'un mail d'activation
                 $repo = $this->getDoctrine()->getRepository(User::class);
                 $user = $repo->findOneByEmail($email);
                 if ($user == null){
@@ -96,7 +97,7 @@ class ApiController extends AbstractController{
      * @route("login/", name="apiLogin", methods="POST")
      */
     public function apiLogin(Request $request){
-        if ($request->getMethod() == 'POST'){
+        if ($request->getMethod() == 'POST'){ //appel et vérification de toutes les données recues du formulaire
             $email = $request->request->get('email');
             $password = $request->request->get('password');
 
@@ -113,7 +114,7 @@ class ApiController extends AbstractController{
                     if (password_verify($password, $user->getPassword())){
                         if ($user->getActive() == 0){
                             $msg['notActive'] = true;
-                        } else {
+                        } else { //si l'utilisateur a un avertissement, affichage de ce dernier s'il est valide, et changement automatique d'etat s'il ne l'est pas
                             if ($user->getWaringDuration() <= strtotime("now")){
                                 $user->setStatus(0);
                                 $em = $this->getDoctrine()->getManager();
@@ -146,7 +147,7 @@ class ApiController extends AbstractController{
      * @route("create-subject/", name="apiCreateSubject", methods="POST")
      */
     public function apiCreateSubject(Request $request){
-        if ($request->getMethod() == 'POST'){
+        if ($request->getMethod() == 'POST'){ //appel et vérification de toutes les données recues du formulaire
             $title = $request->request->get('title');
             $description = $request->request->get('description');
             $content = $request->request->get('content');
@@ -175,7 +176,7 @@ class ApiController extends AbstractController{
             } else {
                 $categories = '';
             }
-            if (!isset($msg)){
+            if (!isset($msg)){ // si tout est bon création du sujet en bdd
                 $content = strip_tags($content);
                 $newSubject = new Subject();
                 $newSubject
@@ -200,18 +201,18 @@ class ApiController extends AbstractController{
      * @route("create-answer/", name="apiCreateAnswer", methods="POST")
      */
     public function apiCreateAnswer(Request $request){
-        if ($request->getMethod() == "POST"){
+        if ($request->getMethod() == "POST"){ //appel et vérification de toutes les données recues du formulaire
             $content = $request->request->get('content');
             $id = $request->request->get('subjectId');
 
-            if (!preg_match('#^[a-z0-9 \'\-_ !,.?:/]{5,10000}$#i', $content)){
+            if (mb_strlen($content) < 5 || mb_strlen($content) > 10000){
                 $msg['content'] = true;
             }
             if (!preg_match('#^[0-9]+$#', $id)){
                 $msg['id'] = true;
             }
 
-            if (!isset($msg)){
+            if (!isset($msg)){ // si tout est bon création de la réponse en bdd
                 $repo = $this->getDoctrine()->getRepository(Subject::class);
                 $subject = $repo->findOneById($id);
                 $newAnswer = new Answer();
@@ -234,7 +235,7 @@ class ApiController extends AbstractController{
     /**
      * @route("delete-subject/", name="apiDeleteSubject", methods="POST")
      */
-    public function apiDeleteSubject(Request $request){
+    public function apiDeleteSubject(Request $request){ //supression d'un sujet et de toutes les réponses de ce sujet
         $id = $request->request->get('subjectId');
 
         $repo = $this->getDoctrine()->getRepository(Subject::class);
@@ -257,7 +258,7 @@ class ApiController extends AbstractController{
     /**
      * @route("delete-answer/", name="apiDeleteAnswer", methods="POST")
      */
-    public function apiDeleteAnswer(Request $request){
+    public function apiDeleteAnswer(Request $request){ // suppression d'une réponse d'un article
         $id = $request->request->get('answerId');
 
         $repo = $this->getDoctrine()->getRepository(Answer::class);
@@ -276,7 +277,7 @@ class ApiController extends AbstractController{
     /**
      * @route("verified-answer/", name="apiVerifiedAnswer", methods="POST")
      */
-    public function apiVerifiedAnswer(Request $request){
+    public function apiVerifiedAnswer(Request $request){ // validation d'une réponse d'un sujet
         $idSubject = $request->request->get('subjectId');
         $idAnswer = $request->request->get('answerId');
 
@@ -303,10 +304,27 @@ class ApiController extends AbstractController{
         }
         return $this->json($msg);
     }
+
+    /**
+     * @route("annulate-answer/", name="apiAnnulateAnswer", methods="POST")
+     */
+    public function apiAnnulateAnswer(Request $request){ //annulation de la validation d'une reponse
+        $idAnswer = $request->request->get('answerId');
+
+        $repo = $this->getDoctrine()->getRepository(Answer::class);
+        $answer = $repo->findOneById($idAnswer);
+        $answer->setVerified(0);
+        $em = $this->getDoctrine()->getManager();
+        $em->merge($answer);
+        $em->flush();
+        $msg['success'] = true;
+        return $this->json($msg);
+    }
+
     /**
      * @route("list-subjects/", name="apiSubjects", methods="POST")
      */
-    public function apiSubjects(Request $request){
+    public function apiSubjects(Request $request){ //gestion en ajax de l'affichage et de la pagination de la liste des sujets
         $languages = ['symfony', 'php', 'bootstrap', 'js','html','css','mySql','jquery'];
         $filter = $request->request->get('filter');
         $filters = explode('&', $filter);
@@ -350,7 +368,7 @@ class ApiController extends AbstractController{
      * @route("admin/change-status", name="apiAdminStatus")
      */
     public function apiAdmin(Request $request){
-        if ($request->getMethod() == "POST"){
+        if ($request->getMethod() == "POST"){ // changement de status et ajout d'un avertissement
             $datastr = $request->request->get('datastr');
             dump($datastr);
             $data = explode("/", $datastr);
@@ -384,7 +402,7 @@ class ApiController extends AbstractController{
     /**
      * @route("sendMail", name="apiSendMail")
      */
-    public function apiSendMail(\Swift_Mailer $mailer, Request $request){
+    public function apiSendMail(\Swift_Mailer $mailer, Request $request){ //fonction d'envoi de mail lors de la création de compte
         $email = $request->request->get('email');
         $repo = $this->getDoctrine()->getRepository(User::class);
         $user = $repo->findOneByEmail($email);
@@ -418,7 +436,7 @@ class ApiController extends AbstractController{
     /**
      * @route("resetPasswordMail", name="apiResetPasswordMail")
      */
-    public function apiResetPasswordMail(Request $request, \Swift_Mailer $mailer){
+    public function apiResetPasswordMail(Request $request, \Swift_Mailer $mailer){ //envoie de mail lors du reset de mot de passe si l'email est correct
         $email = $request->request->get('emailReset');
         $repo = $this->getDoctrine()->getRepository(User::class);
         $user = $repo->findOneByEmail($email);
@@ -453,7 +471,7 @@ class ApiController extends AbstractController{
     /**
      * @route("resetPassword", name="apiResetPassword")
      */
-    public function apiResetPassword(Request $request){
+    public function apiResetPassword(Request $request){ //changement de mot de passe depuis le formulaire 'mot de passe oublié'
         $newPass = $request->request->get('new-pass');
         $passConf = $request->request->get('confirm-pass');
         $id = $request->request->get('id');
@@ -482,13 +500,13 @@ class ApiController extends AbstractController{
     /**
      * @route("PasswordChange", name="apiPasswordChange")
      */
-    public function apiPasswordChange(Request $request){
+    public function apiPasswordChange(Request $request){ //changement de mot de passe depuis la page profil
         $AccountPassword = $this->get('session')->get('account')->getPassword();
         $NewPass = $request->request->get('NewPass');
         $newpass2 = $request->request->get('NewPass2');
         $currentPass = $request->request->get('CurrentPass');
 
-        if($request->getMethod() == 'POST'){
+        if($request->getMethod() == 'POST'){ //appel et vérification de toutes les données recues du formulaire
             if($currentPass == "" || $NewPass == "" || $newpass2 == ""){
                 $msg['emptypassword'] = true;
             } else {
@@ -523,12 +541,12 @@ class ApiController extends AbstractController{
     /**
      * @route("NameChange", name="apiNameChange")
      */
-    public function apiNameChange(Request $request){
+    public function apiNameChange(Request $request){ //changement de pseudo
 
         $oldName = $this->get('session')->get('account')->getNickname();
         $newName = $request->request->get('Nickname');
 
-        if($request->getMethod() == 'POST'){
+        if($request->getMethod() == 'POST'){ //appel et vérification de toutes les données recues du formulaire
             if($newName == ""){
                 $msg['emptyNickName'] = true;
             } else {

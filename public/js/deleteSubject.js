@@ -1,6 +1,6 @@
 $(document).ready(function(){
     $('#delete-subject').click(function(){
-        $.ajax({
+        $.ajax({ //envoie du formulaire en ajax et gestion des erreurs
             url: apiDeleteSubject,
             method: "POST",
             dataType: 'json',
@@ -9,17 +9,12 @@ $(document).ready(function(){
                 subjectId: subjectId
             },
             success:function(data){
-                console.log(data);
-                
                 window.location.assign("../");
-            },
-            error:function(){
-                console.log('error');
             }
         });
     });
     $('.delete-answer').click(function(){
-        $.ajax({
+        $.ajax({ //envoie du formulaire en ajax et gestion des erreurs
             url: apiDeleteAnswer,
             method: "POST",
             dataType: 'json',
@@ -28,18 +23,13 @@ $(document).ready(function(){
                 answerId: $(this).attr('id')
             },
             success:function(data){
-                console.log(data);
-                
                 location.reload(true);
-            },
-            error:function(){
-                console.log('error');
             }
         });
     });
     $('.validate-answer').click(function(){
         var id = $(this).attr('id');
-        $.ajax({
+        $.ajax({ //envoie du formulaire en ajax et gestion des erreurs
             url: apiVerifiedAnswer,
             method: "POST",
             dataType: 'json',
@@ -49,14 +39,28 @@ $(document).ready(function(){
                 subjectId: subjectId
             },
             success:function(data){
-                console.log(data);
                 if (data.success){
                     $('.answer'+id).addClass('bg-success');
                     location.reload(true);
                 }
+            }
+        });
+    });
+    $('.annulate-answer').click(function(){
+        var id = $(this).attr('id');
+        $.ajax({ //envoie du formulaire en ajax et gestion des erreurs
+            url: apiAnnulateAnswer,
+            method: "POST",
+            dataType: 'json',
+            timeout: 4000,
+            data: {
+                answerId: id
             },
-            error:function(){
-                console.log('error');
+            success:function(data){
+                if (data.success){
+                    $('.answer'+id).removeClass('bg-success');
+                    location.reload(true);
+                }
             }
         });
     });

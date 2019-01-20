@@ -1,28 +1,27 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Se connecter{% endblock %}
-{% block body %}
+
+{% block body %} {# rendu de la page de connexion #}
     <div class="container-fluid">
         <div class="row">
             <div class="col-xs-6 col-sm-3 col-md-12 col-lg-9 offset-lg-1 pb-4">
                 <h1 class="col-12 text-center mb-5 text-light police-text">Se connecter</h1>
-                <form id="login-form" method="POST" action="{{ path('apiLogin') }}">
+                <form id="login-form" method="POST" action="{{ path('apiLogin') }}"> {# formulaire ajax permettant de se connecter via 2 champs à remplir #}
                     <div class="form-group m-auto col-12 col-md-6 col-lg-4">
-                        <label class="col-12 pl-0 text-light police-text text-height-x2" for="register-form-email">Adresse Email<span class="pl-4" id="emailError"></span></label>
+                        <label class="col-12 pl-0 text-light police-text text-height-x2" for="register-form-email">Adresse Email : <span class="pl-4" id="emailError"></span></label>
                         <input type="email" class="form-control police-text" id="register-form-email" placeholder="jean@exemple.com"
                             name="email">
                     </div><br>
                     <div class="form-group m-auto col-12 col-md-6 col-lg-4">
-                        <label class="col-12 pl-0 text-light police-text text-height-x2" for="register-form-password">Mot de passe<span class="pl-4" id="passwordError"></span></label>
+                        <label class="col-12 pl-0 text-light police-text text-height-x2" for="register-form-password">Mot de passe : <span class="pl-4" id="passwordError"></span></label>
                         <input type="password" class="form-control police-text" id="register-form-password" placeholder="Mot de passe"
                             name="password">
                     </div><br>
                     <div class="row">
                         <div class="col-12 col-lg-6 offset-lg-3">
-                            <button type="submit" class="btn btn-color col-4 col-md-4 offset-md-1 col-lg-4 pl-1">Se
-                                connecter</button>
-                            <button type="button" id="reset_password" class="col-6 col-md-4 col-lg-4 btn btn-color pl-1 offset-1">Mot
-                                de passe oublié</button>
+                            <button type="submit" class="btn btn-color col-4 col-md-4 offset-md-1 col-lg-4 pl-1">Se connecter</button>
+                            <button type="button" id="reset_password" class="col-6 col-md-4 col-lg-4 btn btn-color pl-1 offset-1">Mot de passe oublié</button> {# bouton de mot de passe oublier envoyant un mail #}
                             <span id="divFailed" class="col-12 text-center"></span>
                         </div>
                     </div>
@@ -31,36 +30,33 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="modalResetPassword" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="modalResetPassword" tabindex="-1" role="dialog" aria-labelledby="modalResetPasswordTitle" aria-hidden="true">  {# modal gerant le mot de passe oublié #}
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header modal-title-color">
-                    <h5 class="modal-title" id="exampleModalLabel">Mot de passe oublié</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <h5 class="modal-title" id="modalResetPasswordTitle">Mot de passe oublié</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
-                        <div class="ResetMdp"></div>
-                    <form action="{{ path('apiResetPasswordMail') }}" method="POST" id="formResetPassword">
+                    <div class="ResetMdp"></div>
+                    <form action="{{ path('apiResetPasswordMail') }}" method="POST" id="formResetPassword"> {# formulaire ajax envoyant un mail de confiramtion de reset #}
                         <div class="form-group m-auto col-12">
                             <div class="NoAcccount"></div>
-                            <label class="col-12 pl-0" for="register-form-email">Adresse Email<span class="pl-4" id="emailError"></span></label>
-                            <input type="email" class="form-control" id="resetPasswordEmail" placeholder="jean@exemple.com"
-                                name="emailReset">
+                            <label class="col-12 pl-0" for="register-form-email">Adresse Email : <span class="pl-4" id="emailError"></span></label>
+                            <input type="email" class="form-control" id="resetPasswordEmail" placeholder="jean@exemple.com" name="emailReset">
                         </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                            <button type="submit" class="btn btn-color" id="btnResetPassword">Valider</button>
+                        </div>
+                    </form>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                    <button type="submit" class="btn btn-color" id="btnResetPassword">Valider</button>
-                </div>
-            </form>
             </div>
         </div>
     </div>
 {% endblock %}
-{% block javascripts %}
+
+{% block javascripts %} {# scripts assignant des variables ou traitant les formulaires de la page #}
 <script>
     var addBtn = ["{{ url('profil') }}", "{{ url('createSubject') }}", "{{ url('disconnect') }}", "{{ url('admin', {type : 'all', page : 1}) }}"];
     var rout_mail = ["{{ url('apiSendMail') }}"]

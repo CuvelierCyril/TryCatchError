@@ -10,7 +10,7 @@ $(document).ready(function(){
         if (newStatus.substr(-1) != 0){
             $('#triggerAdminModal').click();
         } else {
-            $.ajax({
+            $.ajax({ //envoie du formulaire en ajax et gestion des erreurs
                 url: changeStatus,
                 method: "POST",
                 dataType: "json",
@@ -47,7 +47,7 @@ $(document).ready(function(){
         if(reason.length > 3){
             $('#triggerAdminModal').click();
             $('#view').html('');
-            $.ajax({
+            $.ajax({ //envoie du formulaire en ajax et gestion des erreurs
                 url: changeStatus,
                 method: "POST",
                 dataType: "json",

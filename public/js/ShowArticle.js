@@ -1,4 +1,5 @@
 $(document).ready(function(){
+    //gestion ici du hashage afin de simuler une naviguation avec la pagination et pouvoir envoyer son url a quelqu'un et tombé sur les meme resultats
     var nbpage;
     var nb = window.location.hash.substr(1).split('&')[0];
         if (window.location.hash.substr(1).split('&')[1]){
@@ -21,7 +22,7 @@ $(document).ready(function(){
         apiControllerAjax(window.location.hash.substr(1));
     });
     function apiControllerAjax(value){
-       $.ajax({
+       $.ajax({ //envoie du formulaire en ajax et gestion des erreurs
             url: page,
             method: "POST",
             dataType: 'json',
@@ -41,7 +42,7 @@ $(document).ready(function(){
                         </h5>
                 </div>`);
                 $('#displayPagination').html('');
-                $('#next-current').click(function(){
+                $('#next-current').click(function(){ //gestion de tous les boutons de filtres et de pages
                     nb++;
                     if (filter == ''){
                         window.location.hash = nb;
@@ -147,7 +148,7 @@ $(document).ready(function(){
             }
         });
     }
-    function createDisplay(tableau){
+    function createDisplay(tableau){ //modification de l'affichage
         var maxindex = $(tableau).length - 3;
         var pagi = true;
         var str = `<h1 class="m-auto text-center text-light police-text">Liste des articles</h1>`;
@@ -182,7 +183,7 @@ $(document).ready(function(){
     pagi = false;
     $('#displayPagination').html('');
         }
-        if(pagi){
+        if(pagi){ //gestion de la pagination
             if (nb == 1){
                 if(nb == nbpage -1){
                     str2 = `<li class="page-item">
@@ -340,7 +341,7 @@ $(document).ready(function(){
 
         $('#displayPagination').html(str2);
         $('#main-container').html(str);
-        $('#next-current').click(function(){
+        $('#next-current').click(function(){ //gestion de tous les boutons de filtres et de pages
             nb++;
             if (filter == ''){
                 window.location.hash = nb;

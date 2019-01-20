@@ -5,99 +5,172 @@
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('css/prism.css') }}">
 {% endblock %}
-{% block body %}
+
+{% block body %} {# visuel d'un sujet, avec ses reponses et les possibilités d'y repondre ou de gerer les post si on est modo/admin #}
 <body class="font-image">
-        <div class="container-fluid">
-            {% if article is defined %}
-                <div class="col-12 col-md-12 col-sm-12 col-lg-8 offset-lg-2 order-1 order-sm-1 order-md-1 order-lg-1">
-                    <h1 class="text-center text-light police-text" id="anchor-top">{{ article.title }}</h1>
-                    <div class="card page-trans text-light">
-                        <div class="card-footer text-light label-color">Posté par: {{ article.author.nickname }}, le : {{ article.date|date('d-m-Y H:i:s') }}</div>
-                        <p class="card-body mb-3">{{ article.content|raw }}</p>
-                        <a class="btn btn-color col-12 col-lg-3 col-md-6 m-auto" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Répondre</a>
-                        {% if app.session.get('account') is null %}
-                        <div class="collapse multi-collapse" id="multiCollapseExample1">
-                            <p class="alert alert-danger">Connectez vous afin de répondre.</p>
-                        </div>
-                        {% else %}
-                        <div class="row">
-                            <div class="col">
-                                <div class="collapse multi-collapse" id="multiCollapseExample1">
+    <div class="container-fluid">
+        {% if article is defined %} {# affichage de l'article s'il existe #}
+        <div class="col-12 col-md-12 col-sm-12 col-lg-8 offset-lg-2 order-1 order-sm-1 order-md-1 order-lg-1">
+            <h1 class="text-center text-light police-text" id="anchor-top">{{ article.title }}</h1>
+            <div class="card page-trans text-light">
+                <div class="card-footer text-light label-color">Posté par: {{ article.author.nickname }}, le : {{ article.date|date('d-m-Y H:i:s') }}</div>
+                <p class="card-body mb-3">{{ article.content|raw }}</p>
+                    {% if verified is not defined %}
+                    <a class="btn btn-color col-12 col-lg-3 col-md-6 m-auto" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Répondre</a>
+                    {% endif %}
+                    {% if app.session.get('account') is null %}
+                    <div class="collapse multi-collapse" id="multiCollapseExample1">
+                        <p class="alert alert-danger">Connectez vous afin de répondre.</p>
+                    </div>
+                    {% else %}
+                    <div class="row">
+                        <div class="col">
+                            <div class="collapse multi-collapse" id="multiCollapseExample1">
                                 <div class="border-1px">
                                     <form action="{{ path('apiCreateAnswer') }}" method="POST" id="answer-form">
                                         <div class="form-group">
-                                        <label for="exampleFormControlTextarea1" class="text-light text-height-x2 police-text">Répondre : <div id="contentError"></div></label>
-                                        <textarea class="form-control" name="content" id="exampleFormControlTextarea1" placeholder="Votre réponse" rows="3"></textarea>
+                                        <label for="content" class="text-light text-height-x2 police-text">Répondre : <button type="button" class="btn btn-color" data-toggle="modal" data-target="#modalCode">Ajouter du code</button><button type="button" class="btn btn-color ml-2 mr-2"  data-toggle="modal" data-target="#modalStyle">Texte stylisé</button><div id="contentError"></div></label>
+                                        <textarea class="form-control" name="content" id="content" placeholder="Votre réponse" rows="3"></textarea>
                                         <input class="btn btn-color mt-3 mb-3" type="submit" value="Publier"><div id="divFailed"></div>
                                         </div>
                                     </form>
                                     <div id="formSuccess"></div>
                                 </div>
-                                </div>
                             </div>
                         </div>
+                    </div>
                         {% if app.session.get('account') is not null %}
                             {% if app.session.get('account').rank == 2 %}
                                 <button id="delete-subject" class="btn btn-color col-lg-3 m-auto col-12 col-md-6">Supprimer l'article</button>
                             {% endif %}
                         {% endif %}
-                        {% endif %}
-                    </div>
-                    {% if answers is not empty %}
-                    <div class="row">
-                        <div class="col-12">
-                            <div id='anchor-response' class="card-header text-center mt-3 bg-danger text-light">derniers commentaires postés</div>
-                            {% for answer in answers %}
-                                {% if answer.verified == 1 %}
-                                <div class="card page-trans answer{{ answer.id }} bg-success">
-                                    <div class="card-footer text-light label-color">posté par : {{ answer.author.nickname }}, le : {{ answer.date|date('d-m-Y H:i:s') }}</div>
-                                    <div class="card-body">
-                                        <p class="card-text text-light">{{answer.content}}</p>
-                                    </div>
-                                    {% if app.session.get('account') is not null %}
-                                        {% if app.session.get('account').rank == 2 %}
-                                            <button class="delete-answer btn btn-color col-lg-3 m-auto col-12 col-md-6" id="{{ answer.id }}">Supprimer la reponse</button>
-                                        {% endif %}
-                                    {% endif %}
-                                </div>
-                                {% endif %}
-                            {% endfor %}
-                            {% for answer in answers %}
-                            {% if answer.verified == 0 %}
-                            <div class="card page-trans answer{{ answer.id }}">
-                                    <div class="card-footer text-light label-color">
-                                            posté par : {{ answer.author.nickname }}, le : {{ answer.date|date('d-m-Y H:i:s') }}
-                                    </div>
-                                    <div class="card-body">
-                                        <p class="card-text text-light">{{answer.content}}</p>
-                                    </div>
-                                    {% if app.session.get('account') is not null %}
-                                        {% if app.session.get('account').rank == 2 %}
-                                            <button class="delete-answer btn btn-color col-lg-3 m-auto col-12 col-md-6" id="{{ answer.id }}">Supprimer la reponse</button>
-                                            <button class="validate-answer btn btn-color col-lg-3 m-auto col-12 col-md-6" id="{{ answer.id }}">Valider la reponse</button>
-                                        {% endif %}
-                                    {% endif %}
-                                </div>
-                            {% endif %}
-                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="modal fade" id="modalCode" tabindex="-1" role="dialog" aria-labelledby="modalCodeLabel" aria-hidden="true"> {# modal d'ajout de code sécurisé pour la reponse #}
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header modal-title-color">
+                                <h5 class="modal-title" id="modalCodeLabel">Ajouter du code</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p><label for="selected-language">Sélectionnez le langage du code à insérer : </label>
+                                <select name="selected" id="selected-language"></p>
+                                <option value="" selected>langage</option>
+                                <option value="html">html</option>
+                                <option value="js">js</option>
+                                <option value="css">css</option>
+                                <option value="php">php</option>
+                                </select>
+                                <p><label for="txt-code">Ecrivrez ici le code à insérer : </label></p>
+                                <textarea id="txt-code" cols="60" rows="10" placeholder="exemple : <p>Bonjour</p>"></textarea>
+                                <p><pre><code id="simulation-code"></code></pre></p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary btn-category mb-1" data-dismiss="modal">Fermer</button>
+                                <button id="valider" type="button" class="btn btn-color" data-dismiss="modal">Valider</button>
+                            </div>
                         </div>
                     </div>
-                    {% endif %}
+                </div>
+                <div class="modal fade" id="modalStyle" tabindex="-1" role="dialog" aria-labelledby="modalStyleLabel" aria-hidden="true"> {# modal d'ajout de style sécurisé pour la reponse #}
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header modal-title-color">
+                                <h5 class="modal-title" id="modalStyleLabel">Ajouter du texte stylisé</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p><label for="selected-style">Sélectionnez le type de style : </label>
+                                <select name="selected" id="selected-style"></p>
+                                <option value="" selected>Style</option>
+                                <option value="error">zone d'erreur</option>
+                                <option value="underline">zone soulignée</option>
+                                <option value="mark">zone surlignée</option>
+                                <option value="overline">zone rayée</option>
+                                </select>
+                                <p><label for="txt-style">Ecrivrez ici le texte à insérer : </label></p>
+                                <textarea id="txt-style" cols="60" rows="10" placeholder="exemple : Ce texte sera souligné"></textarea>
+                                <p id="simulation-style"></p>
+                                <div>
+                                    <pre><code id="simulation-style"> </code></pre>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary btn-category mb-1" data-dismiss="modal">Fermer</button>
+                                <button id="valider-style" type="button" class="btn btn-color" data-dismiss="modal">Valider</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% if answers is not empty %} {# affichages des réponses s'il y en a #}
+                <div class="row">
+                    <div class="col-12">
+                        <div id='anchor-response' class="card-header text-center mt-3 bg-danger text-light">derniers commentaires postés</div>
+                        {% for answer in answers %}
+                            {% if answer.verified == 1 %}
+                            <div class="card page-trans answer{{ answer.id }} bg-success">
+                                <div class="card-footer text-light label-color">posté par : {{ answer.author.nickname }}, le : {{ answer.date|date('d-m-Y H:i:s') }}</div>
+                                <div class="card-body">
+                                    <p class="card-text text-light">{{ answer.content|raw }}</p>
+                                </div>
+                                {% if app.session.get('account') is not null %} {# gestion seulon l'auteur ou les droits de la suppression, la validation ou l'annulation d'une reponse #}
+                                    {% if app.session.get('account').id == article.author.id %}
+                                        <button class="annulate-answer btn btn-color col-lg-3 m-auto col-12 col-md-6" id="{{ answer.id }}">Annuler la reponse</button>
+                                    {% endif %}
+                                    {% if app.session.get('account').rank == 2 %}
+                                        <button class="delete-answer btn btn-color col-lg-3 m-auto col-12 col-md-6" id="{{ answer.id }}">Supprimer la reponse</button>
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                        {% for answer in answers %}
+                            {% if answer.verified == 0 %}
+                            <div class="card page-trans answer{{ answer.id }}">
+                                <div class="card-footer text-light label-color">
+                                        posté par : {{ answer.author.nickname }}, le : {{ answer.date|date('d-m-Y H:i:s') }}
+                                </div>
+                                <div class="card-body">
+                                    <p class="card-text text-light">{{ answer.content|raw }}</p>
+                                </div>
+                                {% if app.session.get('account') is not null %} {# gestion seulon l'auteur ou les droits de la suppression, la validation ou l'annulation d'une reponse #}
+                                    {% if app.session.get('account').id == article.author.id %}
+                                        {% if verified is not defined %}
+                                        <button class="validate-answer btn btn-color col-lg-3 m-auto col-12 col-md-6" id="{{ answer.id }}">Valider la reponse</button>
+                                        {% endif %}
+                                    {% endif %}
+                                    {% if app.session.get('account').rank == 2 %}
+                                        <button class="delete-answer btn btn-color col-lg-3 m-auto col-12 col-md-6" id="{{ answer.id }}">Supprimer la reponse</button>
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    </div>
+                </div>
                 {% endif %}
-            </div>
-        <footer class="main-footer"></footer>
-        {% endblock %}
-        {% block javascripts %}
-{% if article is defined %}
-    <script>
-        var subjectId = "{{ article.id }}";
-        var apiDeleteSubject = "{{ path('apiDeleteSubject') }}";
-        var apiDeleteAnswer = "{{ path('apiDeleteAnswer') }}";
-        var apiVerifiedAnswer = "{{ path('apiVerifiedAnswer') }}";
-    </script>
-    <script src="{{ asset('js/createAnswer.js') }}"></script>
-    <script src="{{ asset('js/deleteSubject.js') }}"></script>
-    <script src="{{ asset('js/subject.js') }}"></script>
-    <script src="{{ asset('js/prism.js') }}"></script>
-{% endif %}
+            {% endif %}
+        </div>
+    </div>
+</body>
+{% endblock %}
+
+{% block javascripts %}
+    {% if article is defined %} {# script seulement si l'article existe #}
+        <script>
+            var subjectId = "{{ article.id }}";
+            var apiDeleteSubject = "{{ path('apiDeleteSubject') }}";
+            var apiDeleteAnswer = "{{ path('apiDeleteAnswer') }}";
+            var apiVerifiedAnswer = "{{ path('apiVerifiedAnswer') }}";
+            var apiAnnulateAnswer = "{{ path('apiAnnulateAnswer') }}";
+        </script>
+        <script src="{{ asset('js/createAnswer.js') }}"></script>
+        <script src="{{ asset('js/deleteSubject.js') }}"></script>
+        <script src="{{ asset('js/prism.js') }}"></script>
+    {% endif %}
 {% endblock %}

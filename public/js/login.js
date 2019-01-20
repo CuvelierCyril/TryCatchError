@@ -5,7 +5,7 @@ $(document).ready(function(){
         $('#divFailed').html('');
         var form = $(this);
         e.preventDefault();
-        $.ajax({
+        $.ajax({ //envoie du formulaire en ajax et gestion des erreurs
             url: form.attr('action'),
             method: form.attr('method'),
             dataType: 'json',
