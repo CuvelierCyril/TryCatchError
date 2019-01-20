@@ -16,7 +16,7 @@ $(document).ready(function(){
                     $('#nickname').text('Nom d\'utilisateur : '+ form.serialize().substr(9));
                 }
                 if(data.pregmatchNickName){
-                    $('.currentname').html('<p class="alert alert-danger"> Votre nom doit être entre 5, et 500 caractèress ! </p>');
+                    $('.currentname').html('<p class="alert alert-danger"> Votre nom doit être entre 3, et 500 caractèress ! </p>');
                 }
                 if(data.sameNickName){
                     $('.currentname').html('<p class="alert alert-danger"> Votre nom ne doit pas être le même que l\'ancien </p>');

@@ -494,7 +494,7 @@ class ApiController extends AbstractController{
             } else {
                 if(password_verify($currentPass, $AccountPassword)){
                     if($NewPass != $currentPass){
-                        if(preg_match("#^.{3,500}$#", $NewPass)){
+                        if(preg_match("#^.{5,500}$#", $NewPass)){
                             if($NewPass == $newpass2){
                                 $repo = $this->getDoctrine()->getRepository(User::class);
     
