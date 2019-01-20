@@ -99,7 +99,7 @@ $(document).ready(function(){
                     });
                 }
                 if (data.passwordInvalid){
-                    $('#divFailed').html('<p class="alert alert-danger">Adresse et/ou mot de passe incorrect</p>');
+                    $('#emailError').html('<p class="alert alert-danger">Adresse et/ou mot de passe incorrect</p>');
                 }
             },
             error:function(){
