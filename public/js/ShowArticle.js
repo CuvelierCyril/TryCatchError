@@ -32,17 +32,13 @@ $(document).ready(function(){
             success:function(data){
                 nbpage = data[data.length - 2];
                 if (!data.nan){
-                    console.log(data);
                     createDisplay(data);
                 } else {
-                    $('#main-container').html(`<h1 class="text-center text-light">Liste des sujets</h1><div class="card">
-                    <div class="card-header" id="headingThree">
-                        <div class="card-body">
-                            </div>
-                                <h5 class="mb-0">
-                                    <p class="title text-light">Aucun article trouvé !</p>
-                                </h5>
-                        </div>
+                    $('#main-container').html(`<h1 class="text-center text-light">Liste des sujets</h1>
+                    <div  class="p-2" id="headingThree">
+                        <h5 class="mb-0">
+                            <p class="alert alert-danger">Aucun article trouvé !</p>
+                        </h5>
                 </div>`);
                 $('#displayPagination').html('');
                 $('#next-current').click(function(){
@@ -161,7 +157,7 @@ $(document).ready(function(){
                 if(index < maxindex){
                     str = str + `
                     <div class="card page-trans">
-                        <div class="card-header row" id="headingThree">
+                        <div class="row p-2" id="headingThree">
                             <div class="col-8">
                                 <h5 class="mb-0">
                                     <p class="title text-light">` + element.title + `</p>
@@ -178,14 +174,11 @@ $(document).ready(function(){
                 }
             });
         } else {
-            str = str + `<div class="card-header" id="headingThree">
-            <div class="card-body">
-                </div>
+            str = str + `<div class="p-2" id="headingThree">
                     <h5 class="mb-0">
-                        <p class="title text-light">Aucun article trouvé !</p>
+                        <p class="alert alert-danger">Aucun article trouvé !</p>
                     </h5>
-            </div>
-    </div>`;
+                </div>`;
     pagi = false;
     $('#displayPagination').html('');
         }

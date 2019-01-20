@@ -4,18 +4,16 @@
 {% block body %}
     <div class="container-fluid">
         <div class="row">
-            <div class="col-12 col-md-12 col-sm-12 col-lg-7 offset-lg-1 box-shadow-page order-1 order-sm-1 order-md-1 order-lg-1">
+            <div class="col-12 col-md-12 col-sm-12 col-lg-7 offset-lg-1  order-1 order-sm-1 order-md-1 order-lg-1">
                 <h1 class="text-center mb-4 text-light">mon profil</h1>
-                <div class="card page-trans offset-1 offset-sm-4 col-md-9 offset-md-3 offset-lg-4 mt-3 mb-3" style="width: 18rem;">
+                <div class="offset-1 offset-sm-4 col-md-9 offset-md-3 offset-lg-4 mt-3 mb-3" style="width: 18rem;">
                     <div>
-                        <div class="card-img-top"><img class="col-12" src="{{ asset(app.session.get('account').picture) }}"
-                                alt="Profilimage" height="220" width="220">
+                        <div class="card-img-top">
+                            <img class="col-12 box-shadow-page" src="{{ asset(app.session.get('account').picture) }}" alt="Profilimage" height="220" width="220">
                         </div>
                         <div class="card-body">
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item text-light page-trans">Nom d'utilisateur: <i>{{ app.session.get('account').nickname }}</i></li>
-                                <li class="list-group-item text-light page-trans">Adresse Email:<i>{{ app.session.get('account').email }}</i></li>
-                            </ul>
+                                <p id="nickname" class="text-light">Nom d'utilisateur: {{ app.session.get('account').nickname }}</p>
+                                <p class="text-light">Adresse Email: {{ app.session.get('account').email }}</p>
                         </div>
                     </div>
                 </div>
@@ -35,7 +33,21 @@
                                         <p>Aucun article</p>
                                     {% else %}
                                         {% for subject in subjects %}
-                                            <div class="card">
+                                        <div class="card page-trans">
+                                            <div class="row p-2" id="headingThree">
+                                                <div class="col-8">
+                                                    <h5 class="mb-0">
+                                                        <p class="title text-light">{{ subject.title }}</p>
+                                                    </h5>
+                                                    <p class="text-light">{{ subject.description }}</p>
+                                                    <a  href="{{path('subject', {id : subject.id})}}" class="btn btn-color active m-2" role="button">Voir l'article</a>
+                                                </div>
+                                                <div class="col-12 offset-xl-3 col-xl-1 col-md-2 offset-md-2 text-center">
+                                                    <p class="border bg-white">Vues : {{ subject.view }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                            <!-- <div class="card">
                                                 <div class="card-header" id="headingThree">
                                                     <h5 class="mb-0">
                                                         <p>{{ subject.title }}</p>
@@ -46,7 +58,7 @@
                                                         href="{{path('subject', {id : subject.id})}}" class="btn btn-color btn-sm active m-2" role="button">Voir l'article</a>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                         {% endfor %}
                                     {% endif %}
                                 </div>
@@ -102,11 +114,11 @@
                                         </div>
                                         <div class="modal-body">
                                             <div class="card card-body">
-                                            <div class="message"></div>
-                                                <form class="col-12" id="FormChangePassword" action="{{ path('apiPasswordChange') }}" method="POST">
+                                                <div class="message"></div>
+                                            <form class="col-12" id="FormChangePassword" action="{{ path('apiPasswordChange') }}" method="POST">
                                                 <div class="currentpass"></div>
                                                     <div class="input-group mb-2 mr-sm-2">
-                                                        <input type="password" class="form-control CurrentPass" name="CurrentPass" 
+                                                        <input type="password" class="form-control CurrentPass" name="CurrentPass"
                                                             placeholder="Ancien mot de passe">
                                                     </div>
                                                     <div class="newpassword"></div>
@@ -122,12 +134,9 @@
                                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
                                                         <input type="submit" id="ConfirmPasswordChange" class="btn btn-info show">
                                                     </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                                            <button type="button" class="btn btn-color">Comfirmer</button>
-                                        </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -154,16 +163,15 @@
                                                             <input type="file" class="custom-file-input" id="uploadform" name="img">
                                                             <label class="custom-file-label" for="uploadform">Choisisez une
                                                             image</label>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                                            <button type="button" class="btn btn-color">Comfirmer</button>
-                                        </div>
-                                        
-                                    </form>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                                                <input type="submit" class="btn btn-info">
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -181,23 +189,22 @@
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-                                        
                                         <div class="currentname"></div>
-                                        <form action="{{ path('apiNameChange') }}" method="POST" id="FormChangeNickName">
-                                        <div class="modal-body">
-                                            <div class="card card-body page-trans">
-                                                <form class="col-12">
-                                                    <div class="input-group mb-2 mr-sm-2">
-                                                        <input type="text" class="form-control Nickname"  name="Nickname" id="nickname_change"
-                                                            placeholder="changer de nom d'utilisateur">
-                                                    </div>
+                                            <form action="{{ path('apiNameChange') }}" method="POST" id="FormChangeNickName">
+                                            <div class="modal-body">
+                                                <div class="card card-body">
+                                                    <form class="col-12">
+                                                        <div class="input-group mb-2 mr-sm-2">
+                                                            <input type="text" class="form-control Nickname"  name="Nickname" id="nickname_change"
+                                                                placeholder="changer de nom d'utilisateur">
+                                                        </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                                            <button type="button" class="btn btn-color">Comfirmer</button>
-                                        </div>
-                                    </form>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                                                <input type="submit" class="btn btn-info">
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -234,6 +241,7 @@
 
 {% endblock %}
 {% block javascripts %}
-<script src="{{ asset('js/ChangeNickName.js') }}"></script>
-<script src="{{ asset('js/PasswordChange.js') }}"></script>
+    <script src="{{ asset('js/CreateSubject.js') }}"></script>
+    <script src="{{ asset('js/PasswordChange.js') }}"></script>
+    <script src="{{ asset('js/ChangeNickName.js') }}"></script>
 {% endblock %}

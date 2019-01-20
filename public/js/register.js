@@ -41,11 +41,11 @@ $(document).ready(function(){
                     $('#nicknameError').html('<p class="alert alert-danger col-12">Pseudo déjà utilisé</p>');
                 }
                 if(data.recaptcha){
-                    $('#recaptchaError').html('<p class="alert alert-danger col-12 text-center">Recaptcha invalid</p>');
+                    $('#recaptchaError').html('<p class="alert alert-danger col-6 offset-3 text-center">Recaptcha invalid</p>');
                 }
             },
             error:function(){
-                $('#divFailed').html('<p class="alert alert-danger col-12">Erreur lors du traitement des données</p>');
+                $('#divFailed').html('<p class="alert alert-danger col-6 offset-3">Erreur lors du traitement des données</p>');
             },
             beforeSend:function(){
                 setOverlay();
