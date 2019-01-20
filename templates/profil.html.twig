@@ -5,77 +5,21 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12 col-md-12 col-sm-12 col-lg-7 offset-lg-1  order-1 order-sm-1 order-md-1 order-lg-1">
-                <h1 class="text-center mb-4 text-light">mon profil</h1>
+                <h1 class="text-center mb-4 text-light police-text">mon profil</h1>
                 <div class="offset-1 offset-sm-4 col-md-9 offset-md-3 offset-lg-4 mt-3 mb-3" style="width: 18rem;">
                     <div>
                         <div class="card-img-top">
                             <img class="col-12 box-shadow-page" src="{{ asset(app.session.get('account').picture) }}" alt="Profilimage" height="220" width="220">
                         </div>
-                        <div class="card-body">
-                                <p id="nickname" class="text-light">Nom d'utilisateur: {{ app.session.get('account').nickname }}</p>
-                                <p class="text-light">Adresse Email: {{ app.session.get('account').email }}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-sm-12 offset-sm-0 col-lg-8 offset-lg-4">
-                    <a id="btnArticle" class="btn btn-color" data-toggle="collapse" href="#multiCollapseExample1" role="button"
-                        aria-expanded="false" aria-controls="multiCollapseExample1">Mes articles</a>
-                    <a id="btnComment" class="btn btn-color" data-toggle="collapse" href="#Collapsearticle" role="button"
-                        aria-expanded="false" aria-controls="Collapsearticle">Mes commentaires</a>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <div class="collapse multi-collapse" id="multiCollapseExample1">
-                                <div class="accordion page-trans" id="articleliste">
-                                    <h1 class="m-auto text-center text-light">Mes Articles</h1>
-                                    {% if subjects is not defined %}
-                                        <p>Aucun article</p>
-                                    {% else %}
-                                        {% for subject in subjects %}
-                                            <div class="row p-2" id="headingThree">
-                                                <div class="col-8">
-                                                    <h5 class="mb-0">
-                                                        <p class="title text-light">{{ subject.title }}</p>
-                                                    </h5>
-                                                    <p class="text-light">{{ subject.description }}</p>
-                                                    <a  href="{{path('subject', {id : subject.id})}}" class="btn btn-color active m-2" role="button">Voir l'article</a>
-                                                </div>
-                                                <div class="col-12 offset-xl-3 col-xl-1 col-md-2 offset-md-2 text-center">
-                                                    <p class="border bg-white">Vues : {{ subject.view }}</p>
-                                                </div>
-                                            </div>
-                                        {% endfor %}
-                                    {% endif %}
-                                </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <div class="collapse multi-collapse" id="Collapsearticle">
-                                <div class="accordion page-trans" id="articleliste">
-                                    <h1 class="m-auto text-center text-light">Mes Réponses</h1>
-                                    {% if answers is not defined %}
-                                        <p>Aucune réponse</p>
-                                    {% else %}
-                                        {% for answer in answers %}
-                                            <div class="row p-2" id="headingThree">
-                                                <div class="col-8">
-                                                    <h5 class="mb-0">
-                                                        <p class="title text-light">{{ answer.content|truncate }}</p>
-                                                    </h5>
-                                                    <a href="{{path('subject', {id : answer.subject.id})}}" class="btn btn-color btn-sm active m-2 text-light" role="button">Voir l'article</a>
-                                                </div>
-                                            </div>
-                                        {% endfor %}
-                                    {% endif %}
-                                </div>
+                        <div>
+                            <p id="nickname" class="text-light">Nom d'utilisateur: {{ app.session.get('account').nickname }}</p>
+                            <p class="text-light">Adresse Email: {{ app.session.get('account').email }}</p>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-12 col-md-12 text-center col-lg-4 offset-lg-1 ml-0 mt-3 mb-3 order-2 order-lg-2 order-sm-2">
-                <h2 class="col-12 text-light">Modifier mes information</h2>
+                <h2 class="col-12 text-light police-text">Modifier mes informations</h2>
                 <div class="row">
                     <ul class="row m-auto">
                         <li class="admintag mt-3 col-12 col-md-12">
@@ -215,6 +159,66 @@
             </div>
         </div>
     </div>
+    <div class="col-12 col-sm-9 col-lg-8 offset-lg-1">
+        <div class="text-center">
+            <a id="btnArticle" class="btn btn-color" data-toggle="collapse" href="#multiCollapseExample1" role="button"
+                aria-expanded="false" aria-controls="multiCollapseExample1" class="police-text">Mes articles</a>
+            <a id="btnComment" class="btn btn-color" data-toggle="collapse" href="#Collapsearticle" role="button"
+                aria-expanded="false" aria-controls="Collapsearticle" class="police-text">Mes Réponses</a>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="collapse multi-collapse" id="multiCollapseExample1">
+                    <h1 class="m-auto text-center text-light police-text">Mes Articles</h1>
+                    <div class="accordion page-trans">
+                        {% if subjects is not defined %}
+                            <p>Aucun article</p>
+                        {% else %}
+                            {% for subject in subjects %}
+                                <div class="row p-2" id="headingThree">
+                                    <div class="col-8">
+                                        <h5 class="mb-0">
+                                            <p class="title text-light">{{ subject.title }}</p>
+                                        </h5>
+                                        <p class="text-light">{{ subject.description }}</p>
+                                        <a  href="{{path('subject', {id : subject.id})}}" class="btn btn-color active m-2" role="button">Voir l'article</a>
+                                    </div>
+                                    <div class="col-12 offset-xl-3 col-xl-1 col-md-2 offset-md-2 text-center">
+                                        <p class="border bg-white">Vues : {{ subject.view }}</p>
+                                        <p class="border bg-white">réponses : {{ subject.answers|length }}</p>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="collapse multi-collapse" id="Collapsearticle">
+                    <h1 class="m-auto text-center text-light police-text">Mes Réponses</h1>
+                    <div class="accordion page-trans">
+                        {% if answers is not defined %}
+                            <p>Aucune réponse</p>
+                        {% else %}
+                            {% for answer in answers %}
+                                <div class="row p-2" id="headingThree">
+                                    <div class="col-8">
+                                        <h5 class="mb-0">
+                                            <p class="title text-light">{{ answer.content|truncate }}</p>
+                                        </h5>
+                                        <a href="{{path('subject', {id : answer.subject.id})}}" class="btn btn-color btn-sm active m-2 text-light" role="button">Voir l'article</a>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
     <footer class="main-footer"></footer>
 
