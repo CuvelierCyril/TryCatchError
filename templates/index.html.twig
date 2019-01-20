@@ -14,19 +14,21 @@
                 <h1 class="m-auto text-center text-light police-text">Sujets recemment créés : </h1>
                 <div class="accordion page-trans">
                     {% for lastSubject in lastSubjects %}
-                    <div class="row p-2">
-                        <div class="col-8">
-                            <h5 class="mb-0">
-                                <p class="title text-light">{{ lastSubject.title }}</p>
-                            </h5>
-                            <p class="text-light">{{ lastSubject.description }}</p>
-                            <a  href="{{path('subject', {id : lastSubject.id})}}" class="btn btn-color active m-2" role="button">Voir l'article</a>
+                        {% if lastSubject is not null %}
+                        <div class="row p-2">
+                            <div class="col-8">
+                                <h5 class="mb-0">
+                                    <p class="title text-light">{{ lastSubject.title }}</p>
+                                </h5>
+                                <p class="text-light">{{ lastSubject.description }}</p>
+                                <a  href="{{path('subject', {id : lastSubject.id})}}" class="btn btn-color active m-2" role="button">Voir l'article</a>
+                            </div>
+                            <div class="col-12 offset-xl-3 col-xl-1 col-md-2 offset-md-2 text-center">
+                                <p class="border bg-white">Vues : {{ lastSubject.view }}</p>
+                                <p class="border bg-white">réponses : {{ lastSubject.answers|length }}</p>
+                            </div>
                         </div>
-                        <div class="col-12 offset-xl-3 col-xl-1 col-md-2 offset-md-2 text-center">
-                            <p class="border bg-white">Vues : {{ lastSubject.view }}</p>
-                            <p class="border bg-white">réponses : {{ lastSubject.answers|length }}</p>
-                        </div>
-                    </div>
+                        {% endif %}
                     {% endfor %}
                 </div>
                 {% endif %}
@@ -35,19 +37,21 @@
                 <h1 class="m-auto text-center text-light police-text">Sujets recemment vus : </h1>
                 <div class="accordion page-trans">
                     {% for lastThre in lastThree %}
-                    <div class="row p-2" >
-                        <div class="col-8">
-                            <h5 class="mb-0">
-                                <p class="title text-light">{{ lastThre.title }}</p>
-                            </h5>
-                            <p class="text-light">{{ lastThre.description }}</p>
-                            <a  href="{{path('subject', {id : lastThre.id})}}" class="btn btn-color active m-2" role="button">Voir l'article</a>
+                        {% if lastThre is not null %}
+                        <div class="row p-2" >
+                            <div class="col-8">
+                                <h5 class="mb-0">
+                                    <p class="title text-light">{{ lastThre.title }}</p>
+                                </h5>
+                                <p class="text-light">{{ lastThre.description }}</p>
+                                <a  href="{{path('subject', {id : lastThre.id})}}" class="btn btn-color active m-2" role="button">Voir l'article</a>
+                            </div>
+                            <div class="col-12 offset-xl-3 col-xl-1 col-md-2 offset-md-2 text-center">
+                                <p class="border bg-white">Vues : {{ lastThre.view }}</p>
+                                <p class="border bg-white">réponses : {{ lastThre.answers|length }}</p>
+                            </div>
                         </div>
-                        <div class="col-12 offset-xl-3 col-xl-1 col-md-2 offset-md-2 text-center">
-                            <p class="border bg-white">Vues : {{ lastThre.view }}</p>
-                            <p class="border bg-white">réponses : {{ lastThre.answers|length }}</p>
-                        </div>
-                    </div>
+                        {% endif %}
                     {% endfor %}
                 </div>
                 {% endif %}
@@ -56,19 +60,21 @@
                 <h1 class="m-auto text-center text-light police-text">Sujets recemment cherchés avec le mot-clé '{{ keyWord }}' : </h1>
                 <div class="accordion page-trans">
                     {% for lastSearch in lastResearch %}
-                    <div class="row p-2" >
-                        <div class="col-8">
-                            <h5 class="mb-0">
-                                <p class="title text-light">{{ lastSearch.title }}</p>
-                            </h5>
-                            <p class="text-light">{{ lastSearch.description }}</p>
-                            <a  href="{{path('subject', {id : lastSearch.id})}}" class="btn btn-color active m-2" role="button">Voir l'article</a>
+                        {% if lastSearch is not null %}
+                        <div class="row p-2" >
+                            <div class="col-8">
+                                <h5 class="mb-0">
+                                    <p class="title text-light">{{ lastSearch.title }}</p>
+                                </h5>
+                                <p class="text-light">{{ lastSearch.description }}</p>
+                                <a  href="{{path('subject', {id : lastSearch.id})}}" class="btn btn-color active m-2" role="button">Voir l'article</a>
+                            </div>
+                            <div class="col-12 offset-xl-3 col-xl-1 col-md-2 offset-md-2 text-center">
+                                <p class="border bg-white">Vues : {{ lastSearch.view }}</p>
+                                <p class="border bg-white">réponses : {{ lastSearch.answers|length }}</p>
+                            </div>
                         </div>
-                        <div class="col-12 offset-xl-3 col-xl-1 col-md-2 offset-md-2 text-center">
-                            <p class="border bg-white">Vues : {{ lastSearch.view }}</p>
-                            <p class="border bg-white">réponses : {{ lastSearch.answers|length }}</p>
-                        </div>
-                    </div>
+                        {% endif %}
                     {% endfor %}
                 </div>
                 {% endif %}

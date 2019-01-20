@@ -41,15 +41,18 @@ class MainController extends AbstractController{
             }
         }
 
-        if (!isset($lastSubjects) || count($lastSubjects) == 0){
+        if (!isset($lastSubjects) || count($lastSubjects) == 0 || ($lastSubjects[0] == null && $lastSubjects[1] == null && $lastSubjects[2] == null)){
             $lastSubjects = null;
         }
-        if (!isset($lastResearch) || count($lastResearch) == 0){
+        if (!isset($lastResearch) || count($lastResearch) == 0 || ($lastResearch[0] == null && $lastResearch[1] == null && $lastResearch[2] == null)){
             $lastResearch = null;
         }
-        if (!isset($lastThree) || count($lastThree) == 0){
+        if (!isset($lastThree) || count($lastThree) == 0 || ($lastThree[0] == null && $lastThree[1] == null && $lastThree[2] == null)){
             $lastThree = null;
         }
+        dump($lastSubjects);
+        dump($lastResearch);
+        dump($lastThree);
         return $this->render('index.html.twig', array('lastSubjects'=> $lastSubjects, 'lastResearch' => $lastResearch, 'keyWord' => $keyWord, 'lastThree' => $lastThree));
     }
 

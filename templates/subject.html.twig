@@ -9,44 +9,47 @@
 <body class="font-image">
         <div class="container-fluid">
             {% if article is defined %}
-                <div class="col-12 col-md-12 col-sm-12 col-lg-8 offset-lg-2 box-shadow-page order-1 order-sm-1 order-md-1 order-lg-1">
-                    <h1 class="text-center card-header text-light" id="anchor-top">{{ article.title }}</h1>
+                <div class="col-12 col-md-12 col-sm-12 col-lg-8 offset-lg-2 order-1 order-sm-1 order-md-1 order-lg-1">
+                    <h1 class="text-center text-light police-text" id="anchor-top">{{ article.title }}</h1>
                     <div class="card page-trans text-light">
                         <div class="card-footer text-light label-color">Posté par: {{ article.author.nickname }}, le : {{ article.date|date('d-m-Y H:i:s') }}</div>
                         <p class="card-body mb-3">{{ article.content|raw }}</p>
-                            <a class="btn btn-color col-12 col-lg-3 col-md-6 m-auto" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Répondre</a>
-                            <div class="row">
-                                <div class="col">
-                                    <div class="collapse multi-collapse" id="multiCollapseExample1">
-                                    <div class="card card-body page-trans border-1px">
-                                        <form action="{{ path('apiCreateAnswer') }}" method="POST" id="answer-form">
-                                            <div class="form-group">
-                                            <label for="exampleFormControlTextarea1 text-light text-height-x2">Répondre</label>
-                                            <textarea class="form-control" name="content" id="exampleFormControlTextarea1" placeholder="Votre réponse" rows="3"></textarea><div id="contentError"></div>
-                                            <input class="btn btn-color mt-3 mb-3" type="submit" value="Publier"><div id="divFailed"></div>
-                                            </div>
-                                        </form>
-                                        <div id="formSuccess"></div>
-                                    </div>
-                                    </div>
+                        <a class="btn btn-color col-12 col-lg-3 col-md-6 m-auto" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Répondre</a>
+                        {% if app.session.get('account') is null %}
+                        <div class="collapse multi-collapse" id="multiCollapseExample1">
+                            <p class="alert alert-danger">Connectez vous afin de répondre.</p>
+                        </div>
+                        {% else %}
+                        <div class="row">
+                            <div class="col">
+                                <div class="collapse multi-collapse" id="multiCollapseExample1">
+                                <div class="border-1px">
+                                    <form action="{{ path('apiCreateAnswer') }}" method="POST" id="answer-form">
+                                        <div class="form-group">
+                                        <label for="exampleFormControlTextarea1" class="text-light text-height-x2 police-text">Répondre : <div id="contentError"></div></label>
+                                        <textarea class="form-control" name="content" id="exampleFormControlTextarea1" placeholder="Votre réponse" rows="3"></textarea>
+                                        <input class="btn btn-color mt-3 mb-3" type="submit" value="Publier"><div id="divFailed"></div>
+                                        </div>
+                                    </form>
+                                    <div id="formSuccess"></div>
                                 </div>
                                 </div>
-                                {% if app.session.get('account') is not null %}
-                                {% if app.session.get('account').rank == 2 %}
-                                    <button id="delete-subject" class="btn btn-color col-lg-3 m-auto col-12 col-md-6">Supprimer l'article</button>
-                                {% endif %}
+                            </div>
+                        </div>
+                        {% if app.session.get('account') is not null %}
+                            {% if app.session.get('account').rank == 2 %}
+                                <button id="delete-subject" class="btn btn-color col-lg-3 m-auto col-12 col-md-6">Supprimer l'article</button>
                             {% endif %}
-
+                        {% endif %}
+                        {% endif %}
                     </div>
                     {% if answers is not empty %}
                     <div class="row">
                         <div class="col-12">
-                            <div id='anchor-response' class="card-header text-center mt-3 mb-3 bg-secondary text-light">
-                                    derniers commentaires postés
-                            </div>
+                            <div id='anchor-response' class="card-header text-center mt-3 bg-danger text-light">derniers commentaires postés</div>
                             {% for answer in answers %}
                                 {% if answer.verified == 1 %}
-                                <div class="card mb-3 mt-3 page-trans answer{{ answer.id }} bg-success">
+                                <div class="card page-trans answer{{ answer.id }} bg-success">
                                     <div class="card-footer text-light label-color">posté par : {{ answer.author.nickname }}, le : {{ answer.date|date('d-m-Y H:i:s') }}</div>
                                     <div class="card-body">
                                         <p class="card-text text-light">{{answer.content}}</p>
@@ -61,7 +64,7 @@
                             {% endfor %}
                             {% for answer in answers %}
                             {% if answer.verified == 0 %}
-                            <div class="card mb-3 mt-3 page-trans answer{{ answer.id }}">
+                            <div class="card page-trans answer{{ answer.id }}">
                                     <div class="card-footer text-light label-color">
                                             posté par : {{ answer.author.nickname }}, le : {{ answer.date|date('d-m-Y H:i:s') }}
                                     </div>

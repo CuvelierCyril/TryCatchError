@@ -15,7 +15,7 @@
         <div class="row p-2">
             <div class="col-8">
                 <h5 class="mb-0">
-                    <p class="title text-light">{{ article.title }}</p>
+                    <p class="title text-light">{{ article.title|raw }}</p>
                 </h5>
                 <p class="text-light">{{ article.description }}</p>
                 <a  href="{{path('subject', {id : article.id})}}" class="btn btn-color active m-2" role="button">Voir l'article</a>
