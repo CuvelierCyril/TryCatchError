@@ -1,18 +1,16 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Erreur 404{% endblock %}
-{% block stylesheets %}
-<link rel="stylesheet" href="{{ asset('css/error.min.css') }}">
-{% endblock %}
 
 {% block body %}
-<div id='oopss'>
-    <div id='error-text'>
-      <span>404</span>
-      <p>Page introuvable</p>
-      <p class='hmpg'><a href='{{ path('index') }}' class="back">Retour a l'Acceuil</a></p>
+<di class="container-fluid">
+  <div class="row">
+      <div class="col-12 text-center text-light">
+          <h1>404</h1>
+          <p style="font-size: 2rem;">Page introuvable</p>
+          <a class="btn btn-color" role="button" href='{{ path('index') }}'>Retour a l'Acceuil</a>
     </div>
-</div>
-{% endblock %}
+  </div>
+</di>
 
-{% block javascripts %}{% endblock %}
+{% endblock %}
