@@ -42,18 +42,20 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                        <div class="ResetMdp"></div>
                     <form action="{{ path('apiResetPasswordMail') }}" method="POST" id="formResetPassword">
                         <div class="form-group m-auto col-12">
+                            <div class="NoAcccount"></div>
                             <label class="col-12 pl-0" for="register-form-email">Adresse Email<span class="pl-4" id="emailError"></span></label>
                             <input type="email" class="form-control" id="resetPasswordEmail" placeholder="jean@exemple.com"
                                 name="emailReset">
                         </div>
-                    </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                    <button type="button" class="btn btn-primary" id="btnResetPassword">Valider</button>
+                    <input type="submit" class="btn btn-primary" id="btnResetPassword">
                 </div>
+            </form>
             </div>
         </div>
     </div>

@@ -15,7 +15,7 @@ $(document).ready(function(){
                 if (data.success){
                     form.remove();
                     $('.toremove').remove();
-                    $('#formSuccess').html(`<p class="alert alert-success">Connexion réussie, bienvenue !</p>`);
+                    $('#formSuccess').html(`<p class="alert alert-success col-6 offset-3">Connexion réussie, bienvenue !</p>`);
                     $(`<li id="profilBtn" class="nav-item btn-effect text-center">
                     <a class="nav-link text-light" href="`+ addBtn[0] +`"><i class="far fa-user-circle"></i> Mon compte</a>
                     </li>`).insertAfter($('#subjectsBtn'));
@@ -57,16 +57,16 @@ $(document).ready(function(){
                     }
                 }
                 if (data.email){
-                    $('#emailError').html('<span style="color:red;">Format adresse mail invalide</span>');
+                    $('#emailError').html('<p class="alert alert-danger">Format adresse mail invalide</p>');
                 }
                 if (data.password){
-                    $('#passwordError').html('<span style="color:red;">Format mot de passe invalide</span>');
+                    $('#passwordError').html('<p class="alert alert-danger">Format mot de passe invalide</p>');
                 }
                 if (data.emailDoesntExist){
-                    $('#emailError').html('<span style="color:red;">Adresse mail inexistante</span>');
+                    $('#emailError').html('<p class="alert alert-danger">Adresse mail inexistante</p>');
                 }
                 if(data.notActive){
-                    $('#divFailed').html('<span style="color:red;">Votre compte n\'est pas actif. <br><button id="renvoi-mail" class="btn btn-danger">Renvoyer un mail</button></span>');
+                    $('#divFailed').html('<p class="alert alert-danger">Votre compte n\'est pas actif. <br><button id="renvoi-mail" class="btn btn-danger">Renvoyer un mail</button></p>');
                     $('#renvoi-mail').click(function(e){
                         e.preventDefault();
                         $.ajax({
@@ -80,14 +80,14 @@ $(document).ready(function(){
                             success:function(data){
                                 console.log(data);
                                 if (data.success){
-                                    $('#divFailed').html('<span style="color:green;">Un mail vous a été envoyé</span>');
+                                    $('#divFailed').html('<p class="success alert-success">Un mail vous a été envoyé</p>');
                                 }
                                 if (data.noEmail){
-                                    $('#divFailed').html('<span style="color:red;">L\'email est inexistant</span>');
+                                    $('#divFailed').html('<p class="alert alert-danger">L\'email est inexistant</p>');
                                 }
                             },
                             error:function(){
-                                $('#divFailed').html('<span style="color:red;">Erreur lors du traitement des données</span>');
+                                $('#divFailed').html('<p class="alert alert-danger">Erreur lors du traitement des données</p>');
                             },
                             beforeSend:function(){
                                 setOverlay();
@@ -99,11 +99,11 @@ $(document).ready(function(){
                     });
                 }
                 if (data.passwordInvalid){
-                    $('#divFailed').html('<span style="color:red;">Adresse et/ou mot de passe incorrect</span>');
+                    $('#divFailed').html('<p class="alert alert-danger">Adresse et/ou mot de passe incorrect</p>');
                 }
             },
             error:function(){
-                $('#divFailed').html('<span style="color:red;">Erreur lors du traitement des données</span>');
+                $('#divFailed').html('<p class="alert alert-danger">Erreur lors du traitement des données</p>');
             },
             beforeSend:function(){
                 setOverlay();
@@ -128,6 +128,13 @@ $(document).ready(function(){
                 data: form.serialize(),
                 success:function(data){
                     console.log(data);
+                    if(data.noUser){
+                        $('.NoAcccount').html("<p class='alert alert-danger'>Aucun compte n'a été trouvé avec cet e-mail </p>");
+                    }
+                    if(data.success){
+                        form.hide();
+                        $('.ResetMdp').html("<p class='alert alert-success'>Un email vous a été envoyé</p>");
+                        $('#btnResetPassword').hide();                    }
                 },
                 error:function(){
 
