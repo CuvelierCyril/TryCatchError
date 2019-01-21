@@ -20,7 +20,7 @@ $(document).ready(function(){
                 }
                 if(data.success){
                     form.hide();
-                    $('.PasswordChanged').html('<p class="alert alert-success text-center col-6 offset-3 mt-3"> Votre mot de passe à bien été changer </p>');
+                    $('.PasswordChanged').html('<p class="alert alert-success text-center col-6 offset-3 mt-3"> Votre mot de passe à bien été changé </p>');
                 }
             },
             error:function(){
