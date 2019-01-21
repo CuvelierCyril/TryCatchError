@@ -26,7 +26,7 @@ $(document).ready(function(){
                         $('body').append(`<div class="modal fade" id="modalWarning" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                           <div class="modal-content">
-                            <div class="modal-header">
+                            <div class="modal-header modal-title-color">
                               <h5 class="modal-title" id="exampleModalLabel">Avertissement : </h5>
                               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
@@ -36,7 +36,7 @@ $(document).ready(function(){
                             `+ data.warning +`
                             </div>
                             <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                              <button type="button" class="btn btn-color" data-dismiss="modal">Fermer</button>
                             </div>
                           </div>
                         </div>
@@ -69,7 +69,7 @@ $(document).ready(function(){
                     $('#divFailed').html('<p class="alert alert-danger">Votre compte n\'est pas actif. <br><button id="renvoi-mail" class="btn btn-danger">Renvoyer un mail</button></p>');
                     $('#renvoi-mail').click(function(e){
                         e.preventDefault();
-                        $.ajax({
+                        $.ajax({ //envoie du formulaire en ajax et gestion des erreurs
                             url: rout_mail,
                             method: "POST",
                             dataType: 'json',
